@@ -1,8 +1,8 @@
 package com.cloudx.common.exception;
 
-import com.cloudx.common.base.HttpStatus;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.springframework.http.HttpStatus;
 
 /**
  * 统一的业务异常
@@ -39,7 +39,7 @@ public class ApiException extends RuntimeException {
    * @return /
    */
   public static ApiException systemError(String msg) {
-    return new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.val(), msg);
+    return new ApiException(HttpStatus.INTERNAL_SERVER_ERROR.value(), msg);
   }
 
   /**
@@ -49,7 +49,7 @@ public class ApiException extends RuntimeException {
    * @return /
    */
   public static ApiException serviceError(String msg) {
-    return new ApiException(HttpStatus.BAD_REQUEST.val(), msg);
+    return new ApiException(org.springframework.http.HttpStatus.BAD_REQUEST.value(), msg);
   }
 
   /**

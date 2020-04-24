@@ -2,7 +2,7 @@ package com.cloudx.common.util;
 
 import cn.hutool.core.exceptions.ExceptionUtil;
 import com.fasterxml.jackson.annotation.JsonInclude;
-import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.DeserializationFeature;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.SerializationFeature;
@@ -22,7 +22,6 @@ public class JSONUtil {
 
   // 加载Jackson配置
   static {
-    // config
     // 在反序列化时忽略在 json 中存在但 Java 对象不存在的属性
     OBJECT_MAPPER.configure(DeserializationFeature.FAIL_ON_UNKNOWN_PROPERTIES, false);
     // 在序列化时日期格式默认为 yyyy-MM-dd'T'HH:mm:ss
@@ -34,7 +33,7 @@ public class JSONUtil {
   }
 
   /**
-   * obj转String
+   * 序列化
    *
    * @param src 传入参数
    * @param <T> 类型
@@ -43,36 +42,34 @@ public class JSONUtil {
   public static <T> String obj2String(T src) {
     if (src == null) {
       return null;
-    }
-    try {
-      return src instanceof String ? (String) src : OBJECT_MAPPER.writeValueAsString(src);
-    } catch (Exception e) {
-      log.error(ExceptionUtil.stacktraceToString(e));
-      return null;
+    } else {
+      try {
+        return src instanceof String ? (String) src : OBJECT_MAPPER.writeValueAsString(src);
+      } catch (JsonProcessingException e) {
+        log.error(ExceptionUtil.stacktraceToString(e));
+        return null;
+      }
     }
   }
 
   /**
-   * String转obj,反序列化
+   * 反序列化
    *
-   * @param src           传入参数
-   * @param typeReference 对进行泛型的反序列化，使用TypeReference可以明确的指定反序列化的类型，
-   * @param <T>           类型
+   * @param src 传入参数
+   * @param tz  类
+   * @param <T> 类型
    * @return obj
    */
-  @SuppressWarnings("unchecked")
-  public static <T> T toBean(String src, TypeReference<T> typeReference) {
-    if (src == null || typeReference == null) {
+  public static <T> T toBean(Object src, Class<T> tz) {
+    if (src == null || tz == null) {
       return null;
-    }
-    try {
-      return (T)
-          (typeReference.getType().equals(String.class)
-              ? src
-              : OBJECT_MAPPER.readValue(src, typeReference));
-    } catch (Exception e) {
-      log.error(ExceptionUtil.stacktraceToString(e));
-      return null;
+    } else {
+      try {
+        return OBJECT_MAPPER.readValue(OBJECT_MAPPER.writeValueAsString(src), tz);
+      } catch (JsonProcessingException e) {
+        log.error(ExceptionUtil.stacktraceToString(e));
+        return null;
+      }
     }
   }
 }

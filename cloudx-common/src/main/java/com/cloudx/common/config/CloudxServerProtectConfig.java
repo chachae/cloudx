@@ -15,7 +15,7 @@ import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
  *
  * @author chachae
  */
-public class ServerProtectConfig implements WebMvcConfigurer {
+public class CloudxServerProtectConfig implements WebMvcConfigurer {
 
   private HandlerInterceptor serverProtectInterceptor;
 

@@ -7,6 +7,11 @@ package com.cloudx.common.constant;
 public class SystemConstant {
 
   /**
+   * OAUTH2 令牌类型 https://oauth.net/2/bearer-tokens/
+   */
+  public static final String OAUTH2_TOKEN_TYPE = "bearer";
+
+  /**
    * Gateway 常量
    */
   public static class GatewayConstant {
@@ -20,7 +25,6 @@ public class SystemConstant {
      * Gateway请求头TOKEN值
      */
     public static final String TOKEN_VALUE = "cloudx:gateway:tokenValue";
-
   }
 
 }

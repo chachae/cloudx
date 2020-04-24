@@ -14,4 +14,5 @@ import lombok.Setter;
 @Setter
 public class BaseEntity implements Serializable {
 
+  private static final long serialVersionUID = 5970149403350669074L;
 }

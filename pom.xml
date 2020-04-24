@@ -10,10 +10,11 @@
 
   <modules>
     <module>cloudx-common</module>
+    <module>cloudx-auth</module>
   </modules>
 
   <name>cloudx</name>
-  <description>cloud 种子项目</description>
+  <description>cloud 种子项目父工程</description>
 
   <properties>
     <java.version>1.8</java.version>
@@ -22,14 +23,14 @@
     <spring-boot.version>2.2.6.RELEASE</spring-boot.version>
     <spring-cloud-alibaba-version>2.2.0.RELEASE</spring-cloud-alibaba-version>
     <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
-    <mysql-driver.version>8.0.19</mysql-driver.version>
     <mybatis-spring-boot.version>3.3.1</mybatis-spring-boot.version>
-    <hutool-all.version>5.2.4</hutool-all.version>
-    <guava.version>28.2-jre</guava.version>
+    <hutool-all.version>5.3.2</hutool-all.version>
+    <guava.version>29.0-jre</guava.version>
   </properties>
 
   <dependencyManagement>
     <dependencies>
+      <!-- spring boot -->
       <dependency>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-dependencies</artifactId>
@@ -37,7 +38,6 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-
       <!--spring cloud-->
       <dependency>
         <groupId>org.springframework.cloud</groupId>
@@ -46,7 +46,6 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-
       <!--spring cloud alibaba -->
       <dependency>
         <groupId>com.alibaba.cloud</groupId>
@@ -55,12 +54,10 @@
         <type>pom</type>
         <scope>import</scope>
       </dependency>
-
     </dependencies>
   </dependencyManagement>
 
   <dependencies>
-
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-test</artifactId>
@@ -79,16 +76,17 @@
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>
         <artifactId>maven-compiler-plugin</artifactId>
+        <version>3.8.1</version>
         <configuration>
-          <source>1.8</source>
-          <target>1.8</target>
-          <encoding>UTF-8</encoding>
+          <source>${java.version}</source>
+          <target>${java.version}</target>
+          <encoding>${project.build.sourceEncoding}</encoding>
         </configuration>
       </plugin>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <version>2.2.6.RELEASE</version>
+        <version>${spring-boot.version}</version>
       </plugin>
     </plugins>
   </build>

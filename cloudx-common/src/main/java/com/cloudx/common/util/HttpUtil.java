@@ -1,11 +1,16 @@
 package com.cloudx.common.util;
 
 import java.io.IOException;
+import java.util.Objects;
+import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.server.reactive.ServerHttpResponse;
+import org.springframework.web.context.request.RequestContextHolder;
+import org.springframework.web.context.request.ServletRequestAttributes;
 import reactor.core.publisher.Mono;
 
 /**
@@ -18,6 +23,8 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
 
   private HttpUtil() {
   }
+
+  private static final String UNKNOW = "unknown";
 
   /**
    * 设置响应
@@ -53,4 +60,33 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
     return response.writeWith(Mono.just(dataBuffer));
   }
 
+  /**
+   * 获取HttpServletRequest
+   *
+   * @return HttpServletRequest
+   */
+  public static HttpServletRequest getHttpServletRequest() {
+    return ((ServletRequestAttributes) Objects
+        .requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+  }
+
+  /**
+   * 获取请求IP
+   *
+   * @return String IP
+   */
+  public static String getHttpServletRequestIpAddress() {
+    HttpServletRequest request = getHttpServletRequest();
+    String ip = request.getHeader("x-forwarded-for");
+    if (StringUtils.isBlank(ip) || UNKNOW.equalsIgnoreCase(ip)) {
+      ip = request.getHeader("Proxy-Client-IP");
+    }
+    if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
+      ip = request.getHeader("WL-Proxy-Client-IP");
+    }
+    if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
+      ip = request.getRemoteAddr();
+    }
+    return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
+  }
 }

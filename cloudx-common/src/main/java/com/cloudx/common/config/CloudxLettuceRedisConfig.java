@@ -19,7 +19,7 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
  * @author chachae
  * @since 2020/4/13 20:40
  */
-public class LettuceRedisConfig {
+public class CloudxLettuceRedisConfig {
 
   @Bean
   @ConditionalOnClass(RedisOperations.class)

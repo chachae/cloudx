@@ -1,7 +1,9 @@
 package com.cloudx.common.base;
 
+import java.io.Serializable;
 import lombok.Data;
 import lombok.experimental.Accessors;
+import org.springframework.http.HttpStatus;
 
 /**
  * 统一响应信息
@@ -11,7 +13,12 @@ import lombok.experimental.Accessors;
  */
 @Data
 @Accessors(chain = true)
-public class Response<E> {
+public class Result<E> implements Serializable {
+
+  private static final long serialVersionUID = -8713837000040960771L;
+
+  private Result() {
+  }
 
   /**
    * 响应代码
@@ -38,10 +45,10 @@ public class Response<E> {
    *
    * @return /
    */
-  public static Response<Object> ok() {
-    return new Response<>()
-        .setMsg(HttpStatus.OK.desc())
-        .setStatus(HttpStatus.OK.val())
+  public static Result<Object> ok() {
+    return new Result<>()
+        .setStatus(HttpStatus.OK.value())
+        .setMsg(HttpStatus.OK.name())
         .setTimestamp(System.currentTimeMillis());
   }
 
@@ -50,11 +57,11 @@ public class Response<E> {
    *
    * @return /
    */
-  public static <E> Response<E> ok(E data) {
-    return new Response<E>()
+  public static <E> Result<E> ok(E data) {
+    return new Result<E>()
         .setData(data)
-        .setStatus(HttpStatus.OK.val())
-        .setMsg(HttpStatus.OK.desc())
+        .setStatus(HttpStatus.OK.value())
+        .setMsg(HttpStatus.OK.name())
         .setTimestamp(System.currentTimeMillis());
   }
 
@@ -63,8 +70,8 @@ public class Response<E> {
    *
    * @return /
    */
-  public static <E> Response<E> ok(int status, String msg, E data) {
-    return new Response<E>()
+  public static <E> Result<E> ok(int status, String msg, E data) {
+    return new Result<E>()
         .setStatus(status)
         .setMsg(msg)
         .setData(data)
@@ -76,10 +83,10 @@ public class Response<E> {
    *
    * @return /
    */
-  public static Response<Object> fail() {
-    return new Response<>()
-        .setStatus(HttpStatus.BAD_REQUEST.val())
-        .setMsg(HttpStatus.BAD_REQUEST.desc())
+  public static Result<Object> fail() {
+    return new Result<>()
+        .setStatus(HttpStatus.BAD_REQUEST.value())
+        .setMsg(HttpStatus.BAD_REQUEST.name())
         .setTimestamp(System.currentTimeMillis());
   }
 
@@ -88,9 +95,9 @@ public class Response<E> {
    *
    * @return /
    */
-  public static Response<Object> fail(String msg) {
-    return new Response<>()
-        .setStatus(HttpStatus.BAD_REQUEST.val())
+  public static Result<Object> fail(String msg) {
+    return new Result<>()
+        .setStatus(HttpStatus.BAD_REQUEST.value())
         .setMsg(msg)
         .setTimestamp(System.currentTimeMillis());
   }
@@ -100,8 +107,8 @@ public class Response<E> {
    *
    * @return /
    */
-  public static Response<Object> fail(int status, String msg) {
-    return new Response<>()
+  public static Result<Object> fail(int status, String msg) {
+    return new Result<>()
         .setStatus(status)
         .setMsg(msg)
         .setTimestamp(System.currentTimeMillis());
