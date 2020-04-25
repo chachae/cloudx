@@ -1,11 +1,11 @@
 package com.cloudx.auth.config;
 
+import cn.hutool.core.util.StrUtil;
 import com.cloudx.auth.properties.AuthProperties;
 import com.cloudx.common.constant.Oauth2Constant;
 import com.cloudx.common.handler.CloudxAccessDeniedHandler;
 import com.cloudx.common.handler.CloudxAuthExceptionEntryPoint;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.oauth2.config.annotation.web.configuration.EnableResourceServer;
@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
 /**
- * 资源服务器配置
+ * oAuth2.0 资源服务器配置
  *
  * @author chachae
  * @since 2020/04/25
@@ -23,20 +23,20 @@ import org.springframework.security.oauth2.config.annotation.web.configurers.Res
 @RequiredArgsConstructor
 public class CloudxResourceServerConfig extends ResourceServerConfigurerAdapter {
 
+  private final AuthProperties properties;
   private final CloudxAccessDeniedHandler accessDeniedHandler;
   private final CloudxAuthExceptionEntryPoint exceptionEntryPoint;
-  private final AuthProperties properties;
 
   @Override
   public void configure(HttpSecurity http) throws Exception {
-    String[] anonUrls = StringUtils
-        .splitByWholeSeparatorPreserveAllTokens(properties.getAnonUrl(), ",");
-
+    // 匿名路径白名单
+    String[] anonUrls = StrUtil.splitToArray(properties.getAnonUrl(), ',');
     http.csrf().disable()
         .requestMatchers().antMatchers(Oauth2Constant.Endpoint.ALL)
         .and()
         .authorizeRequests()
         .antMatchers(anonUrls).permitAll()
+        // 全部需要经过认证
         .antMatchers(Oauth2Constant.Endpoint.ALL).authenticated()
         .and().httpBasic();
   }

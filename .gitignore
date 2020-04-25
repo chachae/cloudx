@@ -10,3 +10,4 @@ target/
 *.iml
 *.ipr
 **/gen
+log

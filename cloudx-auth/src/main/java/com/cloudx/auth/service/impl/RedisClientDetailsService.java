@@ -14,7 +14,10 @@ import org.springframework.security.oauth2.provider.client.JdbcClientDetailsServ
 import org.springframework.stereotype.Service;
 
 /**
+ * Redis 下的 oauth2.0 客户端信息服务
+ *
  * @author chachae
+ * @since 2020/04/25 17:11
  */
 @Slf4j
 @Service
@@ -34,15 +37,9 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
 
   @Override
   public ClientDetails loadClientByClientId(String clientId) throws InvalidClientException {
-    ClientDetails clientDetails = null;
     String value = (String) redisService.hget(CACHE_CLIENT_KEY, clientId);
-    if (StringUtils.isBlank(value)) {
-      clientDetails = cacheAndGetClient(clientId);
-    } else {
-      clientDetails = JSONObject.parseObject(value, BaseClientDetails.class);
-    }
-
-    return clientDetails;
+    return StringUtils.isBlank(value) ? cacheAndGetClient(clientId)
+        : JSONObject.parseObject(value, BaseClientDetails.class);
   }
 
   /**
@@ -52,6 +49,7 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
    */
   public ClientDetails cacheAndGetClient(String clientId) {
     ClientDetails clientDetails;
+    // 父级通过 JDBC 获取客户端信息，将数据缓存到 Redis
     clientDetails = super.loadClientByClientId(clientId);
     if (clientDetails != null) {
       redisService.hset(CACHE_CLIENT_KEY, clientId, JSONObject.toJSONString(clientDetails));

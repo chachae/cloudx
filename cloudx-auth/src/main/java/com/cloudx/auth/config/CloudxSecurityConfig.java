@@ -1,6 +1,6 @@
 package com.cloudx.auth.config;
 
-import com.cloudx.auth.filter.ValidateCodeFilter;
+import com.cloudx.auth.filter.CaptchaFilter;
 import com.cloudx.common.constant.Oauth2Constant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -15,7 +15,7 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 /**
- * WebSecurity配置
+ * WebSecurity 配置
  *
  * @author chachae
  * @since 2020/04/21
@@ -25,7 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class CloudxSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final ValidateCodeFilter validateCodeFilter;
+  private final CaptchaFilter captchaFilter;
   private final UserDetailsService userDetailService;
   private final PasswordEncoder passwordEncoder;
 
@@ -38,11 +38,13 @@ public class CloudxSecurityConfig extends WebSecurityConfigurerAdapter {
   @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
-        .addFilterBefore(validateCodeFilter, UsernamePasswordAuthenticationFilter.class)
+        //访问资源之前过滤密码模式的认证授权
+        .addFilterBefore(captchaFilter, UsernamePasswordAuthenticationFilter.class)
         .requestMatchers()
         .antMatchers(Oauth2Constant.Endpoint.OAUTH_ALL)
         .and()
         .authorizeRequests()
+        // oAuth 对外暴露接口全部需要认证
         .antMatchers(Oauth2Constant.Endpoint.OAUTH_ALL).authenticated()
         .and()
         .csrf().disable();

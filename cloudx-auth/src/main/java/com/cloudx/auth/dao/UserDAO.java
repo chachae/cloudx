@@ -12,6 +12,12 @@ import org.apache.ibatis.annotations.Select;
  */
 public interface UserDAO extends BaseMapper<SystemUser> {
 
+  /**
+   * 通过用户 ID 获取角色 ID
+   *
+   * @param userId 用户ID
+   * @return 角色值集合
+   */
   @Select("select role_id from user_role where user_id = #{userId}")
   List<String> selectRoleIdByUserId(@Param("userId") Long userId);
 

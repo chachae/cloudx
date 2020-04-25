@@ -1,26 +1,6 @@
 server:
-  port: 8101
+  port: 8301
 spring:
-  datasource:
-    dynamic:
-      hikari:
-        connection-timeout: 30000
-        max-lifetime: 1800000
-        max-pool-size: 15
-        min-idle: 5
-        connection-test-query: select 1
-        pool-name: FebsHikariCP
-      primary: base
-      datasource:
-        base:
-          username: root
-          password: 123456
-          driver-class-name: com.mysql.cj.jdbc.Driver
-          url: jdbc:mysql://${mysql.url}:3306/febs_cloud_base?useUnicode=true&characterEncoding=UTF-8&useJDBCCompliantTimezoneShift=true&useLegacyDatetimeCode=false&serverTimezone=GMT%2b8
-
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
   boot:
     admin:
       client:
@@ -29,38 +9,112 @@ spring:
         password: 123456
         instance:
           prefer-ip: true
-  redis:
-    database: 0
-    host: ${redis.url}
-    port: 6379
-    lettuce:
-      pool:
-        min-idle: 8
-        max-idle: 500
-        max-active: 2000
-        max-wait: 10000
-    timeout: 5000
-mybatis-plus:
-  type-aliases-package: cc.mrbird.febs.common.entity.system
-  mapper-locations: classpath:mapper/*.xml
-  configuration:
-    jdbc-type-for-null: null
-  global-config:
-    banner: false
-info:
-  app:
-    name: ${spring.application.name}
-    description: "@project.description@"
-    version: "@project.version@"
+
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+        - id: FEBS-Auth-Social
+          uri: lb://FEBS-Auth
+          predicates:
+            - Path=/auth/social/**
+          filters:
+            - name: Hystrix
+              args:
+                name: socialfallback
+                fallbackUri: forward:/fallback/FEBS-Auth
+        - id: FEBS-Auth
+          uri: lb://FEBS-Auth
+          predicates:
+            - Path=/auth/**
+          filters:
+            - name: Hystrix
+              args:
+                name: authfallback
+                fallbackUri: forward:/fallback/FEBS-Auth
+        - id: FEBS-Server-System
+          uri: lb://FEBS-Server-System
+          predicates:
+            - Path=/system/**
+          filters:
+            - name: Hystrix
+              args:
+                name: systemfallback
+                fallbackUri: forward:/fallback/FEBS-Server-System
+        - id: FEBS-Server-test
+          uri: lb://FEBS-Server-Test
+          predicates:
+            - Path=/test/**
+          filters:
+            - name: Hystrix
+              args:
+                name: testfallback
+                fallbackUri: forward:/fallback/FEBS-Server-Test
+      loadbalancer:
+        use404: true
+      default-filters:
+        - StripPrefix=1
+
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration,org.springframework.boot.autoconfigure.mongo.MongoReactiveAutoConfiguration,org.springframework.boot.autoconfigure.data.mongo.MongoReactiveRepositoriesAutoConfiguration,org.springframework.boot.autoconfigure.mongo.MongoAutoConfiguration
+
+    # 网关增强配置
+    # data:
+    #   mongodb:
+    #     host: ${mongo.url}
+    #     port: 27017
+    #     database: febs_cloud_route
+
+    # redis:
+    #   database: 3
+    #   host: ${redis.url}
+    #   port: 6379
+    #   lettuce:
+    #     pool:
+    #       min-idle: 8
+    #       max-idle: 500
+    #       max-active: 2000
+    #       max-wait: 10000
+    #   timeout: 5000
+
+
+# 网关增强配置
+febs:
+  gateway:
+    enhance: false
+    jwt:
+      secret: 123456
+      expiration: 36000
+
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 3000
+    socialfallback:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 60000
+
+ribbon:
+  eager-load:
+    enabled: true
 
 management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
   endpoint:
     health:
       show-details: ALWAYS
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
 
-febs:
-  frontUrl: 'http://localhost:9527'

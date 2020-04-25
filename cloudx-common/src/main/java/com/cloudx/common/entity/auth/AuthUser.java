@@ -4,7 +4,6 @@ import java.util.Collection;
 import java.util.Date;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -21,30 +20,22 @@ import org.springframework.security.core.userdetails.User;
 public class AuthUser extends User {
 
   private static final long serialVersionUID = 5970249403350193074L;
-
-  private Long userId;
-
-  private String avatar;
-
-  private String email;
-
-  private String mobile;
-
+  private String userInfoId;
+  private String userName;
+  private String fullName;
   private String sex;
-
-  private Long deptId;
-
-  private String deptName;
-
-  private String roleId;
-
-  private String roleName;
-
+  private String avatar;
+  private String email;
+  private String mobile;
+  private String qqNumber;
+  private String profile;
+  private Date birthday;
+  private String blogAddress;
+  private Date createTime;
+  private Date updateTime;
   private Date lastLoginTime;
-
-  private String description;
-
-  private String status;
+  private String lastLoginIp;
+  private Integer deptId;
 
   public AuthUser(String username, String password,
       Collection<? extends GrantedAuthority> authorities) {

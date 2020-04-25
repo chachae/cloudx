@@ -12,6 +12,11 @@ public class SystemConstant {
   public static final String OAUTH2_TOKEN_TYPE = "bearer";
 
   /**
+   * 验证码 key前缀
+   */
+  public static final String CAPTCHA_PREFIX = "cloudx:captcha:";
+
+  /**
    * Gateway 常量
    */
   public static class GatewayConstant {

@@ -32,4 +32,9 @@ public class AuthProperties {
    * 社交登录所使用的 Client
    */
   private String socialLoginClientId;
+
+  /**
+   * 验证码
+   */
+  private CaptchaProperties code = new CaptchaProperties();
 }

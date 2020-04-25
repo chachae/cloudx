@@ -1,8 +1,11 @@
 package com.cloudx.auth.handler;
 
+import com.cloudx.auth.exception.CaptchaException;
+import com.cloudx.common.base.Result;
 import com.cloudx.common.handler.BaseExceptionHandler;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 /**
@@ -15,5 +18,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 @RestControllerAdvice
 @Order(value = Ordered.HIGHEST_PRECEDENCE)
 public class GlobalExceptionHandler extends BaseExceptionHandler {
+
+  /**
+   * 验证码异常
+   */
+  @ExceptionHandler(CaptchaException.class)
+  public Result<Object> captchaExceptionException(CaptchaException e) {
+    return Result.fail(e.getMessage());
+  }
 
 }

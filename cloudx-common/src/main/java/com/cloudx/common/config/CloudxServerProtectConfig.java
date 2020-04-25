@@ -25,7 +25,7 @@ public class CloudxServerProtectConfig implements WebMvcConfigurer {
   }
 
   /**
-   * 密码加密 / 解密
+   * BCrypt 密码加密 / 解密
    *
    * @return /
    */
@@ -36,7 +36,7 @@ public class CloudxServerProtectConfig implements WebMvcConfigurer {
   }
 
   /**
-   * 网关 Token 拦截器
+   * Gateway 网关 Token 拦截器
    *
    * @return /
    */

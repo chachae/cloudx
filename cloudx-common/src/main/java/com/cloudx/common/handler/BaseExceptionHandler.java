@@ -46,8 +46,8 @@ public abstract class BaseExceptionHandler {
   /**
    * 处理所有不可知的异常
    */
-  @ExceptionHandler(Throwable.class)
-  public Result<Object> handleException(Throwable e) {
+  @ExceptionHandler(Exception.class)
+  public Result<Object> handleException(Exception e) {
     // 打印堆栈信息
     log.error(ExceptionUtil.stacktraceToString(e));
     return Result.fail(e.getMessage());

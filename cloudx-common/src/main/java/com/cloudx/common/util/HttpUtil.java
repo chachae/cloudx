@@ -1,5 +1,6 @@
 package com.cloudx.common.util;
 
+import com.alibaba.fastjson.JSONObject;
 import java.io.IOException;
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
@@ -39,7 +40,7 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
       int status, Object value) throws IOException {
     response.setContentType(contentType);
     response.setStatus(status);
-    response.getOutputStream().write(JSONUtil.obj2String(value).getBytes());
+    response.getOutputStream().write(JSONObject.toJSONString(value).getBytes());
   }
 
   /**
@@ -56,7 +57,7 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
     response.setStatusCode(status);
     response.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType);
     DataBuffer dataBuffer = response.bufferFactory()
-        .wrap(JSONUtil.obj2String(value).getBytes());
+        .wrap(JSONObject.toJSONString(value).getBytes());
     return response.writeWith(Mono.just(dataBuffer));
   }
 
@@ -68,6 +69,24 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
   public static HttpServletRequest getHttpServletRequest() {
     return ((ServletRequestAttributes) Objects
         .requireNonNull(RequestContextHolder.getRequestAttributes())).getRequest();
+  }
+
+  /**
+   * 获取请求头数据
+   *
+   * @return String
+   */
+  public static String getHeader(String key) {
+    return getHttpServletRequest().getHeader(key);
+  }
+
+  /**
+   * 获取请求数据
+   *
+   * @return String
+   */
+  public static String getParam(String key) {
+    return getHttpServletRequest().getParameter(key);
   }
 
   /**

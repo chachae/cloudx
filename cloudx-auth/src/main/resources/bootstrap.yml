@@ -2,6 +2,7 @@ server:
   port: 9200
   servlet:
     context-path: /auth
+
 spring:
   application:
     name: cloudx-auth
