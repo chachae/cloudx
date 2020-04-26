@@ -1,12 +1,12 @@
 package com.cloudx.auth.service.impl;
 
 import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.cloudx.common.service.RedisService;
 import java.util.List;
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.security.oauth2.common.exceptions.InvalidClientException;
 import org.springframework.security.oauth2.provider.ClientDetails;
 import org.springframework.security.oauth2.provider.client.BaseClientDetails;
@@ -38,7 +38,7 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
   @Override
   public ClientDetails loadClientByClientId(String clientId) throws InvalidClientException {
     String value = (String) redisService.hget(CACHE_CLIENT_KEY, clientId);
-    return StringUtils.isBlank(value) ? cacheAndGetClient(clientId)
+    return StrUtil.isBlank(value) ? cacheAndGetClient(clientId)
         : JSONObject.parseObject(value, BaseClientDetails.class);
   }
 

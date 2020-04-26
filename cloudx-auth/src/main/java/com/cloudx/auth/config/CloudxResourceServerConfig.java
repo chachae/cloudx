@@ -13,7 +13,7 @@ import org.springframework.security.oauth2.config.annotation.web.configuration.R
 import org.springframework.security.oauth2.config.annotation.web.configurers.ResourceServerSecurityConfigurer;
 
 /**
- * oAuth2.0 资源服务器配置
+ * OAUTH 2 资源服务器配置
  *
  * @author chachae
  * @since 2020/04/25
@@ -35,6 +35,7 @@ public class CloudxResourceServerConfig extends ResourceServerConfigurerAdapter 
         .requestMatchers().antMatchers(Oauth2Constant.Endpoint.ALL)
         .and()
         .authorizeRequests()
+        // 匿名访问路径放行
         .antMatchers(anonUrls).permitAll()
         // 全部需要经过认证
         .antMatchers(Oauth2Constant.Endpoint.ALL).authenticated()

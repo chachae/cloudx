@@ -8,6 +8,14 @@ package com.cloudx.common.constant;
  */
 public class ServerConstant {
 
+  /**
+   * OAUTH 2 认证授权微服务名
+   */
   public static final String CLOUDX_AUTH = "cloudx-auth";
+
+  /**
+   * Gateway 网关微服务名
+   */
+  public static final String CLOUDX_GATEWAY = "cloudx-gateway";
 
 }

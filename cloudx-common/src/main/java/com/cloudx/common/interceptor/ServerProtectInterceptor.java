@@ -1,10 +1,13 @@
 package com.cloudx.common.interceptor;
 
+import cn.hutool.core.util.StrUtil;
+import com.cloudx.common.base.ResponseMap;
 import com.cloudx.common.constant.SystemConstant.GatewayConstant;
+import com.cloudx.common.util.HttpUtil;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.StringUtils;
+import org.springframework.http.MediaType;
 import org.springframework.lang.NonNull;
 import org.springframework.util.Base64Utils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -26,14 +29,12 @@ public class ServerProtectInterceptor implements HandlerInterceptor {
     // Base64 编码正确的网关 token
     String rightToken = new String(Base64Utils.encode(GatewayConstant.TOKEN_VALUE.getBytes()));
     // 校验 Gateway Token 的正确性
-    if (StringUtils.equals(rightToken, token)) {
+    if (StrUtil.equals(rightToken, token)) {
       return true;
     } else {
-      // todo 完成网关后开启
-//      HttpUtil.makeResponse(response, MediaType.APPLICATION_JSON_VALUE,
-//          HttpServletResponse.SC_FORBIDDEN, Result.fail(HttpStatus.FORBIDDEN.value(), "请通过网关获取资源"));
-//      return false;
-      return true;
+      HttpUtil.makeResponse(response, MediaType.APPLICATION_JSON_VALUE,
+          HttpServletResponse.SC_FORBIDDEN, new ResponseMap().message("请通过网关获取资源"));
+      return false;
     }
   }
 }

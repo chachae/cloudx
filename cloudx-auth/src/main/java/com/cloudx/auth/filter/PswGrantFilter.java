@@ -1,7 +1,12 @@
 package com.cloudx.auth.filter;
 
+import cn.hutool.core.util.StrUtil;
+import com.cloudx.auth.exception.CaptchaException;
+import com.cloudx.auth.service.ICaptchaService;
+import com.cloudx.common.base.ResponseMap;
 import com.cloudx.common.constant.Oauth2Constant;
 import com.cloudx.common.constant.ParamsConstant;
+import com.cloudx.common.util.HttpUtil;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import javax.annotation.Nonnull;
@@ -11,9 +16,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpMethod;
+import org.springframework.http.MediaType;
 import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 import org.springframework.security.web.util.matcher.RequestMatcher;
 import org.springframework.stereotype.Component;
@@ -21,14 +26,17 @@ import org.springframework.util.Base64Utils;
 import org.springframework.web.filter.OncePerRequestFilter;
 
 /**
- * 验证码过滤器
+ * OAUTH2 密码模式过滤器
  *
  * @author chachae
+ * @since 2020/04/26 13:20
  */
 @Slf4j
 @Component
 @RequiredArgsConstructor
-public class CaptchaFilter extends OncePerRequestFilter {
+public class PswGrantFilter extends OncePerRequestFilter {
+
+  private final ICaptchaService captchaService;
 
   @Override
   protected void doFilterInternal(@Nonnull HttpServletRequest httpServletRequest,
@@ -41,15 +49,29 @@ public class CaptchaFilter extends OncePerRequestFilter {
     RequestMatcher matcher = new AntPathRequestMatcher(Oauth2Constant.Endpoint.OAUTH_TOKEN,
         HttpMethod.POST.toString());
     if (matcher.matches(httpServletRequest)
-        && StringUtils
-        .equalsIgnoreCase(httpServletRequest.getParameter(ParamsConstant.GRANT_TYPE),
-            Oauth2Constant.GrantType.PASSWORD)
-        && !StringUtils.equalsAnyIgnoreCase(clientId, "swagger")) {
-      // todo 验证码校验
-      filterChain.doFilter(httpServletRequest, httpServletResponse);
+        // 密码模式
+        && StrUtil.equalsIgnoreCase(httpServletRequest.getParameter(ParamsConstant.GRANT_TYPE),
+        Oauth2Constant.GrantType.PASSWORD)
+        && !StrUtil.equalsAnyIgnoreCase(clientId, "swagger")) {
+      try {
+        // 验证码校验
+        validateCaptcha(httpServletRequest);
+        filterChain.doFilter(httpServletRequest, httpServletResponse);
+      } catch (CaptchaException e) {
+        HttpUtil.makeResponse(httpServletResponse, MediaType.APPLICATION_JSON_VALUE,
+            HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
+            new ResponseMap().message(e.getMessage()));
+        log.error(e.getMessage(), e);
+      }
     } else {
       filterChain.doFilter(httpServletRequest, httpServletResponse);
     }
+  }
+
+  private void validateCaptcha(HttpServletRequest request) throws CaptchaException {
+    String key = request.getParameter(ParamsConstant.CAPTCHA_KEY);
+    String code = request.getParameter(ParamsConstant.CAPTCHA_CODE);
+    captchaService.validateCode(key, code);
   }
 
   /**

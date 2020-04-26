@@ -1,8 +1,8 @@
 package com.cloudx.auth.translator;
 
+import cn.hutool.core.util.StrUtil;
 import com.cloudx.common.base.ResponseMap;
 import lombok.extern.slf4j.Slf4j;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.oauth2.common.exceptions.InvalidGrantException;
@@ -15,7 +15,8 @@ import org.springframework.stereotype.Component;
 /**
  * 异常翻译
  *
- * @author MrBird
+ * @author chachae
+ * @since 2020/04/15 01:28
  */
 @Slf4j
 @Component
@@ -32,7 +33,7 @@ public class CloudxWebResponseExceptionTranslator implements WebResponseExceptio
       return status.body(response.message(message));
     }
     if (e instanceof InvalidTokenException
-        && StringUtils.containsIgnoreCase(e.getMessage(), "Invalid refresh token (expired)")) {
+        && StrUtil.containsIgnoreCase(e.getMessage(), "Invalid refresh token (expired)")) {
       message = "刷新令牌已过期，请重新登录";
       return status.body(response.message(message));
     }
@@ -41,11 +42,11 @@ public class CloudxWebResponseExceptionTranslator implements WebResponseExceptio
       return status.body(response.message(message));
     }
     if (e instanceof InvalidGrantException) {
-      if (StringUtils.containsIgnoreCase(e.getMessage(), "Invalid refresh token")) {
+      if (StrUtil.containsIgnoreCase(e.getMessage(), "Invalid refresh token")) {
         message = "refresh token无效";
         return status.body(response.message(message));
       }
-      if (StringUtils.containsIgnoreCase(e.getMessage(), "locked")) {
+      if (StrUtil.containsIgnoreCase(e.getMessage(), "locked")) {
         message = "用户已被锁定，请联系管理员";
         return status.body(response.message(message));
       }

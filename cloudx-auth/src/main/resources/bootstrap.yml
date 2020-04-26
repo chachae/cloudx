@@ -1,73 +1,17 @@
-server:
-  port: 9200
-  servlet:
-    context-path: /auth
-
 spring:
   application:
     name: cloudx-auth
-
   profiles:
     active: dev
 
-  main:
-    allow-bean-definition-overriding: true
-
-  datasource:
-    hikari:
-      connection-timeout: 30000
-      max-lifetime: 1800000
-      connection-test-query: select 1
-      pool-name: CloudxHikariCP
-      maximum-pool-size: 15
-      minimum-idle: 5
-    username: root
-    password: 123456
-    url: jdbc:mysql:///rbac-common?serverTimezone=Asia/Shanghai&characterEncoding=utf8&useSSL=false
-    driver-class-name: com.mysql.cj.jdbc.Driver
-
-  redis:
-    database: 0
-    host: localhost
-    port: 6379
-    lettuce:
-      pool:
-        min-idle: 8
-        max-idle: 500
-        max-active: 2000
-        max-wait: 10000
-    timeout: 5000
-
-  jackson:
-    date-format: yyyy-MM-dd HH:mm:ss
-    time-zone: GMT+8
-
   cloud:
     nacos:
-      server-addr: 39.108.122.108:8848
-#      config:
-#        server-addr: ${spring.cloud.nacos.server-addr}
-#        group: DEFAULT_GROUP
-#        prefix: ${spring.application.name}
-#        file-extension: yaml
-
-mybatis-plus:
-  global-config:
-    banner: false
-    db-config:
-      id-type: auto
-  configuration:
-    map-underscore-to-camel-case: true
-    jdbc-type-for-null: null
-
-management:
-  endpoints:
-    web:
-      exposure:
-        include: '*'
-  endpoint:
-    health:
-      show-details: ALWAYS
+      server-addr: nacos.chachae.cn:8848
+      config:
+        server-addr: ${spring.cloud.nacos.server-addr}
+        group: DEV_GROUP
+        prefix: ${spring.application.name}
+        file-extension: yaml
 
 logging:
   level:

@@ -1,6 +1,6 @@
 package com.cloudx.auth.config;
 
-import com.cloudx.auth.filter.CaptchaFilter;
+import com.cloudx.auth.filter.PswGrantFilter;
 import com.cloudx.common.constant.Oauth2Constant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -25,7 +25,7 @@ import org.springframework.security.web.authentication.UsernamePasswordAuthentic
 @RequiredArgsConstructor
 public class CloudxSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final CaptchaFilter captchaFilter;
+  private final PswGrantFilter captchaFilter;
   private final UserDetailsService userDetailService;
   private final PasswordEncoder passwordEncoder;
 
@@ -44,7 +44,7 @@ public class CloudxSecurityConfig extends WebSecurityConfigurerAdapter {
         .antMatchers(Oauth2Constant.Endpoint.OAUTH_ALL)
         .and()
         .authorizeRequests()
-        // oAuth 对外暴露接口全部需要认证
+        // OAUTH 对外暴露接口全部需要认证
         .antMatchers(Oauth2Constant.Endpoint.OAUTH_ALL).authenticated()
         .and()
         .csrf().disable();

@@ -1,11 +1,11 @@
 package com.cloudx.common.util;
 
+import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import java.io.IOException;
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
@@ -97,7 +97,7 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
   public static String getHttpServletRequestIpAddress() {
     HttpServletRequest request = getHttpServletRequest();
     String ip = request.getHeader("x-forwarded-for");
-    if (StringUtils.isBlank(ip) || UNKNOW.equalsIgnoreCase(ip)) {
+    if (StrUtil.isBlank(ip) || UNKNOW.equalsIgnoreCase(ip)) {
       ip = request.getHeader("Proxy-Client-IP");
     }
     if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
