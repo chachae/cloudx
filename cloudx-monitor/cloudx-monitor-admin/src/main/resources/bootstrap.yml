@@ -6,8 +6,8 @@ spring:
 
   cloud:
     nacos:
-      server-addr: @nacos.ip@
       config:
+        server-addr: @nacos.ip@
         group: @nacos.group@
         prefix: @project.name@
         file-extension: yaml
@@ -20,9 +20,3 @@ logging:
           nacos:
             client:
               NacosPropertySourceBuilder: error
-
-info:
-  name: @project.name@
-  description: @project.description@
-  version: @project.version@
-  spring-boot-version: @spring-boot.version@

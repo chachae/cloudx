@@ -9,13 +9,14 @@
   </parent>
 
   <modelVersion>4.0.0</modelVersion>
+
   <artifactId>cloudx-common</artifactId>
-  <name>cloudx-common</name>
+  <name>${artifactId}</name>
   <description>cloudx 通用模块</description>
 
   <properties>
     <mybatis-spring-boot.version>3.3.1</mybatis-spring-boot.version>
-    <hutool-all.version>5.3.2</hutool-all.version>
+    <hutool.version>5.3.2</hutool.version>
     <guava.version>29.0-jre</guava.version>
   </properties>
 
@@ -44,16 +45,34 @@
     <dependency>
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-alibaba-nacos-config</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <!-- nacos-discovery -->
     <dependency>
       <groupId>com.alibaba.cloud</groupId>
       <artifactId>spring-cloud-alibaba-nacos-discovery</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <!-- open-feign -->
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-openfeign</artifactId>
+      <exclusions>
+        <exclusion>
+          <groupId>com.google.guava</groupId>
+          <artifactId>guava</artifactId>
+        </exclusion>
+      </exclusions>
     </dependency>
     <!-- configuration-processor -->
     <dependency>
@@ -71,17 +90,17 @@
       <groupId>org.apache.commons</groupId>
       <artifactId>commons-pool2</artifactId>
     </dependency>
-    <!-- guava -->
-    <dependency>
-      <groupId>com.google.guava</groupId>
-      <artifactId>guava</artifactId>
-      <version>${guava.version}</version>
-    </dependency>
     <!-- mysql -->
     <dependency>
       <groupId>mysql</groupId>
       <artifactId>mysql-connector-java</artifactId>
       <scope>runtime</scope>
+    </dependency>
+    <!-- spring-boot-admin -->
+    <dependency>
+      <groupId>de.codecentric</groupId>
+      <artifactId>spring-boot-admin-starter-client</artifactId>
+      <version>${spring-admin.version}</version>
     </dependency>
     <!-- mybatis -->
     <dependency>
@@ -94,11 +113,17 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
     </dependency>
+    <!-- guava -->
+    <dependency>
+      <groupId>com.google.guava</groupId>
+      <artifactId>guava</artifactId>
+      <version>${guava.version}</version>
+    </dependency>
     <!-- HuTool-http -->
     <dependency>
       <groupId>cn.hutool</groupId>
       <artifactId>hutool-http</artifactId>
-      <version>${hutool-all.version}</version>
+      <version>${hutool.version}</version>
     </dependency>
   </dependencies>
 </project>

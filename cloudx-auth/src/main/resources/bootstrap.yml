@@ -1,17 +1,21 @@
 spring:
   application:
-    name: cloudx-auth
+    name: @project.name@
   profiles:
-    active: dev
+    active: @profile.active@
+  main:
+    allow-bean-definition-overriding: true
 
   cloud:
     nacos:
-      server-addr: nacos.chachae.cn:8848
+      server-addr: @nacos.ip@
       config:
-        server-addr: ${spring.cloud.nacos.server-addr}
-        group: DEV_GROUP
-        prefix: ${spring.application.name}
+        group: @nacos.group@
+        prefix: @project.name@
         file-extension: yaml
+      discovery:
+        metadata:
+          management.context-path: ${server.servlet.context-path:}${spring.mvc.servlet.path:}${management.endpoints.web.base-path:}
 
 logging:
   level:
@@ -21,3 +25,9 @@ logging:
           nacos:
             client:
               NacosPropertySourceBuilder: error
+
+info:
+  name: @project.name@
+  description: @project.description@
+  version: @project.version@
+  spring-boot-version: @spring-boot.version@
