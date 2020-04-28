@@ -15,10 +15,10 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
 @EnableWebSecurity
 public class CloudxSecurityConfig extends WebSecurityConfigurerAdapter {
 
-  private final String adminContextPath;
+  private final String ctx;
 
   public CloudxSecurityConfig(AdminServerProperties adminServerProperties) {
-    this.adminContextPath = adminServerProperties.getContextPath();
+    this.ctx = adminServerProperties.getContextPath();
   }
 
   @Override
@@ -29,12 +29,12 @@ public class CloudxSecurityConfig extends WebSecurityConfigurerAdapter {
     http.headers().frameOptions().disable()
         .and()
         .authorizeRequests()
-        .antMatchers(adminContextPath + "/assets/**").permitAll()
-        .antMatchers(adminContextPath + "/login").permitAll()
+        .antMatchers(ctx + "/assets/**").permitAll()
+        .antMatchers(ctx + "/login").permitAll()
         .anyRequest().authenticated()
         .and()
-        .formLogin().loginPage(adminContextPath + "/login").successHandler(successHandler).and()
-        .logout().logoutUrl(adminContextPath + "/logout").and()
+        .formLogin().loginPage(ctx + "/login").successHandler(successHandler).and()
+        .logout().logoutUrl(ctx + "/logout").and()
         .httpBasic().and()
         .csrf().disable();
   }

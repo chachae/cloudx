@@ -36,7 +36,7 @@ public class TokenConfig {
   private final RedisClientDetailsService redisClientDetailsService;
 
   /**
-   * Token 存储
+   * Token 存储策略 JWT / Redis
    *
    * @return /
    */
@@ -61,8 +61,11 @@ public class TokenConfig {
   @Primary
   public DefaultTokenServices defaultTokenServices() {
     DefaultTokenServices tokenServices = new DefaultTokenServices();
+    // token 存储策略
     tokenServices.setTokenStore(tokenStore());
+    // token 刷新
     tokenServices.setSupportRefreshToken(true);
+    // 客户端信息服务
     tokenServices.setClientDetailsService(redisClientDetailsService);
     return tokenServices;
   }

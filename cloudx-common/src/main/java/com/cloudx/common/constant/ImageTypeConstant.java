@@ -4,6 +4,7 @@ package com.cloudx.common.constant;
  * 图片类型常量类
  *
  * @author chachae
+ * @since 2020/03/29 10:49
  */
 public class ImageTypeConstant {
 

@@ -16,7 +16,7 @@
   </modules>
 
   <name>${project.artifactId}</name>
-  <description>cloud 种子项目父工程</description>
+  <description>cloudx 种子项目父工程</description>
 
   <properties>
     <java.version>1.8</java.version>

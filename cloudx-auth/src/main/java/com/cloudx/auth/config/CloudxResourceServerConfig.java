@@ -2,7 +2,7 @@ package com.cloudx.auth.config;
 
 import cn.hutool.core.util.StrUtil;
 import com.cloudx.auth.properties.AuthProperties;
-import com.cloudx.common.constant.Oauth2Constant;
+import com.cloudx.common.constant.EndpointConstant;
 import com.cloudx.common.handler.CloudxAccessDeniedHandler;
 import com.cloudx.common.handler.CloudxAuthExceptionEntryPoint;
 import lombok.RequiredArgsConstructor;
@@ -32,13 +32,13 @@ public class CloudxResourceServerConfig extends ResourceServerConfigurerAdapter 
     // 匿名路径白名单
     String[] anonUrls = StrUtil.splitToArray(properties.getAnonUrl(), ',');
     http.csrf().disable()
-        .requestMatchers().antMatchers(Oauth2Constant.Endpoint.ALL)
+        .requestMatchers().antMatchers(EndpointConstant.ALL)
         .and()
         .authorizeRequests()
         // 匿名访问路径放行
         .antMatchers(anonUrls).permitAll()
         // 全部需要经过认证
-        .antMatchers(Oauth2Constant.Endpoint.ALL).authenticated()
+        .antMatchers(EndpointConstant.ALL).authenticated()
         .and().httpBasic();
   }
 

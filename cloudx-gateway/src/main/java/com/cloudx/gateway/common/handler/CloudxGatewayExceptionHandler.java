@@ -20,6 +20,8 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import org.springframework.web.server.ResponseStatusException;
 
 /**
+ * 网关异常处理
+ *
  * @author chachae
  * @since 2020/04/26 14:15
  */

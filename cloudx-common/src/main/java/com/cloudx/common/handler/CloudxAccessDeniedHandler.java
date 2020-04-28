@@ -10,10 +10,13 @@ import org.springframework.security.access.AccessDeniedException;
 import org.springframework.security.web.access.AccessDeniedHandler;
 
 /**
- * 资源无权响应
+ * 认证过的用户访问无权限资源时的异常
+ * <p>
+ * {@link AccessDeniedHandler }
  *
  * @author chachae
- * @since 2020/4/19 10:02
+ * @see <a href="https://blog.csdn.net/jkjkjkll/article/details/79975975"></a>
+ * @since 2020/4/23 07:08
  */
 public class CloudxAccessDeniedHandler implements AccessDeniedHandler {
 

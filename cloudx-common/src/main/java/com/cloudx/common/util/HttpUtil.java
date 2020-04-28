@@ -25,7 +25,7 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
   private HttpUtil() {
   }
 
-  private static final String UNKNOW = "unknown";
+  private static final String UNKNOWN = "unknown";
 
   /**
    * 设置响应
@@ -72,7 +72,7 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
   }
 
   /**
-   * 获取请求头数据
+   * 获取请求头值
    *
    * @return String
    */
@@ -97,13 +97,13 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
   public static String getHttpServletRequestIpAddress() {
     HttpServletRequest request = getHttpServletRequest();
     String ip = request.getHeader("x-forwarded-for");
-    if (StrUtil.isBlank(ip) || UNKNOW.equalsIgnoreCase(ip)) {
+    if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {
       ip = request.getHeader("Proxy-Client-IP");
     }
-    if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
+    if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
       ip = request.getHeader("WL-Proxy-Client-IP");
     }
-    if (ip == null || ip.length() == 0 || UNKNOW.equalsIgnoreCase(ip)) {
+    if (ip == null || ip.length() == 0 || UNKNOWN.equalsIgnoreCase(ip)) {
       ip = request.getRemoteAddr();
     }
     return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;

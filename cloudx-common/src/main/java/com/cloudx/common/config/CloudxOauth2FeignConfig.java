@@ -1,7 +1,7 @@
 package com.cloudx.common.config;
 
+import com.cloudx.common.constant.GatewayConstant;
 import com.cloudx.common.constant.SystemConstant;
-import com.cloudx.common.constant.SystemConstant.GatewayConstant;
 import com.cloudx.common.util.SecurityUtil;
 import com.google.common.net.HttpHeaders;
 import feign.RequestInterceptor;
@@ -26,7 +26,8 @@ public class CloudxOauth2FeignConfig {
       // 请求头中添加原请求头中的 Token
       String authorizationToken = SecurityUtil.getCurrentTokenValue();
       requestTemplate
-          .header(HttpHeaders.AUTHORIZATION, SystemConstant.OAUTH2_TOKEN_TYPE + authorizationToken);
+          .header(HttpHeaders.AUTHORIZATION,
+              SystemConstant.OAUTH2_TOKEN_TYPE + ' ' + authorizationToken);
     };
   }
 }

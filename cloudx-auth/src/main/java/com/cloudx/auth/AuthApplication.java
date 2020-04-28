@@ -17,10 +17,10 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
  */
 
 @EnableDiscoveryClient
-@EnableCloudxLettuceRedis
-@EnableCloudxAuthExceptionHandler
-@EnableCloudxServerProtect
 @SpringBootApplication
+@EnableCloudxLettuceRedis
+@EnableCloudxServerProtect
+@EnableCloudxAuthExceptionHandler
 @MapperScan("com.cloudx.auth.dao")
 @EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AuthApplication {

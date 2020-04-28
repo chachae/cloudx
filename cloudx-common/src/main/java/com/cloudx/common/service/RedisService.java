@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.redis.core.RedisTemplate;
 
 /**
- * redis
+ * Redis 业务接口
  *
  * @author chachae
  * @since 2020/4/13 20:40

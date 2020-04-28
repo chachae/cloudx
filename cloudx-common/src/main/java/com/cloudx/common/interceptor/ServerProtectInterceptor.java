@@ -1,8 +1,7 @@
 package com.cloudx.common.interceptor;
 
-import cn.hutool.core.util.StrUtil;
 import com.cloudx.common.base.ResponseMap;
-import com.cloudx.common.constant.SystemConstant.GatewayConstant;
+import com.cloudx.common.constant.GatewayConstant;
 import com.cloudx.common.util.HttpUtil;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
@@ -14,27 +13,35 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
  * 微服务请求拦截器
+ * <p>
+ * 详见 Gateway 网关中 GlobalFilter 对通过网关转发请求的请求头处理
  *
  * @author chachae
- * @since 2020/4/16
+ * @since 2020/4/16 21:33
  */
 public class ServerProtectInterceptor implements HandlerInterceptor {
 
+  /**
+   * Gateway Token 拦截处理方法
+   *
+   * @param request  /
+   * @param response /
+   * @param handler  /
+   * @return /
+   * @throws IOException /
+   */
   @Override
   public boolean preHandle(HttpServletRequest request, @NonNull HttpServletResponse response,
       @NonNull Object handler)
       throws IOException {
-    // 从请求头中获取 Gateway token
     String token = request.getHeader(GatewayConstant.TOKEN_HEADER);
-    // Base64 编码正确的网关 token
     String rightToken = new String(Base64Utils.encode(GatewayConstant.TOKEN_VALUE.getBytes()));
-    // 校验 Gateway Token 的正确性
-    if (StrUtil.equals(rightToken, token)) {
-      return true;
-    } else {
-      HttpUtil.makeResponse(response, MediaType.APPLICATION_JSON_VALUE,
-          HttpServletResponse.SC_FORBIDDEN, new ResponseMap().message("请通过网关获取资源"));
-      return false;
-    }
+    return rightToken.equals(token) || banRequest(response);
+  }
+
+  private boolean banRequest(HttpServletResponse response) throws IOException {
+    HttpUtil.makeResponse(response, MediaType.APPLICATION_JSON_VALUE,
+        HttpServletResponse.SC_FORBIDDEN, new ResponseMap().message("请通过网关获取资源"));
+    return false;
   }
 }

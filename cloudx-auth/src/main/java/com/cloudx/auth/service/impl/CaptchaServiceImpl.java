@@ -57,14 +57,14 @@ public class CaptchaServiceImpl implements ICaptchaService {
       throw new CaptchaException("请输入验证码");
     } else if (rightCaptchaText == null) {
       throw new CaptchaException("验证码已过期");
-    } else if (!StrUtil.equalsIgnoreCase(value, String.valueOf(rightCaptchaText))) {
+    } else if (!value.equalsIgnoreCase(String.valueOf(rightCaptchaText))) {
       throw new CaptchaException("验证码不正确");
     }
   }
 
   private Captcha createCaptcha(CaptchaProperties code) {
     Captcha captcha;
-    if (StrUtil.equalsIgnoreCase(code.getType(), ImageTypeConstant.GIF)) {
+    if (code.getType().equalsIgnoreCase(ImageTypeConstant.GIF)) {
       captcha = new GifCaptcha(code.getWidth(), code.getHeight(), code.getLength());
     } else {
       captcha = new SpecCaptcha(code.getWidth(), code.getHeight(), code.getLength());
@@ -74,7 +74,7 @@ public class CaptchaServiceImpl implements ICaptchaService {
   }
 
   private void setHeader(HttpServletResponse response, String type) {
-    if (StrUtil.equalsIgnoreCase(type, ImageTypeConstant.GIF)) {
+    if (type.equalsIgnoreCase(ImageTypeConstant.GIF)) {
       response.setContentType(MediaType.IMAGE_GIF_VALUE);
     } else {
       response.setContentType(MediaType.IMAGE_PNG_VALUE);

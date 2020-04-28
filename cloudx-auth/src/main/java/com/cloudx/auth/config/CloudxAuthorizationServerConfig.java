@@ -18,7 +18,7 @@ import org.springframework.security.oauth2.provider.token.TokenStore;
 import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenConverter;
 
 /**
- * oAuth2.0 认证服务器配置
+ * OAUTH 2 认证服务器配置
  *
  * @author chachae
  * @since 2020/04/25
@@ -56,13 +56,17 @@ public class CloudxAuthorizationServerConfig extends AuthorizationServerConfigur
   @SuppressWarnings("unchecked")
   public void configure(AuthorizationServerEndpointsConfigurer endpoints) {
     endpoints
+        // token 存储方式
         .tokenStore(tokenStore)
+        // 用户信息
         .userDetailsService(userDetailService)
+        // 认证信息管理器
         .authenticationManager(authenticationManager)
-        // oAuth2 认证授权异常翻译
+        // OAUTH2 认证授权异常翻译
         .exceptionTranslator(exceptionTranslator)
         // 支持的请求方式
         .allowedTokenEndpointRequestMethods(HttpMethod.POST);
+    // 判断是否使用 JWT Token
     if (properties.getEnableJwt()) {
       endpoints.accessTokenConverter(jwtAccessTokenConverter);
     }

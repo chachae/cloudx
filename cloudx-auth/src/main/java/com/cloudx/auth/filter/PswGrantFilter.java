@@ -4,7 +4,8 @@ import cn.hutool.core.util.StrUtil;
 import com.cloudx.auth.exception.CaptchaException;
 import com.cloudx.auth.service.ICaptchaService;
 import com.cloudx.common.base.ResponseMap;
-import com.cloudx.common.constant.Oauth2Constant;
+import com.cloudx.common.constant.EndpointConstant;
+import com.cloudx.common.constant.GrantTypeConstant;
 import com.cloudx.common.constant.ParamsConstant;
 import com.cloudx.common.util.HttpUtil;
 import java.io.IOException;
@@ -46,13 +47,12 @@ public class PswGrantFilter extends OncePerRequestFilter {
     String header = httpServletRequest.getHeader(HttpHeaders.AUTHORIZATION);
     // 获取客户端 ID
     String clientId = getClientId(header);
-    RequestMatcher matcher = new AntPathRequestMatcher(Oauth2Constant.Endpoint.OAUTH_TOKEN,
+    RequestMatcher matcher = new AntPathRequestMatcher(EndpointConstant.OAUTH_TOKEN,
         HttpMethod.POST.toString());
     if (matcher.matches(httpServletRequest)
         // 密码模式
         && StrUtil.equalsIgnoreCase(httpServletRequest.getParameter(ParamsConstant.GRANT_TYPE),
-        Oauth2Constant.GrantType.PASSWORD)
-        && !StrUtil.equalsAnyIgnoreCase(clientId, "swagger")) {
+        GrantTypeConstant.PASSWORD) && !StrUtil.equalsAnyIgnoreCase(clientId, "swagger")) {
       try {
         // 验证码校验
         validateCaptcha(httpServletRequest);

@@ -12,9 +12,12 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 /**
- * 令牌认证异常响应
+ * 自定义匿名用户访问无权限访问资源异常
+ * <p>
+ * {@link AuthenticationEntryPoint }
  *
  * @author chachae
+ * @see <a href="https://blog.csdn.net/jkjkjkll/article/details/79975975"></a>
  * @since 2020/4/24 07:28
  */
 @Slf4j

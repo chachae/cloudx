@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Mono;
 
 /**
- * 统一的网关回滚
+ * 统一的网关异常回滚控制层
  *
  * @author chachae
  * @since 2020/26 22:27
@@ -19,7 +19,7 @@ public class FallbackController {
 
   @RequestMapping("fallback/{name}")
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public Mono<Result<Object>> systemFallback(@PathVariable String name) {
+  public Mono<Result<Object>> systemFallback(@PathVariable("name") String name) {
     String response = String.format("访问%s超时或者服务不可用", name);
     return Mono.just(Result.fail(response));
   }

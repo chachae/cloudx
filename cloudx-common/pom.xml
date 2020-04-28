@@ -11,7 +11,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>cloudx-common</artifactId>
-  <name>${artifactId}</name>
+  <name>${project.artifactId}</name>
   <description>cloudx 通用模块</description>
 
   <properties>
@@ -21,7 +21,7 @@
   </properties>
 
   <dependencies>
-    <!-- oauth2.0 -->
+    <!-- OAUTH 2 -->
     <dependency>
       <groupId>org.springframework.cloud</groupId>
       <artifactId>spring-cloud-starter-oauth2</artifactId>

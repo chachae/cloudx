@@ -14,7 +14,7 @@ import org.springframework.security.oauth2.provider.client.JdbcClientDetailsServ
 import org.springframework.stereotype.Service;
 
 /**
- * Redis 下的 oauth2.0 客户端信息服务
+ * OAUTH 2 客户端信息 Redis 缓存服务
  *
  * @author chachae
  * @since 2020/04/25 17:11
@@ -47,7 +47,7 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
    *
    * @param clientId clientId
    */
-  public ClientDetails cacheAndGetClient(String clientId) {
+  private ClientDetails cacheAndGetClient(String clientId) {
     ClientDetails clientDetails;
     // 父级通过 JDBC 获取客户端信息，将数据缓存到 Redis
     clientDetails = super.loadClientByClientId(clientId);

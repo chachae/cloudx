@@ -1,7 +1,7 @@
 package com.cloudx.auth.config;
 
 import com.cloudx.auth.filter.PswGrantFilter;
-import com.cloudx.common.constant.Oauth2Constant;
+import com.cloudx.common.constant.EndpointConstant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;
@@ -36,22 +36,22 @@ public class CloudxSecurityConfig extends WebSecurityConfigurerAdapter {
   }
 
   @Override
+  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+    auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder);
+  }
+
+  @Override
   protected void configure(HttpSecurity http) throws Exception {
     http
         //访问资源之前过滤密码模式的认证授权
         .addFilterBefore(captchaFilter, UsernamePasswordAuthenticationFilter.class)
         .requestMatchers()
-        .antMatchers(Oauth2Constant.Endpoint.OAUTH_ALL)
+        .antMatchers(EndpointConstant.OAUTH_ALL)
         .and()
         .authorizeRequests()
         // OAUTH 对外暴露接口全部需要认证
-        .antMatchers(Oauth2Constant.Endpoint.OAUTH_ALL).authenticated()
+        .antMatchers(EndpointConstant.OAUTH_ALL).authenticated()
         .and()
         .csrf().disable();
-  }
-
-  @Override
-  protected void configure(AuthenticationManagerBuilder auth) throws Exception {
-    auth.userDetailsService(userDetailService).passwordEncoder(passwordEncoder);
   }
 }

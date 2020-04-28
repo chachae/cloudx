@@ -1,0 +1,52 @@
+server:
+  port: 80
+
+spring:
+  boot:
+    admin:
+      client:
+        url: http://localhost:8401
+        username: cloudx
+        password: 123456
+        instance:
+          prefer-ip: true
+
+  cloud:
+    gateway:
+      globalcors:
+        corsConfigurations:
+          '[/**]':
+            allowedOrigins: "*"
+            allowedMethods: "*"
+            allowedHeaders: "*"
+            allowCredentials: true
+      routes:
+        - id: cloudx-auth
+          uri: lb://cloudx-auth
+          predicates:
+            - Path=/auth/**
+      #          filters:
+      #            - name: Hystrix
+      #              args:
+      #                name: authfallback
+      #                fallbackUri: forward:/fallback/cloudx-auth
+      loadbalancer:
+        use404: true
+      default-filters:
+        - StripPrefix=1
+
+  autoconfigure:
+    exclude: org.springframework.boot.autoconfigure.data.redis.RedisAutoConfiguration
+
+ribbon:
+  eager-load:
+    enabled: true
+
+management:
+  endpoint:
+    health:
+      show-details: ALWAYS
+  endpoints:
+    web:
+      exposure:
+        include: health,info,gateway
