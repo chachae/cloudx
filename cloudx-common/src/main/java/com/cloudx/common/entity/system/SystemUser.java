@@ -10,86 +10,25 @@ import lombok.Data;
  * 用户表实体类
  *
  * @author chachae
- * @since 2020-04-24 22:49:53
+ * @since 2020-04-29 21:25:49
  */
 @Data
-@TableName("user")
+@TableName("t_user")
 public class SystemUser implements Serializable {
 
-  private static final long serialVersionUID = -4352930128794165121L;
-
-  /**
-   * 自增ID
-   */
+  private static final long serialVersionUID = 5970249403350193074L;
   @TableId
-  private Long id;
-  /**
-   * 用户数据ID
-   */
-  private String userInfoId;
-  /**
-   * 账号
-   */
+  private Long userId;
   private String userName;
-  /**
-   * 真实姓名
-   */
-  private String fullName;
-  /**
-   * 密码
-   */
   private String password;
-  /**
-   * 性别
-   */
-  private String sex;
-  /**
-   * 头像地址
-   */
-  private String avatar;
-  /**
-   * 邮箱地址
-   */
+  private Long deptId;
   private String email;
-  /**
-   * 移动电话
-   */
   private String mobile;
-  /**
-   * qq号码
-   */
-  private String qqNumber;
-  /**
-   * 个人介绍
-   */
-  private String profile;
-  /**
-   * 生日
-   */
-  private Date birthday;
-  /**
-   * 博客地址
-   */
-  private String blogAddress;
-  /**
-   * 创建时间
-   */
+  private Boolean status;
   private Date createTime;
-  /**
-   * 更新时间
-   */
   private Date updateTime;
-  /**
-   * 上次登录时间
-   */
   private Date lastLoginTime;
-  /**
-   * 上次登录ip
-   */
-  private String lastLoginIp;
-  /**
-   * 部门id
-   */
-  private Integer deptId;
-
+  private Integer gender;
+  private String avatar;
+  private String description;
 }

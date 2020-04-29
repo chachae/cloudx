@@ -18,7 +18,7 @@ import org.springframework.security.core.GrantedAuthority;
 @AllArgsConstructor
 public class CurrentUser implements Serializable {
 
-  private static long serialVersionUID = 761748087824726463L;
+  private static long serialVersionUID = 764748087824726463L;
 
   @JsonIgnore
   private String password;
@@ -28,20 +28,16 @@ public class CurrentUser implements Serializable {
   private boolean accountNonLocked;
   private boolean credentialsNonExpired;
   private boolean enabled;
-  private String userInfoId;
+  private Long userId;
   private String userName;
-  private String fullName;
-  private String sex;
-  private String avatar;
+  private Long deptId;
   private String email;
   private String mobile;
-  private String qqNumber;
-  private String profile;
-  private Date birthday;
-  private String blogAddress;
+  private Object status;
   private Date createTime;
   private Date updateTime;
   private Date lastLoginTime;
-  private String lastLoginIp;
-  private Integer deptId;
+  private Integer gender;
+  private String avatar;
+  private String description;
 }

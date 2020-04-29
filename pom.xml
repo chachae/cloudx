@@ -13,6 +13,7 @@
     <module>cloudx-auth</module>
     <module>cloudx-gateway</module>
     <module>cloudx-monitor</module>
+    <module>cloudx-server</module>
   </modules>
 
   <name>${project.artifactId}</name>

@@ -25,12 +25,13 @@ public class TestController {
 
   @GetMapping("/authInfo")
   public Object getAuthInfo() {
-
+    log.info("token: {}", SecurityUtil.getCurrentTokenValue());
+    log.info("user: {}", SecurityUtil.getCurrentUser());
+    log.info("permission: {}", SecurityUtil.getCurrentUserAuthority());
     return SecurityUtil.getCurrentUser();
   }
 
   @GetMapping("/captcha")
-  @PreAuthorize("hasAuthority('employee:list')")
   public void getCaptcha(HttpServletResponse response)
       throws IOException, CacheException {
     captchaService.create(response);

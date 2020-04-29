@@ -54,7 +54,7 @@
 
   <build>
     <filters>
-      <filter>../../src/main/filters/config-${profile.active}.properties</filter>
+      <filter>../../config/system/config-${profile.active}.properties</filter>
     </filters>
 
     <plugins>

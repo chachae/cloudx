@@ -20,22 +20,19 @@ import org.springframework.security.core.userdetails.User;
 public class AuthUser extends User {
 
   private static final long serialVersionUID = 5970249403350193074L;
-  private String userInfoId;
+  private Long userId;
   private String userName;
-  private String fullName;
-  private String sex;
-  private String avatar;
+  private String password;
+  private Long deptId;
   private String email;
   private String mobile;
-  private String qqNumber;
-  private String profile;
-  private Date birthday;
-  private String blogAddress;
+  private Object status;
   private Date createTime;
   private Date updateTime;
   private Date lastLoginTime;
-  private String lastLoginIp;
-  private Integer deptId;
+  private Integer gender;
+  private String avatar;
+  private String description;
 
   public AuthUser(String username, String password,
       Collection<? extends GrantedAuthority> authorities) {
