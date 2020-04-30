@@ -1,9 +1,8 @@
-package com.cloudx.gateway.common.runner;
+package com.cloudx.monitor.admin.init;
 
-import com.cloudx.common.constant.ServerConstant;
 import java.time.LocalDateTime;
-import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
@@ -12,16 +11,21 @@ import org.springframework.stereotype.Component;
 
 /**
  * @author chachae
+ * @since 2020/04/25
  */
-@Slf4j
 @Component
-@RequiredArgsConstructor
 public class StartedUpRunner implements ApplicationRunner {
+
+  private final Logger log = LoggerFactory.getLogger(this.getClass());
 
   private final ConfigurableApplicationContext context;
 
-  @Value("${spring.application.name:'" + ServerConstant.CLOUDX_GATEWAY + "'}")
+  @Value("${spring.application.name:'cloudx-monitor-admin'}")
   private String applicationName;
+
+  public StartedUpRunner(ConfigurableApplicationContext context) {
+    this.context = context;
+  }
 
   @Override
   public void run(ApplicationArguments args) {

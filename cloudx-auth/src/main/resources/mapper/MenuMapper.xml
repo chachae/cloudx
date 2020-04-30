@@ -3,7 +3,7 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cloudx.auth.mapper.MenuMapper">
 
-  <select id="selectMenusByUserId" resultType="com.cloudx.common.entity.system.Menu">
+  <sql id="baseSql">
     select tm.menu_id,
            tm.parent_id,
            tm.menu_name,
@@ -15,11 +15,15 @@
            tm.create_time,
            tm.update_time
     from t_menu tm
-           left join t_role_menu trm on tm.menu_id = trm.menu_id
-           left join t_user_role tur on trm.role_id = tur.role_id
-           left join t_user tu on tur.user_id = tu.user_id
+  </sql>
+
+  <select id="selectMenusByUserId" resultType="com.cloudx.common.entity.system.Menu">
+    <include refid="baseSql"/>
+    left join t_role_menu trm on tm.menu_id = trm.menu_id
+    left join t_user_role tur on trm.role_id = tur.role_id
+    left join t_user tu on tur.user_id = tu.user_id
     where tu.user_id = #{userId,jdbcType=BIGINT}
-      and tm.expression is not null
-      and tm.expression &lt;&gt; ''
+    and tm.expression is not null
+    and tm.expression &lt;&gt; ''
   </select>
 </mapper>

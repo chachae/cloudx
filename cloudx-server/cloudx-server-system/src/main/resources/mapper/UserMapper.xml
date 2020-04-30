@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cloudx.server.system.mapper.UserMapper">
+
+  <sql id="baseSql">
+    SELECT u.user_id,
+           u.user_name,
+           u.email,
+           u.mobile,
+           u.status,
+           u.create_time,
+           u.gender,
+           u.dept_id,
+           u.last_login_time,
+           u.update_time,
+           u.description,
+           u.avatar,
+           d.dept_name,
+           GROUP_CONCAT(r.role_id)   roleId,
+           GROUP_CONCAT(r.role_name) roleName
+    FROM t_user u
+           LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
+           LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id)
+           LEFT JOIN t_role r ON r.role_id = ur.role_id
+    WHERE 1 = 1
+  </sql>
+
+  <select id="pageSystemUserDetail" parameterType="com.cloudx.common.entity.dto.SystemUserDTO"
+    resultType="com.cloudx.common.entity.dto.SystemUserDTO">
+    <include refid="baseSql"/>
+    <if test="user.userName != null and user.userName != ''">
+      AND u.user_name like CONCAT('%',#{user.userName},'%')
+    </if>
+    <if test="user.deptId != null and user.deptId != ''">
+      AND d.dept_id = #{user.deptId}
+    </if>
+    <if test="user.gender != null">
+      AND u.gender = #{user.gender}
+    </if>
+    <if test="user.status != null">
+      AND u.status = #{user.status}
+    </if>
+    <if test="user.mobile != null and user.mobile != ''">
+      AND u.mobile = #{user.mobile}
+    </if>
+    <if test="user.deptName != null and user.deptName != ''">
+      AND d.dept_name like CONCAT('%',#{user.deptName},'%')
+    </if>
+    GROUP BY u.user_name,u.user_id,u.email,u.mobile,u.status,u.create_time,u.gender,
+    u.dept_id,u.last_login_time,u.update_time,u.description,u.avatar
+  </select>
+
+  <select id="selectSystemUserDetail" parameterType="SystemUserDTO" resultType="SystemUserDTO">
+    <include refid="baseSql"/>
+    <if test="user.userName != null and user.userName != ''">
+      AND u.user_name = #{user.userName}
+    </if>
+    <if test="user.deptId != null and user.deptId != ''">
+      AND d.dept_id = #{user.deptId}
+    </if>
+    <if test="user.gender != null">
+      AND u.gender = #{user.gender}
+    </if>
+    <if test="user.status != null">
+      AND u.status = #{user.status}
+    </if>
+    <if test="user.mobile != null and user.mobile != ''">
+      AND u.mobile = #{user.mobile}
+    </if>
+    <if test="user.deptName != null and user.deptName != ''">
+      AND d.dept_name like CONCAT('%',#{user.deptName},'%')
+    </if>
+    GROUP BY u.user_name,u.user_id,u.email,u.mobile,u.status,u.create_time,u.gender,
+    u.dept_id,u.last_login_time,u.update_time,u.description,u.avatar
+  </select>
+</mapper>

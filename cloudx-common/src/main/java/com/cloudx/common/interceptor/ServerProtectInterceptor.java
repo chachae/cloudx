@@ -13,6 +13,7 @@ import org.springframework.web.servlet.HandlerInterceptor;
 
 /**
  * 微服务请求拦截器
+ *
  * <p>
  * 详见 Gateway 网关中 GlobalFilter 对通过网关转发请求的请求头处理
  *
@@ -36,7 +37,7 @@ public class ServerProtectInterceptor implements HandlerInterceptor {
       throws IOException {
     String token = request.getHeader(GatewayConstant.TOKEN_HEADER);
     String rightToken = new String(Base64Utils.encode(GatewayConstant.TOKEN_VALUE.getBytes()));
-    return rightToken.equals(token) || banRequest(response);
+    return rightToken.equals(token.trim()) || banRequest(response);
   }
 
   private boolean banRequest(HttpServletResponse response) throws IOException {

@@ -1,4 +1,4 @@
-package com.cloudx.auth.runner;
+package com.cloudx.auth.init;
 
 import com.cloudx.common.constant.ServerConstant;
 import java.time.LocalDateTime;

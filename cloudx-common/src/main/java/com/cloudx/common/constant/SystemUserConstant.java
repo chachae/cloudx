@@ -1,4 +1,4 @@
-package com.cloudx.auth.constant;
+package com.cloudx.common.constant;
 
 /**
  * 系统用户默认数据常量

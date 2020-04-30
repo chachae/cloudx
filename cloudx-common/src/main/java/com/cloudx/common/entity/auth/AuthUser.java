@@ -2,8 +2,10 @@ package com.cloudx.common.entity.auth;
 
 import java.util.Collection;
 import java.util.Date;
-import lombok.Data;
 import lombok.EqualsAndHashCode;
+import lombok.Getter;
+import lombok.Setter;
+import lombok.ToString;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
@@ -15,7 +17,9 @@ import org.springframework.security.core.userdetails.User;
  * @author chachae
  * @since 2020/4/24 22:25
  */
-@Data
+@Getter
+@Setter
+@ToString
 @EqualsAndHashCode(callSuper = true)
 public class AuthUser extends User {
 

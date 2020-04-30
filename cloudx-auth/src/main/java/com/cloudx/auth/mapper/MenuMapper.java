@@ -10,7 +10,7 @@ import java.util.List;
 public interface MenuMapper {
 
   /**
-   * 通过用户ID获取菜单集合
+   * 通过用户ID获取用户的菜单集合
    *
    * @param userId 用户ID
    * @return 菜单集合

@@ -1,7 +1,9 @@
 package com.cloudx.common.util;
 
-import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.cloudx.common.constant.PageResultConstant;
+import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -19,10 +21,20 @@ public class PageUtil {
   /**
    * Page 数据处理，预防redis反序列化报错
    */
+  public static <T> Map<String, Object> toPage(IPage<T> page) {
+    Map<String, Object> map = new HashMap<>(2);
+    map.put(PageResultConstant.CONTENT, page.getRecords());
+    map.put(PageResultConstant.TOTAL, page.getTotal());
+    return map;
+  }
+
+  /**
+   * Page 数据处理，预防redis反序列化报错
+   */
   public static <T> Map<String, Object> toPage(T records, long total) {
-    Map<String, Object> map = Maps.newLinkedHashMap();
-    map.put("content", records);
-    map.put("totalElements", total);
+    Map<String, Object> map = new HashMap<>(2);
+    map.put(PageResultConstant.CONTENT, records);
+    map.put(PageResultConstant.TOTAL, total);
     return map;
   }
 
@@ -33,7 +45,7 @@ public class PageUtil {
     int start = (page - 1) * size;
     int end = start + size;
     if (start > list.size()) {
-      return Lists.newArrayList();
+      return new ArrayList<>(0);
     } else if (end >= list.size()) {
       return list.subList(start, list.size());
     } else {

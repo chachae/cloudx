@@ -94,7 +94,7 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
    *
    * @return String IP
    */
-  public static String getHttpServletRequestIpAddress() {
+  public static String getIpAddress() {
     HttpServletRequest request = getHttpServletRequest();
     String ip = request.getHeader("x-forwarded-for");
     if (StrUtil.isBlank(ip) || UNKNOWN.equalsIgnoreCase(ip)) {

@@ -2,9 +2,9 @@ package com.cloudx.auth.service.impl;
 
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cloudx.auth.constant.SystemUserConstant;
 import com.cloudx.auth.mapper.MenuMapper;
 import com.cloudx.auth.mapper.UserMapper;
+import com.cloudx.common.constant.SystemUserConstant;
 import com.cloudx.common.entity.auth.AuthUser;
 import com.cloudx.common.entity.system.Menu;
 import com.cloudx.common.entity.system.SystemUser;
@@ -50,9 +50,9 @@ public class SystemUserDetailServiceImpl extends ServiceImpl<UserMapper, SystemU
   }
 
   private SystemUser findByUserName(String userName) {
-    LambdaQueryWrapper<SystemUser> qw = new LambdaQueryWrapper<>();
-    qw.eq(SystemUser::getUserName, userName);
-    return this.getOne(qw);
+    LambdaQueryWrapper<SystemUser> query = new LambdaQueryWrapper<>();
+    query.eq(SystemUser::getUserName, userName);
+    return getOne(query);
   }
 
   private String selectExpressionByUserId(Long userId) {
