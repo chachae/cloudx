@@ -1,6 +1,6 @@
 package com.cloudx.common.annotation;
 
-import com.cloudx.common.config.CloudxServerProtectConfig;
+import com.cloudx.common.config.ServerProtectConfig;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Import;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(CloudxServerProtectConfig.class)
+@Import(ServerProtectConfig.class)
 public @interface EnableCloudxServerProtect {
 
 }

@@ -5,7 +5,7 @@
 
   <sql id="baseSql">
     SELECT u.user_id,
-           u.user_name,
+           u.username,
            u.email,
            u.mobile,
            u.status,
@@ -29,8 +29,8 @@
   <select id="pageSystemUserDetail" parameterType="com.cloudx.common.entity.dto.SystemUserDTO"
     resultType="com.cloudx.common.entity.dto.SystemUserDTO">
     <include refid="baseSql"/>
-    <if test="user.userName != null and user.userName != ''">
-      AND u.user_name like CONCAT('%',#{user.userName},'%')
+    <if test="user.username != null and user.username != ''">
+      AND u.username like CONCAT('%',#{user.username},'%')
     </if>
     <if test="user.deptId != null and user.deptId != ''">
       AND d.dept_id = #{user.deptId}
@@ -47,14 +47,15 @@
     <if test="user.deptName != null and user.deptName != ''">
       AND d.dept_name like CONCAT('%',#{user.deptName},'%')
     </if>
-    GROUP BY u.user_name,u.user_id,u.email,u.mobile,u.status,u.create_time,u.gender,
+    GROUP BY u.username,u.user_id,u.email,u.mobile,u.status,u.create_time,u.gender,
     u.dept_id,u.last_login_time,u.update_time,u.description,u.avatar
   </select>
 
-  <select id="selectSystemUserDetail" parameterType="SystemUserDTO" resultType="SystemUserDTO">
+  <select id="selectSystemUserDetail" parameterType="com.cloudx.common.entity.dto.SystemUserDTO"
+    resultType="com.cloudx.common.entity.dto.SystemUserDTO">
     <include refid="baseSql"/>
-    <if test="user.userName != null and user.userName != ''">
-      AND u.user_name = #{user.userName}
+    <if test="user.username != null and user.username != ''">
+      AND u.username = #{user.username}
     </if>
     <if test="user.deptId != null and user.deptId != ''">
       AND d.dept_id = #{user.deptId}
@@ -71,7 +72,7 @@
     <if test="user.deptName != null and user.deptName != ''">
       AND d.dept_name like CONCAT('%',#{user.deptName},'%')
     </if>
-    GROUP BY u.user_name,u.user_id,u.email,u.mobile,u.status,u.create_time,u.gender,
+    GROUP BY u.username,u.user_id,u.email,u.mobile,u.status,u.create_time,u.gender,
     u.dept_id,u.last_login_time,u.update_time,u.description,u.avatar
   </select>
 </mapper>

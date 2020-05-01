@@ -25,14 +25,12 @@ public class AuthUser extends User {
 
   private static final long serialVersionUID = 5970249403350193074L;
   private Long userId;
-  private String userName;
+  private String username;
   private String password;
   private Long deptId;
   private String email;
   private String mobile;
-  private Object status;
-  private Date createTime;
-  private Date updateTime;
+  private Boolean status;
   private Date lastLoginTime;
   private Integer gender;
   private String avatar;

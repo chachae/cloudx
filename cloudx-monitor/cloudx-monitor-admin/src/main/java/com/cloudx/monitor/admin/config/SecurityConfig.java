@@ -13,11 +13,11 @@ import org.springframework.security.web.authentication.SavedRequestAwareAuthenti
  * @since 2020/04/27 14:26
  */
 @EnableWebSecurity
-public class CloudxSecurityConfig extends WebSecurityConfigurerAdapter {
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
   private final String ctx;
 
-  public CloudxSecurityConfig(AdminServerProperties adminServerProperties) {
+  public SecurityConfig(AdminServerProperties adminServerProperties) {
     this.ctx = adminServerProperties.getContextPath();
   }
 

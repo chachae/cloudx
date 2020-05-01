@@ -2,7 +2,7 @@ package com.cloudx.auth.config;
 
 import com.cloudx.auth.properties.AuthProperties;
 import com.cloudx.auth.service.impl.RedisClientDetailsService;
-import com.cloudx.auth.translator.CloudxWebResponseExceptionTranslator;
+import com.cloudx.auth.translator.Oauth2WebResponseExceptionTranslator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
@@ -26,7 +26,7 @@ import org.springframework.security.oauth2.provider.token.store.JwtAccessTokenCo
 @Configuration
 @EnableAuthorizationServer
 @RequiredArgsConstructor
-public class CloudxAuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
+public class AuthorizationServerConfig extends AuthorizationServerConfigurerAdapter {
 
   private final TokenStore tokenStore;
   private final AuthProperties properties;
@@ -34,7 +34,7 @@ public class CloudxAuthorizationServerConfig extends AuthorizationServerConfigur
   private final AuthenticationManager authenticationManager;
   private final JwtAccessTokenConverter jwtAccessTokenConverter;
   private final RedisClientDetailsService redisClientDetailsService;
-  private final CloudxWebResponseExceptionTranslator exceptionTranslator;
+  private final Oauth2WebResponseExceptionTranslator exceptionTranslator;
 
   /**
    * 客户端详细信息配置

@@ -11,7 +11,7 @@ import org.springframework.context.annotation.Bean;
  * @author chachae
  * @since 2020/4/13 20:40
  */
-public class CloudxAuthExceptionConfig {
+public class AuthExceptionConfig {
 
   @Bean
   @ConditionalOnMissingBean(name = "accessDeniedHandler")

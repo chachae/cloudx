@@ -19,6 +19,8 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 /**
+ * Spring Security 密码认证实现类
+ *
  * @author chachae
  * @since 2020/4/29 22:08
  */
@@ -30,15 +32,15 @@ public class SystemUserDetailServiceImpl extends ServiceImpl<UserMapper, SystemU
   private final MenuMapper menuMapper;
 
   @Override
-  public UserDetails loadUserByUsername(String userName) throws UsernameNotFoundException {
-    SystemUser systemUser = findByUserName(userName);
+  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+    SystemUser systemUser = findByUserName(username);
     if (systemUser != null) {
       String expression = selectExpressionByUserId(systemUser.getUserId());
       boolean notLocked = false;
       if (SystemUserConstant.STATUS_VALID.equals(systemUser.getStatus())) {
         notLocked = true;
       }
-      AuthUser authUser = new AuthUser(systemUser.getUserName(), systemUser.getPassword(), true,
+      AuthUser authUser = new AuthUser(systemUser.getUsername(), systemUser.getPassword(), true,
           true, true,
           notLocked,
           AuthorityUtils.commaSeparatedStringToAuthorityList(expression));
@@ -49,9 +51,9 @@ public class SystemUserDetailServiceImpl extends ServiceImpl<UserMapper, SystemU
     }
   }
 
-  private SystemUser findByUserName(String userName) {
+  private SystemUser findByUserName(String username) {
     LambdaQueryWrapper<SystemUser> query = new LambdaQueryWrapper<>();
-    query.eq(SystemUser::getUserName, userName);
+    query.eq(SystemUser::getUsername, username);
     return getOne(query);
   }
 

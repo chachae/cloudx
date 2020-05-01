@@ -1,10 +1,10 @@
 package com.cloudx.common.util;
 
-import com.alibaba.fastjson.JSONObject;
 import com.cloudx.common.entity.auth.AuthUser;
 import com.cloudx.common.entity.auth.CurrentUser;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import java.util.Collection;
+import java.util.LinkedHashMap;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
@@ -33,8 +33,9 @@ public class SecurityUtil {
    */
   public static CurrentUser getCurrentUser() {
     try {
-      Object principal = getAuthenticationDetails().getPrincipal();
-      return JSONObject.parseObject(MAPPER.writeValueAsString(principal), CurrentUser.class);
+      LinkedHashMap<String, Object> authenticationDetails = getAuthenticationDetails();
+      Object principal = authenticationDetails.get("principal");
+      return MAPPER.readValue(MAPPER.writeValueAsString(principal), CurrentUser.class);
     } catch (Exception e) {
       log.error("获取当前用户信息失败", e);
       return null;
@@ -79,7 +80,9 @@ public class SecurityUtil {
     return (OAuth2Authentication) authentication;
   }
 
-  private static Authentication getAuthenticationDetails() {
-    return getOauth2Authentication().getUserAuthentication();
+  @SuppressWarnings("all")
+  private static LinkedHashMap<String, Object> getAuthenticationDetails() {
+    return (LinkedHashMap<String, Object>) getOauth2Authentication().getUserAuthentication()
+        .getDetails();
   }
 }

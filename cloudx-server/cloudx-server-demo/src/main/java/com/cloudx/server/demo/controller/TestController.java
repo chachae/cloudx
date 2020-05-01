@@ -1,0 +1,60 @@
+package com.cloudx.server.demo.controller;
+
+import com.cloudx.common.base.QueryParam;
+import com.cloudx.common.base.Result;
+import com.cloudx.common.entity.dto.SystemUserDTO;
+import com.cloudx.common.exception.ApiException;
+import com.cloudx.common.util.HttpUtil;
+import com.cloudx.common.util.SecurityUtil;
+import com.cloudx.server.demo.service.IUserService;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.concurrent.atomic.AtomicBoolean;
+import lombok.RequiredArgsConstructor;
+import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
+
+/**
+ * 测试用控制层
+ *
+ * @author chachae
+ * @since 2020/5/1 11:57
+ */
+@RestController
+@RequestMapping
+@RequiredArgsConstructor
+public class TestController {
+
+  private final IUserService userService;
+
+  private final AtomicBoolean cut = new AtomicBoolean(false);
+
+  /**
+   * 用于演示 Feign调用受保护的远程方法
+   */
+  @GetMapping("user/page")
+  public Result<Map<String, Object>> pageRemoteUsers(QueryParam queryParam, SystemUserDTO user) {
+    if (!cut.get()) {
+      cut.compareAndSet(false, true);
+      throw ApiException.serviceError("测试 Feign 异常回滚");
+    } else {
+      cut.compareAndSet(true, false);
+    }
+    return userService.pageUser(queryParam, user);
+  }
+
+  /**
+   * 获取当前用户信息
+   */
+  @GetMapping("user")
+  public Map<String, Object> currentUser() {
+    Map<String, Object> map = new HashMap<>(5);
+    map.put("currentUser", SecurityUtil.getCurrentUser());
+    map.put("currentUsername", SecurityUtil.getCurrentUsername());
+    map.put("currentUserAuthority", SecurityUtil.getCurrentUserAuthority());
+    map.put("currentTokenValue", SecurityUtil.getCurrentTokenValue());
+    map.put("currentRequestIpAddress", HttpUtil.getIpAddress());
+    return map;
+  }
+}

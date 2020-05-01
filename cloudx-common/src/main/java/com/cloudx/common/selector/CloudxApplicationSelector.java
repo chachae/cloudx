@@ -1,8 +1,8 @@
 package com.cloudx.common.selector;
 
-import com.cloudx.common.config.CloudxAuthExceptionConfig;
-import com.cloudx.common.config.CloudxOauth2FeignConfig;
-import com.cloudx.common.config.CloudxServerProtectConfig;
+import com.cloudx.common.config.AuthExceptionConfig;
+import com.cloudx.common.config.Oauth2FeignConfig;
+import com.cloudx.common.config.ServerProtectConfig;
 import javax.annotation.Nonnull;
 import org.springframework.context.annotation.ImportSelector;
 import org.springframework.core.type.AnnotationMetadata;
@@ -19,9 +19,9 @@ public class CloudxApplicationSelector implements ImportSelector {
   @SuppressWarnings("all")
   public String[] selectImports(@Nonnull AnnotationMetadata annotationMetadata) {
     return new String[]{
-        CloudxAuthExceptionConfig.class.getName(),
-        CloudxOauth2FeignConfig.class.getName(),
-        CloudxServerProtectConfig.class.getName()
+        AuthExceptionConfig.class.getName(),
+        Oauth2FeignConfig.class.getName(),
+        ServerProtectConfig.class.getName()
     };
   }
 }

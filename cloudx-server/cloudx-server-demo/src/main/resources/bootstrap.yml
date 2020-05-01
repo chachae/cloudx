@@ -1,0 +1,24 @@
+spring:
+  application:
+    name: @project.name@
+  profiles:
+    active: @profile.active@
+  main:
+    allow-bean-definition-overriding: true
+
+  cloud:
+    nacos:
+      server-addr: @nacos.ip@
+      config:
+        group: @nacos.group@
+        prefix: @project.name@
+        file-extension: yaml
+      discovery:
+        metadata:
+          management.context-path: ${server.servlet.context-path:}${spring.mvc.servlet.path:}${management.endpoints.web.base-path:}
+
+info:
+  name: @project.name@
+  description: @project.description@
+  version: @project.version@
+  spring-boot-version: @spring-boot.version@

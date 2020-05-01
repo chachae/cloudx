@@ -23,4 +23,8 @@ public class ServerConstant {
    */
   public static final String CLOUDX_SERVER_SYSTEM = "cloudx-server-system";
 
+  /**
+   * Server-DEMO 微服务名
+   */
+  public static final String CLOUDX_SERVER_DEMO = "cloudx-server-demo";
 }

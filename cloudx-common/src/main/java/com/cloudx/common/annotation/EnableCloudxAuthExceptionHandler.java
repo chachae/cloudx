@@ -1,6 +1,6 @@
 package com.cloudx.common.annotation;
 
-import com.cloudx.common.config.CloudxAuthExceptionConfig;
+import com.cloudx.common.config.AuthExceptionConfig;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -14,6 +14,6 @@ import org.springframework.context.annotation.Import;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(CloudxAuthExceptionConfig.class)
+@Import(AuthExceptionConfig.class)
 public @interface EnableCloudxAuthExceptionHandler {
 }

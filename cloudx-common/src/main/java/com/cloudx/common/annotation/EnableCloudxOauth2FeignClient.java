@@ -1,6 +1,6 @@
 package com.cloudx.common.annotation;
 
-import com.cloudx.common.config.CloudxOauth2FeignConfig;
+import com.cloudx.common.config.Oauth2FeignConfig;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -14,7 +14,7 @@ import org.springframework.context.annotation.Import;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(CloudxOauth2FeignConfig.class)
+@Import(Oauth2FeignConfig.class)
 public @interface EnableCloudxOauth2FeignClient {
 
 }

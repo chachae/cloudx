@@ -14,7 +14,7 @@ import org.springframework.util.Base64Utils;
  * @author chachae
  * @since 2020/4/18 17:11
  */
-public class CloudxOauth2FeignConfig {
+public class Oauth2FeignConfig {
 
   @Bean
   public RequestInterceptor oauth2FeignRequestInterceptor() {

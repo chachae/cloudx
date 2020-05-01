@@ -15,7 +15,7 @@ import org.springframework.context.annotation.Configuration;
  * @since 2020/04/20
  */
 @Configuration
-public class CloudxWebConfig {
+public class WebConfig {
 
   /**
    * MyBatisPlus 分页

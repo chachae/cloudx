@@ -23,7 +23,7 @@ import org.springframework.web.reactive.result.view.ViewResolver;
  */
 @Configuration
 @RequiredArgsConstructor
-public class CloudxGatewayErrorConfig {
+public class GatewayErrorConfig {
 
   private final ServerProperties serverProperties;
   private final ApplicationContext applicationContext;

@@ -29,13 +29,12 @@ public class CurrentUser implements Serializable {
   private boolean credentialsNonExpired;
   private boolean enabled;
   private Long userId;
-  private String userName;
+  private String username;
   private Long deptId;
   private String email;
   private String mobile;
-  private Object status;
-  private Date createTime;
-  private Date updateTime;
+  private Boolean status;
+  @JsonIgnore
   private Date lastLoginTime;
   private Integer gender;
   private String avatar;

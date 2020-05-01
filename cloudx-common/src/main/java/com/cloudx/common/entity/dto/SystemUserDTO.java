@@ -20,7 +20,7 @@ public class SystemUserDTO implements Serializable {
 
   private static final long serialVersionUID = 5970249403350193074L;
   private Long userId;
-  private String userName;
+  private String username;
   @JsonIgnore
   private String password;
   private Long deptId;

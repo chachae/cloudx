@@ -44,7 +44,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
   @Override
   public SystemUser selectByUserName(String userName) {
     LambdaQueryWrapper<SystemUser> qw = new LambdaQueryWrapper<>();
-    qw.eq(SystemUser::getUserName, userName);
+    qw.eq(SystemUser::getUsername, userName);
     return getOne(qw);
   }
 
@@ -80,10 +80,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
   @Transactional(rollbackFor = Exception.class)
   public void update(Long userId, SystemUserDTO user) {
     // 更新用户
-    user.setPassword(null);
-    user.setUserName(null);
-    user.setCreateTime(null);
-    user.setUpdateTime(new Date());
+    user.setPassword(null).setUsername(null).setCreateTime(null).setUpdateTime(new Date());
     SystemUser updateUser = new SystemUser();
     BeanUtils.copyProperties(user, updateUser);
     updateById(updateUser);
@@ -96,6 +93,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
       String[] roles = user.getRoleId().split(StringPool.COMMA);
       setUserRoles(user.getUserId(), roles);
     }
+  }
+
+  @Override
+  public void delete(Long userId) {
+    baseMapper.deleteById(userId);
+    LambdaQueryWrapper<UserRole> qw = new LambdaQueryWrapper<>();
+    qw.eq(UserRole::getUserId, userId);
+    userRoleService.remove(qw);
   }
 
   /**

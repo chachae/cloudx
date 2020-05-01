@@ -20,6 +20,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 用户信息控制层
+ *
  * @author chachae
  * @since 2020/4/30 19:56
  */
@@ -59,8 +61,8 @@ public class UserController {
 
   @DeleteMapping("/delete/{userId}")
   @PreAuthorize("hasAuthority('user:delete')")
-  public void delete(@PathVariable("userId") String id) {
-    userService.removeById(id);
+  public void delete(@PathVariable("userId") Long id) {
+    userService.delete(id);
   }
 
 }

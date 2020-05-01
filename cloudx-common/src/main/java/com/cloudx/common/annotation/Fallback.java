@@ -9,7 +9,10 @@ import org.springframework.core.annotation.AliasFor;
 import org.springframework.stereotype.Component;
 
 /**
+ * 回滚标记注解
+ *
  * @author chachae
+ * @since 2020/05/01 12:24
  */
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)

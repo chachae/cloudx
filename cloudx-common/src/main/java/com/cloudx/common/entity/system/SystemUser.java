@@ -25,7 +25,7 @@ public class SystemUser implements Serializable {
   private static final long serialVersionUID = 5970249403350193074L;
   @TableId
   private Long userId;
-  private String userName;
+  private String username;
   private String password;
   private Long deptId;
   private String email;

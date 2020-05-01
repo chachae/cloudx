@@ -15,9 +15,8 @@ import org.springframework.stereotype.Component;
 /**
  * OAUTH 2 异常翻译
  * <p>
- * 对 OAuth2Exception 异常的响应数据进行统一处理，默认是 xml 响应，不友好且不统一。
- * 具体是实现{@link WebResponseExceptionTranslator}接口的方法， 可以自定义返回的数据格式，
- * 这里使用 Spring 提供的{@link ResponseEntity}构建响应数据体
+ * 对 OAuth2Exception 异常的响应数据进行统一处理，默认是 xml 响应，不友好且不统一。 具体是实现{@link WebResponseExceptionTranslator}接口的方法，
+ * 可以自定义返回的数据格式， 这里使用 Spring 提供的{@link ResponseEntity}构建响应数据体
  * </p>
  *
  * @author chachae
@@ -26,7 +25,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class CloudxWebResponseExceptionTranslator implements WebResponseExceptionTranslator {
+public class Oauth2WebResponseExceptionTranslator implements WebResponseExceptionTranslator {
 
   @Override
   public ResponseEntity<?> translate(Exception e) {

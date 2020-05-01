@@ -1,6 +1,6 @@
 package com.cloudx.common.annotation;
 
-import com.cloudx.common.config.CloudxLettuceRedisConfig;
+import com.cloudx.common.config.LettuceRedisConfig;
 import java.lang.annotation.Documented;
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -16,7 +16,7 @@ import org.springframework.context.annotation.Import;
 @Target({ElementType.TYPE})
 @Retention(RetentionPolicy.RUNTIME)
 @Documented
-@Import(CloudxLettuceRedisConfig.class)
+@Import(LettuceRedisConfig.class)
 public @interface EnableCloudxLettuceRedis {
 
 }

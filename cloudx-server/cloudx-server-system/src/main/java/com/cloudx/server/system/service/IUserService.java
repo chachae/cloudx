@@ -21,4 +21,6 @@ public interface IUserService extends IService<SystemUser> {
   void insert(SystemUserDTO user);
 
   void update(Long userId, SystemUserDTO user);
+
+  void delete(Long userId);
 }
