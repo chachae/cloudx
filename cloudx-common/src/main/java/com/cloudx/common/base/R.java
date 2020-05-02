@@ -1,6 +1,5 @@
 package com.cloudx.common.base;
 
-import com.cloudx.common.util.HttpUtil;
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
 import java.util.Date;
@@ -35,11 +34,6 @@ public class R<E> implements Serializable {
   private E data;
 
   /**
-   * 请求地址
-   */
-  private String path;
-
-  /**
    * 时间戳
    */
   private Date timestamp;
@@ -50,16 +44,15 @@ public class R<E> implements Serializable {
   /**
    * 全参构造
    */
-  private R(Integer code, String message, E data, String path, Date timestamp) {
+  private R(Integer code, String message, E data, Date timestamp) {
     this.code = code;
     this.message = message;
     this.data = data;
-    this.path = path;
     this.timestamp = timestamp;
   }
 
   private R(Integer code, String message, E data) {
-    this(code, message, data, null, null);
+    this(code, message, data, null);
   }
 
   public R(String message) {
@@ -98,7 +91,7 @@ public class R<E> implements Serializable {
    * @return /
    */
   public static R<String> fail(String message) {
-    return new R<>(null, message, null, HttpUtil.getRequestUrl(), new Date());
+    return new R<>(null, message, null, new Date());
   }
 
   /**
@@ -107,6 +100,6 @@ public class R<E> implements Serializable {
    * @return /
    */
   public static R<Object> fail(int code, String message) {
-    return new R<>(code, message, null, HttpUtil.getRequestUrl(), new Date());
+    return new R<>(code, message, null, new Date());
   }
 }

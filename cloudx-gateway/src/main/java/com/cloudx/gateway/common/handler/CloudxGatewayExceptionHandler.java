@@ -1,6 +1,7 @@
 package com.cloudx.gateway.common.handler;
 
 import cn.hutool.core.util.StrUtil;
+import com.alibaba.csp.sentinel.slots.block.flow.FlowException;
 import java.util.HashMap;
 import java.util.Map;
 import lombok.extern.slf4j.Slf4j;
@@ -46,7 +47,9 @@ public class CloudxGatewayExceptionHandler extends DefaultErrorWebExceptionHandl
         request.path(), request.methodName(), error.getMessage()
     );
     String errorMessage;
-    if (error instanceof NotFoundException) {
+    if (error instanceof FlowException) {
+      errorMessage = "服务访问的流量过多，请稍后再试";
+    } else if (error instanceof NotFoundException) {
       String serverId = StrUtil.subAfter(error.getMessage(), "Unable to find instance for ", true);
       serverId = StrUtil.replace(serverId, "\"", StrUtil.EMPTY);
       errorMessage = String.format("无法找到%s服务", serverId);
