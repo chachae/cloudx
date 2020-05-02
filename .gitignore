@@ -11,3 +11,4 @@ target/
 *.ipr
 **/gen
 log
+**/**/resources/rebel.xml

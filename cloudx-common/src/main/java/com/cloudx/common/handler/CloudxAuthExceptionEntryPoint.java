@@ -1,7 +1,7 @@
 package com.cloudx.common.handler;
 
 import cn.hutool.core.util.StrUtil;
-import com.cloudx.common.base.ResponseMap;
+import com.cloudx.common.base.R;
 import com.cloudx.common.util.HttpUtil;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;
@@ -38,7 +38,6 @@ public class CloudxAuthExceptionEntryPoint implements AuthenticationEntryPoint {
       status = HttpServletResponse.SC_INTERNAL_SERVER_ERROR;
     }
     log.error(message, authException);
-    HttpUtil.makeResponse(response, MediaType.APPLICATION_JSON_VALUE, status,
-        new ResponseMap().message(message));
+    HttpUtil.makeResponse(response, MediaType.APPLICATION_JSON_VALUE, status, R.fail(message));
   }
 }

@@ -1,7 +1,7 @@
 package com.cloudx.auth.handler;
 
 import com.cloudx.auth.exception.CaptchaException;
-import com.cloudx.common.base.Result;
+import com.cloudx.common.base.R;
 import com.cloudx.common.handler.BaseExceptionHandler;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
@@ -23,8 +23,8 @@ public class GlobalExceptionHandler extends BaseExceptionHandler {
    * 验证码异常
    */
   @ExceptionHandler(CaptchaException.class)
-  public Result<Object> captchaExceptionException(CaptchaException e) {
-    return Result.fail(e.getMessage());
+  public R<String> captchaExceptionException(CaptchaException e) {
+    return R.fail(e.getMessage());
   }
 
 }

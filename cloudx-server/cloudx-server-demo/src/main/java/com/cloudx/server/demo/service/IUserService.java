@@ -1,7 +1,7 @@
 package com.cloudx.server.demo.service;
 
 import com.cloudx.common.base.QueryParam;
-import com.cloudx.common.base.Result;
+import com.cloudx.common.base.R;
 import com.cloudx.common.constant.ServerConstant;
 import com.cloudx.common.entity.dto.SystemUserDTO;
 import com.cloudx.server.demo.service.fallback.UserServiceFallback;
@@ -24,9 +24,9 @@ public interface IUserService {
    *
    * @param queryParam queryRequest
    * @param user       user
-   * @return Result<Map < String, Object>>
+   * @return R<Map < String, Object>>
    */
   @GetMapping("user/page")
-  Result<Map<String, Object>> pageUser(@RequestParam("queryParam") QueryParam queryParam,
+  R<Map<String, Object>> pageUser(@RequestParam("queryParam") QueryParam queryParam,
       @RequestParam("user") SystemUserDTO user);
 }

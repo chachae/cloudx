@@ -1,12 +1,23 @@
 package com.cloudx.common.handler;
 
-import cn.hutool.core.exceptions.ExceptionUtil;
-import com.cloudx.common.base.Result;
+import cn.hutool.core.util.StrUtil;
+import com.cloudx.common.base.R;
 import com.cloudx.common.exception.ApiException;
-import java.util.Objects;
+import java.util.List;
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
+import javax.validation.Path;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.http.HttpStatus;
+import org.springframework.security.access.AccessDeniedException;
+import org.springframework.validation.BindException;
+import org.springframework.validation.FieldError;
+import org.springframework.web.HttpMediaTypeNotSupportedException;
+import org.springframework.web.HttpRequestMethodNotSupportedException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.ResponseStatus;
 
 /**
  * 全局异常处理基类
@@ -18,38 +29,93 @@ import org.springframework.web.bind.annotation.ExceptionHandler;
 @Slf4j
 public abstract class BaseExceptionHandler {
 
+  @ExceptionHandler(value = Exception.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public R<String> handleException(Exception e) {
+    log.error("系统内部异常，异常信息", e);
+    return R.fail("系统内部异常");
+  }
+
+  @ExceptionHandler(value = ApiException.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public R<String> handleApiException(ApiException e) {
+    log.error("系统错误", e);
+    return R.fail(e.getMessage());
+  }
+
   /**
-   * 数据校验异常
+   * 统一处理请求参数校验(实体对象传参)
+   *
+   * @param e BindException
+   * @return FebsResponse
+   */
+  @ExceptionHandler(BindException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public R<String> handleBindException(BindException e) {
+    StringBuilder message = new StringBuilder();
+    List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
+    for (FieldError error : fieldErrors) {
+      message.append(error.getField()).append(error.getDefaultMessage()).append(",");
+    }
+    message = new StringBuilder(message.substring(0, message.length() - 1));
+    return R.fail(message.toString());
+  }
+
+  /**
+   * 统一处理请求参数校验(普通传参)
+   *
+   * @param e ConstraintViolationException
+   * @return FebsResponse
+   */
+  @ExceptionHandler(value = ConstraintViolationException.class)
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public R<String> handleConstraintViolationException(ConstraintViolationException e) {
+    StringBuilder message = new StringBuilder();
+    Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
+    for (ConstraintViolation<?> violation : violations) {
+      Path path = violation.getPropertyPath();
+      String[] pathArr = StrUtil.splitToArray(path.toString(), '.');
+      message.append(pathArr[1]).append(violation.getMessage()).append(',');
+    }
+    message = new StringBuilder(message.substring(0, message.length() - 1));
+    return R.fail(message.toString());
+  }
+
+  /**
+   * 统一处理请求参数校验(json)
+   *
+   * @param e ConstraintViolationException
+   * @return FebsResponse
    */
   @ExceptionHandler(MethodArgumentNotValidException.class)
-  public Result<Object> handleMethodArgumentNotValidException(
-      MethodArgumentNotValidException e) {
-    String[] str =
-        Objects.requireNonNull(e.getBindingResult().getAllErrors().get(0).getCodes())[1].split(
-            "\\.");
-    String message = e.getBindingResult().getAllErrors().get(0).getDefaultMessage();
-    String msg = "不能为空";
-    if (msg.equals(message)) {
-      message = str[1] + ":" + message;
+  @ResponseStatus(HttpStatus.BAD_REQUEST)
+  public R<String> handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+    StringBuilder message = new StringBuilder();
+    for (FieldError error : e.getBindingResult().getFieldErrors()) {
+      message.append(error.getField()).append(error.getDefaultMessage()).append(",");
     }
-    return Result.fail(message);
+    message = new StringBuilder(message.substring(0, message.length() - 1));
+    log.error(message.toString(), e);
+    return R.fail(message.toString());
   }
 
-  /**
-   * 自定义ApiException
-   */
-  @ExceptionHandler(ApiException.class)
-  public Result<Object> badRequestException(ApiException e) {
-    return Result.fail(e.getStatus(), e.getMsg());
+  @ExceptionHandler(value = AccessDeniedException.class)
+  @ResponseStatus(HttpStatus.FORBIDDEN)
+  public R<String> handleAccessDeniedException() {
+    return R.fail("没有权限访问该资源");
   }
 
-  /**
-   * 处理所有不可知的异常
-   */
-  @ExceptionHandler(Exception.class)
-  public Result<Object> handleException(Exception e) {
-    // 打印堆栈信息
-    log.error(ExceptionUtil.stacktraceToString(e));
-    return Result.fail(e.getMessage());
+  @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public R<String> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
+    return R.fail("改方法不支持" + StrUtil.subBetween(e.getMessage(), "'", "'") + "媒体类型");
   }
+
+  @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
+  @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
+  public R<String> handleHttpRequestMethodNotSupportedException(
+      HttpRequestMethodNotSupportedException e) {
+    return R.fail("该方法不支持" + StrUtil.subBetween(e.getMessage(), "'", "'") + "请求方法");
+  }
+
 }

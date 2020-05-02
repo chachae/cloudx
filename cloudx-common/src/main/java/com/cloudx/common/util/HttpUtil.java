@@ -90,6 +90,15 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
   }
 
   /**
+   * 获取请求地址
+   *
+   * @return String
+   */
+  public static String getRequestUrl() {
+    return getHttpServletRequest().getRequestURI();
+  }
+
+  /**
    * 获取请求IP
    *
    * @return String IP

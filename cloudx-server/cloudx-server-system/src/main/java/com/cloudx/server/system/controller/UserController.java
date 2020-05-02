@@ -2,7 +2,7 @@ package com.cloudx.server.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cloudx.common.base.QueryParam;
-import com.cloudx.common.base.Result;
+import com.cloudx.common.base.R;
 import com.cloudx.common.entity.dto.SystemUserDTO;
 import com.cloudx.common.entity.system.SystemUser;
 import com.cloudx.common.util.PageUtil;
@@ -35,10 +35,10 @@ public class UserController {
 
   @GetMapping("/page")
   @PreAuthorize("hasAuthority('user:view')")
-  public Result<Map<String, Object>> pageUser(QueryParam queryParam, SystemUserDTO user) {
+  public R<Map<String, Object>> pageUser(QueryParam queryParam, SystemUserDTO user) {
     IPage<SystemUserDTO> result = userService.pageSystemUser(queryParam, user);
     Map<String, Object> pageResult = PageUtil.toPage(result);
-    return Result.ok(pageResult);
+    return R.ok(pageResult);
   }
 
   @GetMapping("/check/{userName}")

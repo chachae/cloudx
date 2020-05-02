@@ -3,6 +3,7 @@ package com.cloudx.auth.service.impl;
 import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.TypeReference;
 import com.cloudx.common.service.RedisService;
 import java.util.List;
 import javax.sql.DataSource;
@@ -39,7 +40,8 @@ public class RedisClientDetailsService extends JdbcClientDetailsService {
   public ClientDetails loadClientByClientId(String clientId) throws InvalidClientException {
     String value = (String) redisService.hget(CACHE_CLIENT_KEY, clientId);
     return StrUtil.isBlank(value) ? cacheAndGetClient(clientId)
-        : JSONObject.parseObject(value, BaseClientDetails.class);
+        : JSONObject.parseObject(value, new TypeReference<BaseClientDetails>() {
+        }.getType());
   }
 
   /**

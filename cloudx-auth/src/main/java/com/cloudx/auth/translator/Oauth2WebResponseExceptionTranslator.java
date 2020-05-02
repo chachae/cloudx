@@ -1,7 +1,7 @@
 package com.cloudx.auth.translator;
 
 import cn.hutool.core.util.StrUtil;
-import com.cloudx.common.base.ResponseMap;
+import com.cloudx.common.base.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -25,39 +25,39 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
-public class Oauth2WebResponseExceptionTranslator implements WebResponseExceptionTranslator {
+public class Oauth2WebResponseExceptionTranslator implements
+    WebResponseExceptionTranslator {
 
   @Override
-  public ResponseEntity<?> translate(Exception e) {
+  public ResponseEntity<R<String>> translate(Exception e) {
     ResponseEntity.BodyBuilder status = ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR);
-    ResponseMap response = new ResponseMap();
     String message = "认证失败";
     log.error(message, e);
     if (e instanceof UnsupportedGrantTypeException) {
       message = "不支持该认证类型";
-      return status.body(response.message(message));
+      return status.body(R.fail(message));
     }
     if (e instanceof InvalidTokenException
         && StrUtil.containsIgnoreCase(e.getMessage(), "Invalid refresh token (expired)")) {
       message = "刷新令牌已过期，请重新登录";
-      return status.body(response.message(message));
+      return status.body(R.fail(message));
     }
     if (e instanceof InvalidScopeException) {
       message = "不是有效的scope值";
-      return status.body(response.message(message));
+      return status.body(R.fail(message));
     }
     if (e instanceof InvalidGrantException) {
       if (StrUtil.containsIgnoreCase(e.getMessage(), "Invalid refresh token")) {
         message = "refresh token无效";
-        return status.body(response.message(message));
+        return status.body(R.fail(message));
       }
       if (StrUtil.containsIgnoreCase(e.getMessage(), "locked")) {
         message = "用户已被锁定，请联系管理员";
-        return status.body(response.message(message));
+        return status.body(R.fail(message));
       }
       message = "用户名或密码错误";
-      return status.body(response.message(message));
+      return status.body(R.fail(message));
     }
-    return status.body(response.message(message));
+    return status.body(R.fail(message));
   }
 }

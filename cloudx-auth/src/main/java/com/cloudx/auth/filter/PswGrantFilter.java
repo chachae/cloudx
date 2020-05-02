@@ -3,7 +3,7 @@ package com.cloudx.auth.filter;
 import cn.hutool.core.util.StrUtil;
 import com.cloudx.auth.exception.CaptchaException;
 import com.cloudx.auth.service.ICaptchaService;
-import com.cloudx.common.base.ResponseMap;
+import com.cloudx.common.base.R;
 import com.cloudx.common.constant.EndpointConstant;
 import com.cloudx.common.constant.GrantTypeConstant;
 import com.cloudx.common.constant.ParamsConstant;
@@ -59,8 +59,7 @@ public class PswGrantFilter extends OncePerRequestFilter {
         filterChain.doFilter(httpServletRequest, httpServletResponse);
       } catch (CaptchaException e) {
         HttpUtil.makeResponse(httpServletResponse, MediaType.APPLICATION_JSON_VALUE,
-            HttpServletResponse.SC_INTERNAL_SERVER_ERROR,
-            new ResponseMap().message(e.getMessage()));
+            HttpServletResponse.SC_INTERNAL_SERVER_ERROR, R.fail(e.getMessage()));
         log.error(e.getMessage(), e);
       }
     } else {
