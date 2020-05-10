@@ -8,6 +8,9 @@ package com.cloudx.common.constant;
  */
 public class RegexpConstant {
 
+  private RegexpConstant() {
+  }
+
   /**
    * 移动电话（国内）
    */

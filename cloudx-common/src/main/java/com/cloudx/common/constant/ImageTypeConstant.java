@@ -8,6 +8,9 @@ package com.cloudx.common.constant;
  */
 public class ImageTypeConstant {
 
+  private ImageTypeConstant() {
+  }
+
   /**
    * gif类型
    */

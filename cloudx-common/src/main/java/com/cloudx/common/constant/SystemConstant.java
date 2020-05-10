@@ -8,6 +8,9 @@ package com.cloudx.common.constant;
  */
 public class SystemConstant {
 
+  private SystemConstant() {
+  }
+
   /**
    * OAUTH 2 令牌类型 https://oauth.net/2/bearer-tokens/
    */

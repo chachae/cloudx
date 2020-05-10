@@ -6,6 +6,9 @@ package com.cloudx.common.constant;
  */
 public class PageResultConstant {
 
+  private PageResultConstant() {
+  }
+
   /**
    * 数据总数
    */

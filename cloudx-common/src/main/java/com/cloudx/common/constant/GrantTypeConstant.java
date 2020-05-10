@@ -8,6 +8,9 @@ package com.cloudx.common.constant;
  */
 public class GrantTypeConstant {
 
+  private GrantTypeConstant() {
+  }
+
   /**
    * 刷新模式
    */

@@ -34,8 +34,7 @@ public class CaptchaServiceImpl implements ICaptchaService {
   private final AuthProperties properties;
 
   @Override
-  public void create(HttpServletResponse response)
-      throws IOException, CaptchaException {
+  public void create(HttpServletResponse response) throws IOException {
     String key = HttpUtil.getParam(ParamsConstant.CAPTCHA_KEY);
     if (StrUtil.isBlank(key)) {
       throw new CaptchaException("验证码key不能为空");
@@ -47,11 +46,12 @@ public class CaptchaServiceImpl implements ICaptchaService {
     setHeader(response, code.getType());
     // 缓存至 Redis
     redisService.set(SystemConstant.CAPTCHA_PREFIX + key, captcha.text(), code.getTime());
+    // 此处可能抛出 IOException
     captcha.out(response.getOutputStream());
   }
 
   @Override
-  public void validateCode(String key, String value) throws CaptchaException {
+  public void validateCode(String key, String value) {
     Object rightCaptchaText = redisService.get(SystemConstant.CAPTCHA_PREFIX + key);
     if (StrUtil.isBlank(value)) {
       throw new CaptchaException("请输入验证码");

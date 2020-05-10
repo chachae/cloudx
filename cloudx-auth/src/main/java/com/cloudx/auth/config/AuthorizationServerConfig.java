@@ -3,7 +3,6 @@ package com.cloudx.auth.config;
 import com.cloudx.auth.properties.AuthProperties;
 import com.cloudx.auth.service.impl.RedisClientDetailsService;
 import com.cloudx.auth.translator.Oauth2WebResponseExceptionTranslator;
-import com.cloudx.common.base.R;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;

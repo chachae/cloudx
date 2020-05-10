@@ -12,12 +12,12 @@
     <module>cloudx-common</module>
     <module>cloudx-auth</module>
     <module>cloudx-gateway</module>
-    <module>cloudx-monitor</module>
+    <module>cloudx-apm</module>
     <module>cloudx-server</module>
   </modules>
 
   <name>${project.artifactId}</name>
-  <description>cloudx 种子项目父工程</description>
+  <description>cloudx 种子项目聚合工程</description>
 
   <properties>
     <java.version>1.8</java.version>

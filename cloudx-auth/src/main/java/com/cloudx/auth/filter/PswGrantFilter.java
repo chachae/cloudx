@@ -67,7 +67,7 @@ public class PswGrantFilter extends OncePerRequestFilter {
     }
   }
 
-  private void validateCaptcha(HttpServletRequest request) throws CaptchaException {
+  private void validateCaptcha(HttpServletRequest request) {
     String key = request.getParameter(ParamsConstant.CAPTCHA_KEY);
     String code = request.getParameter(ParamsConstant.CAPTCHA_CODE);
     captchaService.validateCode(key, code);
@@ -79,7 +79,7 @@ public class PswGrantFilter extends OncePerRequestFilter {
    * 密码模式：Authorization：Basic context，context由 client_id 和 secret 通过 base64 编码构成
    *
    * @param header 请求头内容
-   * @return 客户端I D
+   * @return 客户端 ID
    */
   private String getClientId(String header) {
     String clientId = null;

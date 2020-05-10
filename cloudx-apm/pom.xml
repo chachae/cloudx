@@ -11,13 +11,13 @@
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
-  <artifactId>cloudx-monitor</artifactId>
-  <name>${artifactId}</name>
-  <description>cloudx 监控模块</description>
+  <artifactId>cloudx-apm</artifactId>
+  <name>${project.artifactId}</name>
+  <description>cloudx APM平台聚合模块</description>
   <packaging>pom</packaging>
 
   <modules>
-    <module>cloudx-monitor-admin</module>
+    <module>cloudx-admin</module>
   </modules>
 
 </project>

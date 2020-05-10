@@ -1,7 +1,8 @@
 package com.cloudx.common.util;
 
+import static com.alibaba.fastjson.JSON.toJSONBytes;
+
 import cn.hutool.core.util.StrUtil;
-import com.alibaba.fastjson.JSONObject;
 import java.io.IOException;
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
@@ -13,6 +14,7 @@ import org.springframework.http.server.reactive.ServerHttpResponse;
 import org.springframework.web.context.request.RequestContextHolder;
 import org.springframework.web.context.request.ServletRequestAttributes;
 import reactor.core.publisher.Mono;
+
 
 /**
  * HuTool HttpUtil 拓展
@@ -40,7 +42,7 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
       int status, Object value) throws IOException {
     response.setContentType(contentType);
     response.setStatus(status);
-    response.getOutputStream().write(JSONObject.toJSONString(value).getBytes());
+    response.getOutputStream().write(toJSONBytes(value));
   }
 
   /**
@@ -57,7 +59,7 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
     response.setStatusCode(status);
     response.getHeaders().add(HttpHeaders.CONTENT_TYPE, contentType);
     DataBuffer dataBuffer = response.bufferFactory()
-        .wrap(JSONObject.toJSONString(value).getBytes());
+        .wrap(toJSONBytes(value));
     return response.writeWith(Mono.just(dataBuffer));
   }
 

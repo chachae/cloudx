@@ -8,6 +8,9 @@ package com.cloudx.common.constant;
  */
 public class ServerConstant {
 
+  private ServerConstant() {
+  }
+
   /**
    * OAUTH 2 认证授权微服务名
    */

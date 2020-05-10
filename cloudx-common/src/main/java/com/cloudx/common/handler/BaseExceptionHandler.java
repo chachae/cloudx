@@ -47,7 +47,7 @@ public abstract class BaseExceptionHandler {
    * 统一处理请求参数校验(实体对象传参)
    *
    * @param e BindException
-   * @return FebsResponse
+   * @return R<String>
    */
   @ExceptionHandler(BindException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -65,7 +65,7 @@ public abstract class BaseExceptionHandler {
    * 统一处理请求参数校验(普通传参)
    *
    * @param e ConstraintViolationException
-   * @return FebsResponse
+   * @return R<String>
    */
   @ExceptionHandler(value = ConstraintViolationException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
@@ -85,7 +85,7 @@ public abstract class BaseExceptionHandler {
    * 统一处理请求参数校验(json)
    *
    * @param e ConstraintViolationException
-   * @return FebsResponse
+   * @return R<String>
    */
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)

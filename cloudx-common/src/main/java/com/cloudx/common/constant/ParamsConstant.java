@@ -8,6 +8,9 @@ package com.cloudx.common.constant;
  */
 public class ParamsConstant {
 
+  private ParamsConstant() {
+  }
+
   /**
    * 验证码 key
    */

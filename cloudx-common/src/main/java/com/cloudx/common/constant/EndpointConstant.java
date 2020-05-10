@@ -8,6 +8,9 @@ package com.cloudx.common.constant;
  */
 public class EndpointConstant {
 
+  private EndpointConstant() {
+  }
+
   public static final String ALL = "/**";
 
   public static final String OAUTH_ALL = "/oauth/**";

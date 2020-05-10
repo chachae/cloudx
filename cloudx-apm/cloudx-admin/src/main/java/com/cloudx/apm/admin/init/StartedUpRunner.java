@@ -1,4 +1,4 @@
-package com.cloudx.monitor.admin.init;
+package com.cloudx.apm.admin.init;
 
 import java.time.LocalDateTime;
 import org.slf4j.Logger;
@@ -20,12 +20,12 @@ public class StartedUpRunner implements ApplicationRunner {
 
   private final ConfigurableApplicationContext context;
 
-  @Value("${spring.application.name:'cloudx-monitor-admin'}")
-  private String applicationName;
-
   public StartedUpRunner(ConfigurableApplicationContext context) {
     this.context = context;
   }
+
+  @Value("${spring.application.name:'cloudx-admin'}")
+  private String applicationName;
 
   @Override
   public void run(ApplicationArguments args) {

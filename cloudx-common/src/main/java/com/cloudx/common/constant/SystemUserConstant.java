@@ -8,6 +8,9 @@ package com.cloudx.common.constant;
  */
 public class SystemUserConstant {
 
+  private SystemUserConstant() {
+  }
+
   /**
    * 用户状态：有效
    */
@@ -23,7 +26,7 @@ public class SystemUserConstant {
   /**
    * 默认密码
    */
-  public static final String DEFAULT_PASSWORD = "123";
+  public static final String DEFAULT_PASSWORD = "123456";
   /**
    * 性别男
    */

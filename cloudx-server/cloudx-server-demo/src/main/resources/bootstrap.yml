@@ -17,6 +17,25 @@ spring:
         metadata:
           management.context-path: ${server.servlet.context-path:}${spring.mvc.servlet.path:}${management.endpoints.web.base-path:}
 
+  # boot-admin
+  boot:
+    admin:
+      client:
+        url: @apm.admin.ip@:@apm.admin.port@
+        username: @apm.admin.username@
+        password: @apm.admin.password@
+        instance:
+          prefer-ip: true
+
+logging:
+  level:
+    com:
+      alibaba:
+        cloud:
+          nacos:
+            client:
+              NacosPropertySourceBuilder: error
+
 info:
   name: @project.name@
   description: @project.description@

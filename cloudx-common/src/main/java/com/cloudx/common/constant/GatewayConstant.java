@@ -8,6 +8,9 @@ package com.cloudx.common.constant;
  */
 public class GatewayConstant {
 
+  private GatewayConstant() {
+  }
+
   /**
    * Gateway请求头TOKEN名称（不要有空格）
    */

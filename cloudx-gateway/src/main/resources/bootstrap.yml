@@ -12,6 +12,22 @@ spring:
         prefix: @project.name@
         file-extension: yaml
 
+    sentinel:
+      transport:
+        dashboard: @sentinel.ip@:@sentinel.port@ #sentinel控制台访问路径
+        port: @sentinel.port@
+      eager: true #心跳启动
+
+  # boot-admin
+  boot:
+    admin:
+      client:
+        url: @apm.admin.ip@:@apm.admin.port@
+        username: @apm.admin.username@
+        password: @apm.admin.password@
+        instance:
+          prefer-ip: true
+
 logging:
   level:
     com:

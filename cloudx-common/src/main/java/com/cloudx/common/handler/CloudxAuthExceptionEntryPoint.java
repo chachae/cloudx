@@ -12,7 +12,7 @@ import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.AuthenticationEntryPoint;
 
 /**
- * 自定义匿名用户访问无权限访问资源异常
+ * 自定义 token 异常 JSON 响应
  * <p>
  * {@link AuthenticationEntryPoint }
  *
@@ -31,6 +31,9 @@ public class CloudxAuthExceptionEntryPoint implements AuthenticationEntryPoint {
     String rawMessage = authException.getMessage();
     if (StrUtil.containsIgnoreCase(rawMessage, "Invalid access token")) {
       message = "访问令牌不正确";
+    }
+    if (StrUtil.containsIgnoreCase(rawMessage, "Access token expired")) {
+      message = "token过期";
     }
     if (StrUtil.containsIgnoreCase(rawMessage,
         "Full authentication is required to access this resource")) {

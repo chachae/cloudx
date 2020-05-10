@@ -25,6 +25,7 @@ import org.springframework.stereotype.Component;
  */
 @Slf4j
 @Component
+@SuppressWarnings("all")
 public class Oauth2WebResponseExceptionTranslator implements
     WebResponseExceptionTranslator {
 

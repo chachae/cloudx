@@ -1,3 +1,6 @@
+server:
+  port: @apm.admin.port@
+
 spring:
   application:
     name: @project.name@
@@ -6,11 +9,17 @@ spring:
 
   cloud:
     nacos:
-      config:
-        server-addr: @nacos.ip@
-        group: @nacos.group@
-        prefix: @project.name@
-        file-extension: yaml
+      server-addr: @nacos.ip@
+
+  security:
+    user:
+      name: @apm.admin.username@
+      password: @apm.admin.password@
+
+  boot:
+    admin:
+      ui:
+        title: ${spring.application.name}
 
 logging:
   level:
