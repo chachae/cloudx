@@ -1,7 +1,6 @@
 package com.cloudx.server.demo.service.fallback;
 
-
-import com.cloudx.common.annotation.Fallback;
+import com.cloudx.common.core.annotation.Fallback;
 import com.cloudx.server.demo.service.IUserService;
 import feign.hystrix.FallbackFactory;
 import lombok.extern.slf4j.Slf4j;

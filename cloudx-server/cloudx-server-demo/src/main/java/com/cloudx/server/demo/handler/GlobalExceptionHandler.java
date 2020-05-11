@@ -1,6 +1,6 @@
 package com.cloudx.server.demo.handler;
 
-import com.cloudx.common.handler.BaseExceptionHandler;
+import com.cloudx.common.core.handler.BaseExceptionHandler;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;
 import org.springframework.web.bind.annotation.RestControllerAdvice;

@@ -1,9 +1,9 @@
 package com.cloudx.server.demo.service;
 
-import com.cloudx.common.base.QueryParam;
-import com.cloudx.common.base.R;
-import com.cloudx.common.constant.ServerConstant;
-import com.cloudx.common.entity.dto.SystemUserDTO;
+import com.cloudx.common.core.base.QueryParam;
+import com.cloudx.common.core.base.R;
+import com.cloudx.common.core.constant.ServerConstant;
+import com.cloudx.common.core.entity.dto.SystemUserDTO;
 import com.cloudx.server.demo.service.fallback.UserServiceFallback;
 import java.util.Map;
 import org.springframework.cloud.openfeign.FeignClient;

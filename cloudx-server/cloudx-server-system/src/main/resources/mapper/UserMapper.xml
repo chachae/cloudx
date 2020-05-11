@@ -26,8 +26,8 @@
     WHERE 1 = 1
   </sql>
 
-  <select id="pageSystemUserDetail" parameterType="com.cloudx.common.entity.dto.SystemUserDTO"
-    resultType="com.cloudx.common.entity.dto.SystemUserDTO">
+  <select id="pageSystemUserDetail" parameterType="com.cloudx.common.core.entity.dto.SystemUserDTO"
+    resultType="com.cloudx.common.core.entity.dto.SystemUserDTO">
     <include refid="baseSql"/>
     <if test="user.username != null and user.username != ''">
       AND u.username like CONCAT('%',#{user.username},'%')
@@ -51,8 +51,9 @@
     u.dept_id,u.last_login_time,u.update_time,u.description,u.avatar
   </select>
 
-  <select id="selectSystemUserDetail" parameterType="com.cloudx.common.entity.dto.SystemUserDTO"
-    resultType="com.cloudx.common.entity.dto.SystemUserDTO">
+  <select id="selectSystemUserDetail"
+    parameterType="com.cloudx.common.core.entity.dto.SystemUserDTO"
+    resultType="com.cloudx.common.core.entity.dto.SystemUserDTO">
     <include refid="baseSql"/>
     <if test="user.username != null and user.username != ''">
       AND u.username = #{user.username}

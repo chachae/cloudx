@@ -2,9 +2,9 @@ package com.cloudx.gateway.common.filter;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.SentinelGatewayFilter;
-import com.cloudx.common.base.R;
-import com.cloudx.common.constant.GatewayConstant;
-import com.cloudx.common.util.HttpUtil;
+import com.cloudx.common.core.base.R;
+import com.cloudx.common.core.constant.GatewayConstant;
+import com.cloudx.common.core.util.HttpUtil;
 import com.cloudx.gateway.common.properties.CloudxGatewayProperties;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -22,12 +22,11 @@ import reactor.core.publisher.Mono;
 /**
  * Gateway 网关全局过滤器
  * <p>
- * Gateway 网关接入 Sentinel 作为微服务的流量控制组件，其 {@link SentinelGatewayFilter} 内实现
- * 了{@link org.springframework.cloud.gateway.filter.GlobalFilter} 接口，本网关采用自定义
- * 的 Gateway Token 作为微服务调用 / 远程调用的请求来自网关转发的凭证，需要依赖全局过滤器，同时需要
- * Sentinel 的过滤器来实现簇点链路流控，因此需通过继承 Sentinel 的过滤器以此获得其所有实现，并重写
- * {@link SentinelGatewayFilter#filter} 方法实现自定义请求头的规则，方法内调用用父级的实现完成
- * 请求在网关内的过滤和禁止访问路径的拦截。（后面使用 MongoDB 实现黑白名单控制）
+ * Gateway 网关接入 Sentinel 作为微服务的流量控制组件，其 {@link SentinelGatewayFilter} 内实现 了{@link
+ * org.springframework.cloud.gateway.filter.GlobalFilter} 接口，本网关采用自定义 的 Gateway Token 作为微服务调用 /
+ * 远程调用的请求来自网关转发的凭证，需要依赖全局过滤器，同时需要 Sentinel 的过滤器来实现簇点链路流控，因此需通过继承 Sentinel 的过滤器以此获得其所有实现，并重写 {@link
+ * SentinelGatewayFilter#filter} 方法实现自定义请求头的规则，方法内调用用父级的实现完成 请求在网关内的过滤和禁止访问路径的拦截。（后面使用 MongoDB
+ * 实现黑白名单控制）
  *
  * @author chachae
  * @since 2020/04/21 13:30

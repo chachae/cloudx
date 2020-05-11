@@ -4,7 +4,7 @@ import cn.hutool.core.collection.CollUtil;
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.TypeReference;
-import com.cloudx.common.service.RedisService;
+import com.cloudx.common.redis.starter.service.RedisService;
 import java.util.List;
 import javax.sql.DataSource;
 import lombok.extern.slf4j.Slf4j;

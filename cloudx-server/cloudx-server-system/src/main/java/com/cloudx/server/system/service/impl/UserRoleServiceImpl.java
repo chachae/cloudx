@@ -1,7 +1,8 @@
 package com.cloudx.server.system.service.impl;
 
+
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cloudx.common.entity.system.UserRole;
+import com.cloudx.common.core.entity.system.UserRole;
 import com.cloudx.server.system.mapper.UserRoleMapper;
 import com.cloudx.server.system.service.IUserRoleService;
 import org.springframework.stereotype.Service;

@@ -10,7 +10,11 @@ import org.springframework.util.Base64Utils;
 public class Base64Test {
 
   public static void main(String[] args) {
-    System.out.println(de());
+    secret();
+  }
+
+  public static void secret(){
+    System.out.println(Base64Utils.encodeToString("cloudx:123456".getBytes()));
   }
 
   public static String en() {

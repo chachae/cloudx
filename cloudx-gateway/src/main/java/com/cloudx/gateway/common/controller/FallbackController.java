@@ -1,6 +1,6 @@
 package com.cloudx.gateway.common.controller;
 
-import com.cloudx.common.base.R;
+import com.cloudx.common.core.base.R;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;

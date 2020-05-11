@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+  <parent>
+    <artifactId>cloudx-common</artifactId>
+    <groupId>com.cloudx</groupId>
+    <version>1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
+  </parent>
+  <modelVersion>4.0.0</modelVersion>
+
+  <version>1.0-SNAPSHOT</version>
+  <name>${project.artifactId}</name>
+  <description>cloudx 通用 Security 模块</description>
+  <artifactId>cloudx-common-security-starter</artifactId>
+
+  <properties>
+    <cloudx.version>1.0-SNAPSHOT</cloudx.version>
+  </properties>
+
+  <dependencies>
+    <dependency>
+      <groupId>com.cloudx</groupId>
+      <artifactId>cloudx-common-core</artifactId>
+      <version>${cloudx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-configuration-processor</artifactId>
+      <optional>true</optional>
+    </dependency>
+  </dependencies>
+
+</project>

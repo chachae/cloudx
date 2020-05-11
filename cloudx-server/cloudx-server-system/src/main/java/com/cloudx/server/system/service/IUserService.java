@@ -1,10 +1,11 @@
 package com.cloudx.server.system.service;
 
+
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cloudx.common.base.QueryParam;
-import com.cloudx.common.entity.dto.SystemUserDTO;
-import com.cloudx.common.entity.system.SystemUser;
+import com.cloudx.common.core.base.QueryParam;
+import com.cloudx.common.core.entity.dto.SystemUserDTO;
+import com.cloudx.common.core.entity.system.SystemUser;
 
 /**
  * @author chachae

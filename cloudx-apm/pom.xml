@@ -13,7 +13,7 @@
 
   <artifactId>cloudx-apm</artifactId>
   <name>${project.artifactId}</name>
-  <description>cloudx APM平台聚合模块</description>
+  <description>cloudx APM监控平台聚合模块</description>
   <packaging>pom</packaging>
 
   <modules>

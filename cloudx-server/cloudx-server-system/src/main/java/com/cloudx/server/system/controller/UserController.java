@@ -1,11 +1,11 @@
 package com.cloudx.server.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.cloudx.common.base.QueryParam;
-import com.cloudx.common.base.R;
-import com.cloudx.common.entity.dto.SystemUserDTO;
-import com.cloudx.common.entity.system.SystemUser;
-import com.cloudx.common.util.PageUtil;
+import com.cloudx.common.core.base.QueryParam;
+import com.cloudx.common.core.base.R;
+import com.cloudx.common.core.entity.dto.SystemUserDTO;
+import com.cloudx.common.core.entity.system.SystemUser;
+import com.cloudx.common.core.util.PageUtil;
 import com.cloudx.server.system.service.IUserService;
 import java.util.Map;
 import javax.validation.Valid;

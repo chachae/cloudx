@@ -3,8 +3,8 @@ package com.cloudx.server.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.cloudx.common.entity.dto.SystemUserDTO;
-import com.cloudx.common.entity.system.SystemUser;
+import com.cloudx.common.core.entity.dto.SystemUserDTO;
+import com.cloudx.common.core.entity.system.SystemUser;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

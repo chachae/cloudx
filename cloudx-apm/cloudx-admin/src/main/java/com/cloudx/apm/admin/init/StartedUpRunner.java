@@ -1,12 +1,11 @@
 package com.cloudx.apm.admin.init;
 
 import java.time.LocalDateTime;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Value;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.ApplicationArguments;
 import org.springframework.boot.ApplicationRunner;
 import org.springframework.context.ConfigurableApplicationContext;
+import org.springframework.core.env.Environment;
 import org.springframework.stereotype.Component;
 
 /**
@@ -16,25 +15,28 @@ import org.springframework.stereotype.Component;
 @Component
 public class StartedUpRunner implements ApplicationRunner {
 
-  private final Logger log = LoggerFactory.getLogger(this.getClass());
-
   private final ConfigurableApplicationContext context;
+  private final Environment environment;
 
-  public StartedUpRunner(ConfigurableApplicationContext context) {
+  @Autowired
+  public StartedUpRunner(ConfigurableApplicationContext context, Environment environment) {
     this.context = context;
+    this.environment = environment;
   }
 
-  @Value("${spring.application.name:'cloudx-admin'}")
-  private String applicationName;
+  private static void printSystemUpBanner(Environment environment) {
+    String banner = "-----------------------------------------\n" +
+        "服务启动成功，时间：" + LocalDateTime.now() + "\n" +
+        "服务名称：" + environment.getProperty("spring.application.name") + "\n" +
+        "端口号：" + environment.getProperty("server.port") + "\n" +
+        "-----------------------------------------";
+    System.out.println(banner);
+  }
 
   @Override
   public void run(ApplicationArguments args) {
     if (context.isActive()) {
-      log.info("  _   _   _   _   _   _   _   _");
-      log.info(" / \\ / \\ / \\ / \\ / \\ / \\ / \\ / \\");
-      log.info("( c | o | m | p | l | e | t | e )");
-      log.info(" \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/ \\_/");
-      log.info("{} 启动完毕，时间：{}", applicationName, LocalDateTime.now());
+      printSystemUpBanner(environment);
     }
   }
 }

@@ -1,6 +1,6 @@
 package com.cloudx.auth.mapper;
 
-import com.cloudx.common.entity.system.Menu;
+import com.cloudx.common.core.entity.system.Menu;
 import java.util.List;
 
 /**

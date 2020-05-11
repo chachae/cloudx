@@ -2,9 +2,9 @@ package com.cloudx.auth.config;
 
 import cn.hutool.core.util.StrUtil;
 import com.cloudx.auth.properties.AuthProperties;
-import com.cloudx.common.constant.EndpointConstant;
-import com.cloudx.common.handler.CloudxAccessDeniedHandler;
-import com.cloudx.common.handler.CloudxAuthExceptionEntryPoint;
+import com.cloudx.common.core.constant.EndpointConstant;
+import com.cloudx.common.security.starter.handler.CloudxAccessDeniedHandler;
+import com.cloudx.common.security.starter.handler.CloudxAuthExceptionEntryPoint;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;

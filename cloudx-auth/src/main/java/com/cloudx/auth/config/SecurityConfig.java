@@ -1,7 +1,7 @@
 package com.cloudx.auth.config;
 
 import com.cloudx.auth.filter.PswGrantFilter;
-import com.cloudx.common.constant.EndpointConstant;
+import com.cloudx.common.core.constant.EndpointConstant;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
 import org.springframework.core.annotation.Order;

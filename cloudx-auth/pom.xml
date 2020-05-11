@@ -6,19 +6,33 @@
     <artifactId>cloudx</artifactId>
     <groupId>com.cloudx</groupId>
     <version>1.0-SNAPSHOT</version>
+    <relativePath>../pom.xml</relativePath>
   </parent>
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>cloudx-auth</artifactId>
-  <name>${artifactId}</name>
+  <name>${project.artifactId}</name>
   <description>cloudx 认证服务</description>
 
+  <properties>
+    <cloudx.version>1.0-SNAPSHOT</cloudx.version>
+  </properties>
+
   <dependencies>
-    <!-- cloudx 通用 -->
     <dependency>
       <groupId>com.cloudx</groupId>
-      <artifactId>cloudx-common</artifactId>
-      <version>${project.version}</version>
+      <artifactId>cloudx-common-redis-starter</artifactId>
+      <version>${cloudx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.cloudx</groupId>
+      <artifactId>cloudx-common-datasource-starter</artifactId>
+      <version>${cloudx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.cloudx</groupId>
+      <artifactId>cloudx-common-security-starter</artifactId>
+      <version>${cloudx.version}</version>
     </dependency>
     <!-- easy-captcha -->
     <dependency>
@@ -29,23 +43,26 @@
   </dependencies>
 
   <build>
-    <filters>
-      <filter>../config/system/config-${profile.active}.properties</filter>
-    </filters>
-
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>repackage</goal>
-            </goals>
-          </execution>
-        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <delimiters>@</delimiters>
+          <useDefaultDelimiters>false</useDefaultDelimiters>
+        </configuration>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
   </build>
 
 </project>

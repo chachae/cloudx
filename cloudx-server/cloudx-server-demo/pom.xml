@@ -13,11 +13,20 @@
   <name>${project.artifactId}</name>
   <description>cloudx 微服务调用示例模块</description>
 
+  <properties>
+    <cloudx.version>1.0-SNAPSHOT</cloudx.version>
+  </properties>
+
   <dependencies>
     <dependency>
       <groupId>com.cloudx</groupId>
-      <artifactId>cloudx-common</artifactId>
-      <version>${project.version}</version>
+      <artifactId>cloudx-common-datasource-starter</artifactId>
+      <version>${cloudx.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.cloudx</groupId>
+      <artifactId>cloudx-common-security-starter</artifactId>
+      <version>${cloudx.version}</version>
     </dependency>
     <dependency>
       <groupId>org.springframework.boot</groupId>
@@ -26,23 +35,26 @@
   </dependencies>
 
   <build>
-    <filters>
-      <filter>../../config/system/config-${profile.active}.properties</filter>
-    </filters>
-
     <plugins>
       <plugin>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
-        <executions>
-          <execution>
-            <goals>
-              <goal>repackage</goal>
-            </goals>
-          </execution>
-        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-resources-plugin</artifactId>
+        <configuration>
+          <delimiters>@</delimiters>
+          <useDefaultDelimiters>false</useDefaultDelimiters>
+        </configuration>
       </plugin>
     </plugins>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+        <filtering>true</filtering>
+      </resource>
+    </resources>
   </build>
 
 </project>

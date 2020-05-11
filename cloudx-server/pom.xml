@@ -10,7 +10,7 @@
   <modelVersion>4.0.0</modelVersion>
 
   <artifactId>cloudx-server</artifactId>
-  <name>${artifactId}</name>
+  <name>${project.artifactId}</name>
   <description>cloudx 服务提供模块</description>
   <modules>
     <module>cloudx-server-system</module>

@@ -1,31 +1,26 @@
-server:
-  port: @apm.admin.port@
-
 spring:
   application:
-    name: @project.name@
-  profiles:
-    active: @profile.active@
-
+    name: cloudx-admin
   cloud:
     nacos:
-      server-addr: @nacos.ip@
-
-  security:
-    user:
-      name: @apm.admin.username@
-      password: @apm.admin.password@
-
-  boot:
-    admin:
-      ui:
-        title: ${spring.application.name}
+      config:
+        server-addr: ${nacos.url}
+        group: DEFAULT_GROUP
+        prefix: ${spring.application.name}
+        file-extension: yaml
 
 logging:
   level:
     com:
       alibaba:
-        cloud:
-          nacos:
-            client:
-              NacosPropertySourceBuilder: error
+        nacos:
+          client:
+            config:
+              impl:
+                ClientWorker: error
+    org:
+      springframework:
+        boot:
+          actuate:
+            endpoint:
+              EndpointId: error

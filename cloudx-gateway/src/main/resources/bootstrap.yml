@@ -1,44 +1,28 @@
 spring:
   application:
-    name: @project.name@
-  profiles:
-    active: @profile.active@
-
+    name: cloudx-gateway
   cloud:
     nacos:
-      server-addr: @nacos.ip@
       config:
-        group: @nacos.group@
-        prefix: @project.name@
+        server-addr: ${nacos.url}
+        group: DEFAULT_GROUP
+        prefix: ${spring.application.name}
         file-extension: yaml
-
-    sentinel:
-      transport:
-        dashboard: @sentinel.ip@:@sentinel.port@ #sentinel控制台访问路径
-        port: @sentinel.port@
-      eager: true #心跳启动
-
-  # boot-admin
-  boot:
-    admin:
-      client:
-        url: @apm.admin.ip@:@apm.admin.port@
-        username: @apm.admin.username@
-        password: @apm.admin.password@
-        instance:
-          prefer-ip: true
+      discovery:
+        server-addr: ${nacos.url}
 
 logging:
   level:
     com:
       alibaba:
-        cloud:
-          nacos:
-            client:
-              NacosPropertySourceBuilder: error
-
-info:
-  name: @project.name@
-  description: @project.description@
-  version: @project.version@
-  spring-boot-version: @spring-boot.version@
+        nacos:
+          client:
+            config:
+              impl:
+                ClientWorker: error
+    org:
+      springframework:
+        boot:
+          actuate:
+            endpoint:
+              EndpointId: error

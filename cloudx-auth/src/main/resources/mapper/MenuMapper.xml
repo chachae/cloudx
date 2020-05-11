@@ -17,7 +17,7 @@
     from t_menu tm
   </sql>
 
-  <select id="selectMenusByUserId" resultType="com.cloudx.common.entity.system.Menu">
+  <select id="selectMenusByUserId" resultType="com.cloudx.common.core.entity.system.Menu">
     <include refid="baseSql"/>
     left join t_role_menu trm on tm.menu_id = trm.menu_id
     left join t_user_role tur on trm.role_id = tur.role_id

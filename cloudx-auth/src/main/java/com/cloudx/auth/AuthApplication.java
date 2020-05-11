@@ -1,13 +1,10 @@
 package com.cloudx.auth;
 
-import com.cloudx.common.annotation.EnableCloudxAuthExceptionHandler;
-import com.cloudx.common.annotation.EnableCloudxLettuceRedis;
-import com.cloudx.common.annotation.EnableCloudxServerProtect;
+import com.cloudx.common.security.starter.annotation.EnableCloudxCloudResourceServer;
 import org.mybatis.spring.annotation.MapperScan;
-import org.springframework.boot.SpringApplication;
+import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.cloud.client.discovery.EnableDiscoveryClient;
-import org.springframework.security.config.annotation.method.configuration.EnableGlobalMethodSecurity;
+import org.springframework.boot.builder.SpringApplicationBuilder;
 
 /**
  * 启动器
@@ -16,17 +13,14 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
  * @since 2020/4/24 18:45
  */
 
-@EnableDiscoveryClient
 @SpringBootApplication
-@EnableCloudxLettuceRedis
-@EnableCloudxServerProtect
-@EnableCloudxAuthExceptionHandler
+@EnableCloudxCloudResourceServer
 @MapperScan("com.cloudx.auth.mapper")
-@EnableGlobalMethodSecurity(prePostEnabled = true)
 public class AuthApplication {
 
   public static void main(String[] args) {
-    SpringApplication.run(AuthApplication.class, args);
+    new SpringApplicationBuilder(AuthApplication.class)
+        .web(WebApplicationType.SERVLET)
+        .run(args);
   }
-
 }

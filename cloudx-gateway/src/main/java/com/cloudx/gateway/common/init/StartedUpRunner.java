@@ -1,6 +1,6 @@
 package com.cloudx.gateway.common.init;
 
-import com.cloudx.common.constant.ServerConstant;
+import com.cloudx.common.core.constant.ServerConstant;
 import java.time.LocalDateTime;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;

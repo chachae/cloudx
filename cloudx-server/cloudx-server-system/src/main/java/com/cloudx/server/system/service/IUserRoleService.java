@@ -1,7 +1,8 @@
 package com.cloudx.server.system.service;
 
+
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cloudx.common.entity.system.UserRole;
+import com.cloudx.common.core.entity.system.UserRole;
 
 /**
  * @author chachae

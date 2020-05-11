@@ -1,11 +1,11 @@
 package com.cloudx.server.demo.controller;
 
-import com.cloudx.common.base.QueryParam;
-import com.cloudx.common.base.R;
-import com.cloudx.common.entity.dto.SystemUserDTO;
-import com.cloudx.common.exception.ApiException;
-import com.cloudx.common.util.HttpUtil;
-import com.cloudx.common.util.SecurityUtil;
+import com.cloudx.common.core.base.QueryParam;
+import com.cloudx.common.core.base.R;
+import com.cloudx.common.core.entity.dto.SystemUserDTO;
+import com.cloudx.common.core.exception.ApiException;
+import com.cloudx.common.core.util.HttpUtil;
+import com.cloudx.common.core.util.SecurityUtil;
 import com.cloudx.server.demo.service.IUserService;
 import java.util.HashMap;
 import java.util.Map;

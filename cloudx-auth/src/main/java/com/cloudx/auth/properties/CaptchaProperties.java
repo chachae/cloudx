@@ -1,6 +1,6 @@
 package com.cloudx.auth.properties;
 
-import com.cloudx.common.constant.ImageTypeConstant;
+import com.cloudx.common.core.constant.ImageTypeConstant;
 import lombok.Data;
 import org.springframework.stereotype.Component;
 
