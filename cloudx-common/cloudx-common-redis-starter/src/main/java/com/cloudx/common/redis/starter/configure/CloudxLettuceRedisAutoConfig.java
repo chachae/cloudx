@@ -18,6 +18,8 @@ import org.springframework.data.redis.serializer.StringRedisSerializer;
 
 /**
  * Lettuce Redis配置
+ * <p>
+ * {@link ConditionalOnProperty} 控制 Configuration 是否生效
  *
  * @author chachae
  * @since 2020/05/06 18:23

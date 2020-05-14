@@ -48,15 +48,19 @@ public class CloudxCloudSecurityAutoConfig {
     return new CloudxCloudSecurityInterceptorConfig();
   }
 
-
+  /**
+   * Feign 远程调用请求拦截，加入GatewayToken 和 当前用户的 Authorization Token
+   *
+   * @return RequestInterceptor
+   */
   @Bean
   public RequestInterceptor oauth2FeignRequestInterceptor() {
     return requestTemplate -> {
       String gatewayToken = new String(Base64Utils.encode(GatewayConstant.TOKEN_VALUE.getBytes()));
-      requestTemplate.header(GatewayConstant.TOKEN_HEADER, gatewayToken);
-      String authorizationToken = SecurityUtil.getCurrentTokenValue();
       requestTemplate
-          .header(HttpHeaders.AUTHORIZATION, SystemConstant.OAUTH2_TOKEN_TYPE + authorizationToken);
+          .header(GatewayConstant.TOKEN_HEADER, gatewayToken)
+          .header(HttpHeaders.AUTHORIZATION,
+              SystemConstant.OAUTH2_TOKEN_TYPE + SecurityUtil.getCurrentTokenValue());
     };
   }
 }

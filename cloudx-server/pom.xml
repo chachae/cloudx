@@ -18,4 +18,12 @@
   </modules>
   <packaging>pom</packaging>
 
+  <dependencies>
+    <dependency>
+      <groupId>net.logstash.logback</groupId>
+      <artifactId>logstash-logback-encoder</artifactId>
+      <version>${logstash-logback-encoder.version}</version>
+    </dependency>
+  </dependencies>
+
 </project>

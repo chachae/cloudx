@@ -40,6 +40,13 @@
       <artifactId>easy-captcha</artifactId>
       <version>1.6.2</version>
     </dependency>
+    <!-- logstash-logback-encoder -->
+    <dependency>
+      <groupId>net.logstash.logback</groupId>
+      <artifactId>logstash-logback-encoder</artifactId>
+      <version>${logstash-logback-encoder.version}</version>
+    </dependency>
+
   </dependencies>
 
   <build>
@@ -48,21 +55,7 @@
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-resources-plugin</artifactId>
-        <configuration>
-          <delimiters>@</delimiters>
-          <useDefaultDelimiters>false</useDefaultDelimiters>
-        </configuration>
-      </plugin>
     </plugins>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
   </build>
 
 </project>

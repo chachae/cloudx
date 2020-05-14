@@ -3,6 +3,8 @@ package com.cloudx.common.redis.starter.properties;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 
 /**
+ * Lettuce Redis Properties
+ *
  * @author chachae
  * @since 2020/05/11 22:31
  */

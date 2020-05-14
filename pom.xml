@@ -36,6 +36,7 @@
     <spring-cloud-alibaba-version>2.2.1.RELEASE</spring-cloud-alibaba-version>
     <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
     <spring-admin.version>2.2.2</spring-admin.version>
+    <logstash-logback-encoder.version>6.3</logstash-logback-encoder.version>
   </properties>
 
   <dependencyManagement>

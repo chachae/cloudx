@@ -30,6 +30,7 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <!-- 替换默认容器 Tomcat 为 Jetty -->
     <dependency>
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-jetty</artifactId>
@@ -61,12 +62,6 @@
         <artifactId>spring-boot-maven-plugin</artifactId>
       </plugin>
     </plugins>
-    <resources>
-      <resource>
-        <directory>src/main/resources</directory>
-        <filtering>true</filtering>
-      </resource>
-    </resources>
   </build>
 
 </project>

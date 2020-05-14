@@ -26,9 +26,9 @@ public class StartedUpRunner implements ApplicationRunner {
 
   private static void printSystemUpBanner(Environment environment) {
     String banner = "-----------------------------------------\n" +
-        "服务启动成功，时间：" + LocalDateTime.now() + "\n" +
-        "服务名称：" + environment.getProperty("spring.application.name") + "\n" +
-        "端口号：" + environment.getProperty("server.port") + "\n" +
+        "server up success,current datetime is：" + LocalDateTime.now() + "\n" +
+        "server application name：" + environment.getProperty("spring.application.name") + "\n" +
+        "server port：" + environment.getProperty("server.port") + "\n" +
         "-----------------------------------------";
     System.out.println(banner);
   }

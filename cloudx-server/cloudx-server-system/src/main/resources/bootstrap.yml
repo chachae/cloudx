@@ -13,12 +13,6 @@ spring:
       discovery:
         server-addr: ${nacos.url}
 
-cloudx:
-  cloud:
-    security:
-      enable: true
-      anon-uris: /actuator/**,/v2/api-docs,/v2/api-docs-ext
-
 logging:
   level:
     com:
