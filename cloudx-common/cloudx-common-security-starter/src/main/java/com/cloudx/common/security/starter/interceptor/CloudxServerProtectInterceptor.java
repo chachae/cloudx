@@ -1,6 +1,6 @@
 package com.cloudx.common.security.starter.interceptor;
 
-import com.cloudx.common.core.base.R;
+import com.cloudx.common.core.entity.R;
 import com.cloudx.common.core.constant.GatewayConstant;
 import com.cloudx.common.core.util.HttpUtil;
 import com.cloudx.common.security.starter.properties.CloudxCloudSecurityProperties;

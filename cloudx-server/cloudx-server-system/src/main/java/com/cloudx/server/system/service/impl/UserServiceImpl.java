@@ -6,8 +6,8 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cloudx.common.core.base.QueryParam;
 import com.cloudx.common.core.constant.SystemUserConstant;
+import com.cloudx.common.core.entity.QueryParam;
 import com.cloudx.common.core.entity.auth.CurrentUser;
 import com.cloudx.common.core.entity.dto.SystemUserDTO;
 import com.cloudx.common.core.entity.system.SystemUser;
@@ -42,7 +42,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
   private final PasswordEncoder passwordEncoder;
 
   @Override
-  public SystemUser selectByUserName(String userName) {
+  public SystemUser selectByUsername(String userName) {
     LambdaQueryWrapper<SystemUser> qw = new LambdaQueryWrapper<>();
     qw.eq(SystemUser::getUsername, userName);
     return getOne(qw);

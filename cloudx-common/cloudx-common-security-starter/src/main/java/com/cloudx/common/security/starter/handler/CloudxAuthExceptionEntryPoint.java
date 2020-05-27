@@ -1,6 +1,6 @@
 package com.cloudx.common.security.starter.handler;
 
-import com.cloudx.common.core.base.R;
+import com.cloudx.common.core.entity.R;
 import com.cloudx.common.core.util.HttpUtil;
 import java.io.IOException;
 import javax.servlet.http.HttpServletRequest;

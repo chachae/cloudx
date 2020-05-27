@@ -30,10 +30,13 @@ public class CurrentUser implements Serializable {
   private boolean enabled;
   private Long userId;
   private String username;
-  private Long deptId;
   private String email;
   private String mobile;
   private Boolean status;
+  private Long deptId;
+  private String deptName;
+  private String roleIds;
+  private String roleName;
   @JsonIgnore
   private Date lastLoginTime;
   private Integer gender;

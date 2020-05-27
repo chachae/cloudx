@@ -35,7 +35,8 @@ public class SecurityUtil {
     try {
       LinkedHashMap<String, Object> authenticationDetails = getAuthenticationDetails();
       Object principal = authenticationDetails.get("principal");
-      return MAPPER.readValue(MAPPER.writeValueAsString(principal), CurrentUser.class);
+      ObjectMapper mapper = new ObjectMapper();
+      return mapper.readValue(mapper.writeValueAsString(principal), CurrentUser.class);
     } catch (Exception e) {
       log.error("获取当前用户信息失败", e);
       return null;
@@ -70,9 +71,13 @@ public class SecurityUtil {
    * @return String 令牌内容
    */
   public static String getCurrentTokenValue() {
-    OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) getOauth2Authentication()
-        .getDetails();
-    return details.getTokenValue();
+    try {
+      OAuth2AuthenticationDetails details = (OAuth2AuthenticationDetails) getOauth2Authentication()
+          .getDetails();
+      return details.getTokenValue();
+    } catch (Exception ignore) {
+      return null;
+    }
   }
 
   private static OAuth2Authentication getOauth2Authentication() {

@@ -1,7 +1,7 @@
 package com.cloudx.auth.handler;
 
 import com.cloudx.auth.exception.CaptchaException;
-import com.cloudx.common.core.base.R;
+import com.cloudx.common.core.entity.R;
 import com.cloudx.common.core.handler.BaseExceptionHandler;
 import org.springframework.core.Ordered;
 import org.springframework.core.annotation.Order;

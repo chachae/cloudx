@@ -1,12 +1,12 @@
 package com.cloudx.auth.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cloudx.auth.mapper.MenuMapper;
 import com.cloudx.auth.mapper.UserMapper;
 import com.cloudx.common.core.constant.SystemUserConstant;
 import com.cloudx.common.core.entity.auth.AuthUser;
+import com.cloudx.common.core.entity.dto.SystemUserDTO;
 import com.cloudx.common.core.entity.system.Menu;
 import com.cloudx.common.core.entity.system.SystemUser;
 import java.util.List;
@@ -34,8 +34,8 @@ public class SystemUserDetailServiceImpl extends ServiceImpl<UserMapper, SystemU
   private final MenuMapper menuMapper;
 
   @Override
-  public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
-    SystemUser systemUser = findByUserName(username);
+  public UserDetails loadUserByUsername(String username) {
+    SystemUserDTO systemUser = baseMapper.findUserDto(username);
     if (systemUser != null) {
       // 判断用户状态
       if (SystemUserConstant.STATUS_VALID.equals(systemUser.getStatus())) {
@@ -59,25 +59,13 @@ public class SystemUserDetailServiceImpl extends ServiceImpl<UserMapper, SystemU
   }
 
   /**
-   * 通过用户名查询用户信息
-   *
-   * @param username 用户名
-   * @return 用户信息：SystemUser
-   */
-  private SystemUser findByUserName(String username) {
-    LambdaQueryWrapper<SystemUser> query = new LambdaQueryWrapper<>();
-    query.eq(SystemUser::getUsername, username);
-    return getOne(query);
-  }
-
-  /**
    * 通过用户id获取用户权限表达式
    *
    * @param userId 用户id
    * @return 用户权限表达式：String
    */
   private String selectExpressionByUserId(Long userId) {
-    List<Menu> menus = menuMapper.selectMenusByUserId(userId);
+    List<Menu> menus = menuMapper.selectListByUserId(userId);
     return menus.stream().map(Menu::getExpression).collect(Collectors.joining(","));
   }
 }

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.4//EN"
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.cloudx.auth.mapper.MenuMapper">
+<mapper namespace="com.cloudx.server.system.mapper.MenuMapper">
 
   <sql id="baseSql">
     select m.menu_id,
@@ -18,7 +18,19 @@
     from t_menu m
   </sql>
 
-  <select id="selectListByUserId" parameterType="long"
+  <select id="selectUserPermissions" resultType="com.cloudx.common.core.entity.system.Menu">
+    select distinct m.expression
+    from t_role r
+           left join t_user_role ur on (r.role_id = ur.role_id)
+           left join t_user u on (u.user_id = ur.user_id)
+           left join t_role_menu rm on (rm.role_id = r.role_id)
+           left join t_menu m on (m.menu_id = rm.menu_id)
+    where u.username = #{userName}
+      and m.expression is not null
+      and m.expression &lt;&gt; ''
+  </select>
+
+  <select id="selectListByUsername" parameterType="string"
     resultType="com.cloudx.common.core.entity.system.Menu">
     <include refid="baseSql"/>
     where m.type &lt;&gt; 1
@@ -28,7 +40,7 @@
     left join t_role r on (rm.role_id = r.role_id)
     left join t_user_role ur on (ur.role_id = r.role_id)
     left join t_user u on (u.user_id = ur.user_id)
-    where u.user_id = #{userId,jdbcType=INTEGER})
+    where u.username = #{username,jdbcType=VARCHAR})
     order by m.order_num
   </select>
 </mapper>

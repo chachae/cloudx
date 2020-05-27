@@ -1,5 +1,6 @@
 package com.cloudx.common.core.entity.system;
 
+import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
@@ -11,9 +12,10 @@ import lombok.Data;
  * @since 2020-04-29 21:25:49
  */
 @Data
+@TableName("t_login_log")
 public class LoginLog implements Serializable {
 
-  private static final long serialVersionUID = 5370224853350191738L;
+  private static final long serialVersionUID = 3640324615927431799L;
 
   /**
    * id

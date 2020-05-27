@@ -1,10 +1,9 @@
-package com.cloudx.common.core.base;
+package com.cloudx.common.core.entity;
 
 import com.fasterxml.jackson.annotation.JsonInclude;
 import java.io.Serializable;
 import java.util.Date;
 import lombok.Data;
-import org.springframework.http.HttpStatus;
 
 /**
  * 统一响应信息
@@ -17,11 +16,6 @@ import org.springframework.http.HttpStatus;
 public class R<E> implements Serializable {
 
   private static final long serialVersionUID = -8713837163942965721L;
-
-  /**
-   * 响应代码
-   */
-  private Integer code;
 
   /**
    * 响应信息
@@ -44,27 +38,22 @@ public class R<E> implements Serializable {
   /**
    * 全参构造
    */
-  private R(Integer code, String message, E data, Date timestamp) {
-    this.code = code;
+  private R(String message, E data, Date timestamp) {
     this.message = message;
     this.data = data;
     this.timestamp = timestamp;
   }
 
-  private R(Integer code, String message, E data) {
-    this(code, message, data, null);
+  private R(String message, E data) {
+    this(message, data, null);
   }
 
   public R(String message) {
-    this(null, message, null);
+    this(message, null, null);
   }
 
   public R(E data) {
-    this(null, null, data);
-  }
-
-  public R(int code, String message) {
-    this(code, message, null);
+    this(null, data, null);
   }
 
   /**
@@ -73,7 +62,7 @@ public class R<E> implements Serializable {
    * @return /
    */
   public static R<Object> ok() {
-    return new R<>(HttpStatus.OK.value(), HttpStatus.OK.name(), null);
+    return new R<>("ok", null);
   }
 
   /**
@@ -82,7 +71,7 @@ public class R<E> implements Serializable {
    * @return /
    */
   public static <E> R<E> ok(E data) {
-    return new R<>(HttpStatus.OK.value(), HttpStatus.OK.name(), data);
+    return new R<>("ok", data);
   }
 
   /**
@@ -91,7 +80,7 @@ public class R<E> implements Serializable {
    * @return /
    */
   public static R<String> fail(String message) {
-    return new R<>(null, message, null, new Date());
+    return new R<>(message, null, new Date());
   }
 
   /**
@@ -99,7 +88,7 @@ public class R<E> implements Serializable {
    *
    * @return /
    */
-  public static R<Object> fail(int code, String message) {
-    return new R<>(code, message, null, new Date());
+  public static R<String> fail() {
+    return fail("fail");
   }
 }

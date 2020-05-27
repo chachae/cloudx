@@ -3,7 +3,7 @@ package com.cloudx.server.system.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
-import com.cloudx.common.core.base.QueryParam;
+import com.cloudx.common.core.entity.QueryParam;
 import com.cloudx.common.core.entity.dto.SystemUserDTO;
 import com.cloudx.common.core.entity.system.SystemUser;
 
@@ -13,7 +13,7 @@ import com.cloudx.common.core.entity.system.SystemUser;
  */
 public interface IUserService extends IService<SystemUser> {
 
-  SystemUser selectByUserName(String userName);
+  SystemUser selectByUsername(String userName);
 
   IPage<SystemUserDTO> pageSystemUser(QueryParam param, SystemUserDTO user);
 

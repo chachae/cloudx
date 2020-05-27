@@ -15,5 +15,5 @@ public interface MenuMapper {
    * @param userId 用户ID
    * @return 菜单集合
    */
-  List<Menu> selectMenusByUserId(Long userId);
+  List<Menu> selectListByUserId(Long userId);
 }

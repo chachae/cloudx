@@ -1,6 +1,5 @@
-package com.cloudx.common.core.base;
+package com.cloudx.common.core.entity;
 
-import java.io.Serializable;
 import lombok.Data;
 
 /**
@@ -10,9 +9,7 @@ import lombok.Data;
  * @since 2020/4/30 20:15
  */
 @Data
-public class QueryParam implements Serializable {
-
-  private static final long serialVersionUID = -4219594085276188358L;
+public class QueryParam {
 
   /**
    * 页号，默认第1页

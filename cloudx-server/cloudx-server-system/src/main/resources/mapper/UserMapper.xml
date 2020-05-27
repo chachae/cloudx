@@ -11,18 +11,19 @@
            u.status,
            u.create_time,
            u.gender,
-           u.dept_id,
            u.last_login_time,
            u.update_time,
            u.description,
            u.avatar,
+           u.dept_id,
            d.dept_name,
            GROUP_CONCAT(r.role_id)   roleId,
            GROUP_CONCAT(r.role_name) roleName
     FROM t_user u
-           LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
            LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id)
-           LEFT JOIN t_role r ON r.role_id = ur.role_id
+           LEFT JOIN t_role r ON (r.role_id = ur.role_id)
+           LEFT JOIN t_user_dept tud ON (u.user_id = tud.user_id)
+           LEFT JOIN t_dept d ON (tud.dept_id = d.dept_id)
     WHERE 1 = 1
   </sql>
 

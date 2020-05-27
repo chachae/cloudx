@@ -2,8 +2,8 @@ package com.cloudx.gateway.common.filter;
 
 import cn.hutool.core.util.StrUtil;
 import com.alibaba.csp.sentinel.adapter.gateway.sc.SentinelGatewayFilter;
-import com.cloudx.common.core.base.R;
 import com.cloudx.common.core.constant.GatewayConstant;
+import com.cloudx.common.core.entity.R;
 import com.cloudx.common.core.util.HttpUtil;
 import com.cloudx.gateway.common.properties.CloudxGatewayProperties;
 import lombok.RequiredArgsConstructor;

@@ -1,7 +1,7 @@
 package com.cloudx.common.core.handler;
 
 import cn.hutool.core.util.StrUtil;
-import com.cloudx.common.core.base.R;
+import com.cloudx.common.core.entity.R;
 import com.cloudx.common.core.exception.ApiException;
 import java.util.List;
 import java.util.Set;
@@ -31,14 +31,14 @@ public abstract class BaseExceptionHandler {
 
   @ExceptionHandler(value = Exception.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public R<String> handleException(Exception e) {
+  protected R<String> handleException(Exception e) {
     log.error("系统内部异常，异常信息", e);
     return R.fail("系统内部异常");
   }
 
   @ExceptionHandler(value = ApiException.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public R<String> handleApiException(ApiException e) {
+  protected R<String> handleApiException(ApiException e) {
     log.error("系统错误", e);
     return R.fail(e.getMessage());
   }
@@ -51,7 +51,7 @@ public abstract class BaseExceptionHandler {
    */
   @ExceptionHandler(BindException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public R<String> handleBindException(BindException e) {
+  protected R<String> handleBindException(BindException e) {
     StringBuilder message = new StringBuilder();
     List<FieldError> fieldErrors = e.getBindingResult().getFieldErrors();
     for (FieldError error : fieldErrors) {
@@ -69,7 +69,7 @@ public abstract class BaseExceptionHandler {
    */
   @ExceptionHandler(value = ConstraintViolationException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public R<String> handleConstraintViolationException(ConstraintViolationException e) {
+  protected R<String> handleConstraintViolationException(ConstraintViolationException e) {
     StringBuilder message = new StringBuilder();
     Set<ConstraintViolation<?>> violations = e.getConstraintViolations();
     for (ConstraintViolation<?> violation : violations) {
@@ -89,7 +89,7 @@ public abstract class BaseExceptionHandler {
    */
   @ExceptionHandler(MethodArgumentNotValidException.class)
   @ResponseStatus(HttpStatus.BAD_REQUEST)
-  public R<String> handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+  protected R<String> handlerMethodArgumentNotValidException(MethodArgumentNotValidException e) {
     StringBuilder message = new StringBuilder();
     for (FieldError error : e.getBindingResult().getFieldErrors()) {
       message.append(error.getField()).append(error.getDefaultMessage()).append(",");
@@ -101,19 +101,20 @@ public abstract class BaseExceptionHandler {
 
   @ExceptionHandler(value = AccessDeniedException.class)
   @ResponseStatus(HttpStatus.FORBIDDEN)
-  public R<String> handleAccessDeniedException() {
+  protected R<String> handleAccessDeniedException() {
     return R.fail("没有权限访问该资源");
   }
 
   @ExceptionHandler(value = HttpMediaTypeNotSupportedException.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public R<String> handleHttpMediaTypeNotSupportedException(HttpMediaTypeNotSupportedException e) {
-    return R.fail("改方法不支持" + StrUtil.subBetween(e.getMessage(), "'", "'") + "媒体类型");
+  protected R<String> handleHttpMediaTypeNotSupportedException(
+      HttpMediaTypeNotSupportedException e) {
+    return R.fail("该方法不支持" + StrUtil.subBetween(e.getMessage(), "'", "'") + "媒体类型");
   }
 
   @ExceptionHandler(value = HttpRequestMethodNotSupportedException.class)
   @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-  public R<String> handleHttpRequestMethodNotSupportedException(
+  protected R<String> handleHttpRequestMethodNotSupportedException(
       HttpRequestMethodNotSupportedException e) {
     return R.fail("该方法不支持" + StrUtil.subBetween(e.getMessage(), "'", "'") + "请求方法");
   }

@@ -6,23 +6,20 @@ package com.cloudx.common.core.constant;
  * @author chachae
  * @since 2020/03/29 10:49
  */
-public class ImageTypeConstant {
-
-  private ImageTypeConstant() {
-  }
+public interface ImageTypeConstant {
 
   /**
    * gif类型
    */
-  public static final String GIF = "gif";
+  String GIF = "gif";
 
   /**
    * png类型
    */
-  public static final String PNG = "png";
+  String PNG = "png";
 
   /**
    * jpg类型
    */
-  public static final String JPG = "jpg";
+  String JPG = "jpg";
 }

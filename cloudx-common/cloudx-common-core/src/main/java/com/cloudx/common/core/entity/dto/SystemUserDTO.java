@@ -25,7 +25,7 @@ public class SystemUserDTO implements Serializable {
   private String password;
   private Long deptId;
   private String deptName;
-  private String roleId;
+  private String roleIds;
   private String roleName;
   private String email;
   private String mobile;

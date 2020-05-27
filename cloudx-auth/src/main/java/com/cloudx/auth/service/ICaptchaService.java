@@ -13,6 +13,8 @@ public interface ICaptchaService {
 
   /**
    * 创建验证码
+   *
+   * @param response 响应对象
    */
   void create(HttpServletResponse response) throws IOException;
 

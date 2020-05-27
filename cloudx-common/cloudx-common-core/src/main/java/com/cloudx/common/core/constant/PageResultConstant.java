@@ -4,19 +4,16 @@ package com.cloudx.common.core.constant;
  * @author chachae
  * @since 2020/4/30 20:54
  */
-public class PageResultConstant {
-
-  private PageResultConstant() {
-  }
+public interface PageResultConstant {
 
   /**
    * 数据总数
    */
-  public static final String TOTAL = "total";
+  String TOTAL = "total";
 
   /**
    * 数据信息
    */
-  public static final String CONTENT = "content";
+  String CONTENT = "content";
 
 }

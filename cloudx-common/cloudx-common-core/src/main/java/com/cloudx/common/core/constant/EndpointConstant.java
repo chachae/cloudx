@@ -6,24 +6,21 @@ package com.cloudx.common.core.constant;
  * @author chachae
  * @since 2020/4/27 22:23
  */
-public class EndpointConstant {
+public interface EndpointConstant {
 
-  private EndpointConstant() {
-  }
+  String ALL = "/**";
 
-  public static final String ALL = "/**";
+  String OAUTH_ALL = "/oauth/**";
 
-  public static final String OAUTH_ALL = "/oauth/**";
+  String OAUTH_AUTHORIZE = "/oauth/authorize";
 
-  public static final String OAUTH_AUTHORIZE = "/oauth/authorize";
+  String OAUTH_CHECK_TOKEN = "/oauth/check_token";
 
-  public static final String OAUTH_CHECK_TOKEN = "/oauth/check_token";
+  String OAUTH_CONFIRM_ACCESS = "/oauth/confirm_access";
 
-  public static final String OAUTH_CONFIRM_ACCESS = "/oauth/confirm_access";
+  String OAUTH_TOKEN = "/oauth/token";
 
-  public static final String OAUTH_TOKEN = "/oauth/token";
+  String OAUTH_TOKEN_KEY = "/oauth/token_key";
 
-  public static final String OAUTH_TOKEN_KEY = "/oauth/token_key";
-
-  public static final String OAUTH_ERROR = "/oauth/error";
+  String OAUTH_ERROR = "/oauth/error";
 }

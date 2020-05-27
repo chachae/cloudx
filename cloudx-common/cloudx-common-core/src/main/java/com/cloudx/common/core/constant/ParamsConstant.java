@@ -6,26 +6,24 @@ package com.cloudx.common.core.constant;
  * @author chachae
  * @since 2020/4/25 23:23
  */
-public class ParamsConstant {
+public interface ParamsConstant {
 
-  private ParamsConstant() {
-  }
 
   /**
    * 验证码 key
    */
-  public static final String CAPTCHA_KEY = "key";
+  String CAPTCHA_KEY = "key";
   /**
    * 验证码 code
    */
-  public static final String CAPTCHA_CODE = "code";
+  String CAPTCHA_CODE = "code";
   /**
    * 认证类型参数 key
    */
-  public static final String GRANT_TYPE = "grant_type";
+  String GRANT_TYPE = "grant_type";
   /**
    * 登录类型
    */
-  public static final String LOGIN_TYPE = "login_type";
+  String LOGIN_TYPE = "login_type";
 
 }

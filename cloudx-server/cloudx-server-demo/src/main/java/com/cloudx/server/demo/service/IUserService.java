@@ -1,8 +1,8 @@
 package com.cloudx.server.demo.service;
 
-import com.cloudx.common.core.base.QueryParam;
-import com.cloudx.common.core.base.R;
 import com.cloudx.common.core.constant.ServerConstant;
+import com.cloudx.common.core.entity.QueryParam;
+import com.cloudx.common.core.entity.R;
 import com.cloudx.common.core.entity.dto.SystemUserDTO;
 import com.cloudx.server.demo.service.fallback.UserServiceFallback;
 import java.util.Map;

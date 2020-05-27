@@ -3,5 +3,37 @@
   "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.cloudx.auth.mapper.UserMapper">
 
+  <sql id="baseSql">
+    SELECT u.user_id,
+           u.username,
+           u.email,
+           u.mobile,
+           u.password,
+           u.status,
+           u.create_time,
+           u.gender,
+           u.last_login_time,
+           u.update_time,
+           u.description,
+           u.avatar,
+           u.dept_id,
+           d.dept_name,
+           GROUP_CONCAT(r.role_id)   roleIds,
+           GROUP_CONCAT(r.role_name) roleName
+    FROM t_user u
+           LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id)
+           LEFT JOIN t_role r ON (r.role_id = ur.role_id)
+           LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
+    WHERE 1 = 1
+  </sql>
+
+  <select id="findUserDto"
+    parameterType="string"
+    resultType="com.cloudx.common.core.entity.dto.SystemUserDTO">
+    <include refid="baseSql"/>
+    and u.username = #{username,jdbcType=VARCHAR}
+    GROUP BY u.username,u.user_id,u.email,u.mobile,u.status,u.create_time,u.gender,
+    u.dept_id,u.last_login_time,u.update_time,u.description,u.avatar
+  </select>
 
 </mapper>

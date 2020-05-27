@@ -1,7 +1,7 @@
 package com.cloudx.auth.translator;
 
 import cn.hutool.core.util.StrUtil;
-import com.cloudx.common.core.base.R;
+import com.cloudx.common.core.entity.R;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;

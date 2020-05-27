@@ -1,8 +1,8 @@
 package com.cloudx.server.system.controller;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
-import com.cloudx.common.core.base.QueryParam;
-import com.cloudx.common.core.base.R;
+import com.cloudx.common.core.entity.QueryParam;
+import com.cloudx.common.core.entity.R;
 import com.cloudx.common.core.entity.dto.SystemUserDTO;
 import com.cloudx.common.core.entity.system.SystemUser;
 import com.cloudx.common.core.util.PageUtil;
@@ -27,13 +27,13 @@ import org.springframework.web.bind.annotation.RestController;
  */
 
 @RestController
-@RequestMapping("/user")
+@RequestMapping("user")
 @RequiredArgsConstructor
 public class UserController {
 
   private final IUserService userService;
 
-  @GetMapping("/page")
+  @GetMapping("page")
   @PreAuthorize("hasAuthority('user:view')")
   public R<Map<String, Object>> pageUser(QueryParam queryParam, SystemUserDTO user) {
     IPage<SystemUserDTO> result = userService.pageSystemUser(queryParam, user);
@@ -41,25 +41,25 @@ public class UserController {
     return R.ok(pageResult);
   }
 
-  @GetMapping("/check/{userName}")
+  @GetMapping("check/{userName}")
   public boolean checkUserName(@PathVariable("userName") String userName) {
-    SystemUser result = userService.selectByUserName(userName);
+    SystemUser result = userService.selectByUsername(userName);
     return result != null;
   }
 
-  @PostMapping("/add")
+  @PostMapping
   @PreAuthorize("hasAuthority('user:add')")
   public void add(@Valid SystemUserDTO user) {
     userService.insert(user);
   }
 
-  @PutMapping("/update/{userId}")
+  @PutMapping("{userId}")
   @PreAuthorize("hasAuthority('user:update')")
   public void update(@PathVariable("userId") Long id, @Valid SystemUserDTO user) {
     userService.update(id, user);
   }
 
-  @DeleteMapping("/delete/{userId}")
+  @DeleteMapping("{userId}")
   @PreAuthorize("hasAuthority('user:delete')")
   public void delete(@PathVariable("userId") Long id) {
     userService.delete(id);

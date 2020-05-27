@@ -23,6 +23,7 @@ import lombok.experimental.Accessors;
 public class SystemUser implements Serializable {
 
   private static final long serialVersionUID = 5970249403350193074L;
+
   @TableId
   private Long userId;
   private String username;
