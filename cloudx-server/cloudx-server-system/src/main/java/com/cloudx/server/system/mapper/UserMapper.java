@@ -24,7 +24,7 @@ public interface UserMapper extends BaseMapper<SystemUser> {
    * @param <T>  type
    * @return Ipage<SystemUserDTO>
    */
-  <T> IPage<SystemUserDTO> pageSystemUserDetail(Page<T> page, @Param("user") SystemUserDTO user);
+  <T> IPage<SystemUserDTO> pageSystemUserDetail(Page<T> page, @Param("user") SystemUser user);
 
   /**
    * 查找用户详细信息
@@ -32,6 +32,6 @@ public interface UserMapper extends BaseMapper<SystemUser> {
    * @param user 用户对象，用于传递查询条件
    * @return List<SystemUserDTO>
    */
-  List<SystemUserDTO> selectSystemUserDetail(@Param("user") SystemUserDTO user);
+  List<SystemUserDTO> selectSystemUserDetail(@Param("user") SystemUser user);
 
 }

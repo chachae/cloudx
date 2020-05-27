@@ -37,7 +37,7 @@ public class AuthUser extends User {
   private String roleName;
   private String email;
   private String mobile;
-  private Boolean status;
+  private String status;
   private Date lastLoginTime;
   private Integer gender;
   private String avatar;

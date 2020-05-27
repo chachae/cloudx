@@ -32,7 +32,7 @@ public class CurrentUser implements Serializable {
   private String username;
   private String email;
   private String mobile;
-  private Boolean status;
+  private String status;
   private Long deptId;
   private String deptName;
   private String roleIds;

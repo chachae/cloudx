@@ -1,5 +1,7 @@
 package com.cloudx.common.core.entity.system;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
 import java.util.Date;
@@ -30,6 +32,7 @@ public class Menu implements Serializable {
   /**
    * 菜单/按钮ID
    */
+  @TableId(type = IdType.AUTO)
   private Long menuId;
   /**
    * 上级菜单ID

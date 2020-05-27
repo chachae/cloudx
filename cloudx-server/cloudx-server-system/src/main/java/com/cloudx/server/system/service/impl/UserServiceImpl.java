@@ -6,6 +6,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.core.toolkit.StringPool;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cloudx.common.core.constant.SystemConstant;
 import com.cloudx.common.core.constant.SystemUserConstant;
 import com.cloudx.common.core.entity.QueryParam;
 import com.cloudx.common.core.entity.auth.CurrentUser;
@@ -13,6 +14,7 @@ import com.cloudx.common.core.entity.dto.SystemUserDTO;
 import com.cloudx.common.core.entity.system.SystemUser;
 import com.cloudx.common.core.entity.system.UserRole;
 import com.cloudx.common.core.util.SecurityUtil;
+import com.cloudx.common.core.util.SortUtil;
 import com.cloudx.server.system.mapper.UserMapper;
 import com.cloudx.server.system.service.IUserRoleService;
 import com.cloudx.server.system.service.IUserService;
@@ -42,20 +44,31 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
   private final PasswordEncoder passwordEncoder;
 
   @Override
-  public SystemUser selectByUsername(String userName) {
+  public SystemUser getSystemUser(String userName) {
     LambdaQueryWrapper<SystemUser> qw = new LambdaQueryWrapper<>();
     qw.eq(SystemUser::getUsername, userName);
     return getOne(qw);
   }
 
   @Override
-  public IPage<SystemUserDTO> pageSystemUser(QueryParam param, SystemUserDTO user) {
-    Page<SystemUserDTO> page = new Page<>(param.getPageNum(), param.getPageSize());
+  public IPage<SystemUserDTO> pageSystemUser(QueryParam param, SystemUser user) {
+    Page<SystemUser> page = new Page<>(param.getPageNum(), param.getPageSize());
+    SortUtil.handlePageSort(param, page, "user_id", SystemConstant.ORDER_ASC, false);
     return baseMapper.pageSystemUserDetail(page, user);
   }
 
   @Override
-  public SystemUserDTO selectSystemUser(SystemUserDTO user) {
+  public void updateLoginTime(String username) {
+    SystemUser user = new SystemUser();
+    user.setLastLoginTime(new Date());
+    LambdaQueryWrapper<SystemUser> qw = new LambdaQueryWrapper<>();
+    qw.eq(SystemUser::getUsername, username);
+    baseMapper.update(user, qw);
+  }
+
+
+  @Override
+  public SystemUserDTO selectSystemUser(SystemUser user) {
     List<SystemUserDTO> result = baseMapper.selectSystemUserDetail(user);
     return CollUtil.isNotEmpty(result) ? result.get(0) : new SystemUserDTO();
   }
@@ -72,7 +85,7 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
         .setCreateTime(new Date());
     save(insertUser);
     // 设置角色信息
-    String[] roles = user.getRoleId().split(StringPool.COMMA);
+    String[] roles = user.getRoleIds().split(StringPool.COMMA);
     setUserRoles(insertUser.getUserId(), roles);
   }
 
@@ -86,11 +99,11 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     updateById(updateUser);
 
     // 如果有更新用户角色信息则进行
-    if (user.getRoleId() != null) {
+    if (user.getRoleIds() != null) {
       LambdaQueryWrapper<UserRole> qw = new LambdaQueryWrapper<>();
       qw.eq(UserRole::getUserId, user.getUserId());
       userRoleService.remove(qw);
-      String[] roles = user.getRoleId().split(StringPool.COMMA);
+      String[] roles = user.getRoleIds().split(StringPool.COMMA);
       setUserRoles(user.getUserId(), roles);
     }
   }

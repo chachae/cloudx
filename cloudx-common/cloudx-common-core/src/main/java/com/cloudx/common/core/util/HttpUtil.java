@@ -3,6 +3,8 @@ package com.cloudx.common.core.util;
 import static com.alibaba.fastjson.JSON.toJSONBytes;
 
 import cn.hutool.core.util.StrUtil;
+import cn.hutool.http.useragent.UserAgent;
+import cn.hutool.http.useragent.UserAgentUtil;
 import java.io.IOException;
 import java.util.Objects;
 import javax.servlet.http.HttpServletRequest;
@@ -131,5 +133,15 @@ public class HttpUtil extends cn.hutool.http.HttpUtil {
       ip = request.getRemoteAddr();
     }
     return "0:0:0:0:0:0:0:1".equals(ip) ? "127.0.0.1" : ip;
+  }
+
+  /**
+   * 获取当前用户浏览器 UserAgent 信息
+   *
+   * @return 用户标识对象
+   */
+  public static UserAgent getUserAgent() {
+    String userAgent = getHeader(HttpHeaders.USER_AGENT);
+    return UserAgentUtil.parse(userAgent);
   }
 }

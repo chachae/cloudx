@@ -90,6 +90,12 @@
       <artifactId>hutool-http</artifactId>
       <version>${hutool.version}</version>
     </dependency>
+    <!-- ip2region -->
+    <dependency>
+      <groupId>org.lionsoul</groupId>
+      <artifactId>ip2region</artifactId>
+      <version>${ip2region.version}</version>
+    </dependency>
     <!-- micrometer-registry-prometheus -->
     <dependency>
       <groupId>io.micrometer</groupId>

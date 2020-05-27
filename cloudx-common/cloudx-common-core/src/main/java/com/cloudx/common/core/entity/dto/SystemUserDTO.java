@@ -29,7 +29,7 @@ public class SystemUserDTO implements Serializable {
   private String roleName;
   private String email;
   private String mobile;
-  private Boolean status;
+  private String status;
   private Date createTime;
   private Date updateTime;
   private Date lastLoginTime;

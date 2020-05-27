@@ -35,13 +35,13 @@ import org.springframework.transaction.annotation.Transactional;
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
 
   @Override
-  public String findUserPermissions(String username) {
+  public String getUserPermissions(String username) {
     List<Menu> menus = baseMapper.selectUserPermissions(username);
     return menus.stream().map(Menu::getExpression).collect(Collectors.joining(","));
   }
 
   @Override
-  public List<Menu> findUserMenus(String username) {
+  public List<Menu> getUserMenus(String username) {
     return this.baseMapper.selectListByUsername(username);
   }
 
@@ -75,7 +75,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
   @Override
   public List<VueRouter<Menu>> getUserRouters(String username) {
     List<VueRouter<Menu>> routes = new ArrayList<>();
-    List<Menu> menus = this.findUserMenus(username);
+    List<Menu> menus = this.getUserMenus(username);
     menus.forEach(menu -> {
       VueRouter<Menu> route = new VueRouter<>();
       route.setId(menu.getMenuId().toString());

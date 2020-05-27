@@ -21,7 +21,7 @@ public interface IMenuService extends IService<Menu> {
    * @param username 用户名
    * @return 用户权限
    */
-  String findUserPermissions(String username);
+  String getUserPermissions(String username);
 
   /**
    * 获取用户菜单
@@ -29,7 +29,7 @@ public interface IMenuService extends IService<Menu> {
    * @param username 用户名
    * @return 用户菜单
    */
-  List<Menu> findUserMenus(String username);
+  List<Menu> getUserMenus(String username);
 
   /**
    * 获取用户菜单

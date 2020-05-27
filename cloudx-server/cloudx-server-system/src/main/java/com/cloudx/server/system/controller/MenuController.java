@@ -18,6 +18,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
+ * 菜单路由控制层
+ *
  * @author chachae
  * @version v1.0
  * @date 2020/5/27 11:15
@@ -26,17 +28,17 @@ import org.springframework.web.bind.annotation.RestController;
 @Validated
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/menu")
+@RequestMapping("menu")
 public class MenuController {
 
   private final IMenuService menuService;
 
-  @GetMapping("/{username}")
+  @GetMapping("{username}")
   public R<Map<String, Object>> getUserRouters(
       @NotBlank(message = "{required}") @PathVariable String username) {
     Map<String, Object> result = new HashMap<>(2);
     List<VueRouter<Menu>> userRouters = this.menuService.getUserRouters(username);
-    String userPermissions = this.menuService.findUserPermissions(username);
+    String userPermissions = this.menuService.getUserPermissions(username);
     String[] permissionArray = new String[0];
     if (StrUtil.isNotBlank(userPermissions)) {
       permissionArray = StrUtil.splitToArray(userPermissions, ',');
@@ -52,9 +54,9 @@ public class MenuController {
     return R.ok(menus);
   }
 
-  @GetMapping("/permissions")
+  @GetMapping("permissions")
   public String findUserPermissions(String username) {
-    return this.menuService.findUserPermissions(username);
+    return this.menuService.getUserPermissions(username);
   }
 
 }

@@ -22,12 +22,11 @@
     FROM t_user u
            LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id)
            LEFT JOIN t_role r ON (r.role_id = ur.role_id)
-           LEFT JOIN t_user_dept tud ON (u.user_id = tud.user_id)
-           LEFT JOIN t_dept d ON (tud.dept_id = d.dept_id)
+           LEFT JOIN t_dept d ON (u.dept_id = d.dept_id)
     WHERE 1 = 1
   </sql>
 
-  <select id="pageSystemUserDetail" parameterType="com.cloudx.common.core.entity.dto.SystemUserDTO"
+  <select id="pageSystemUserDetail" parameterType="com.cloudx.common.core.entity.system.SystemUser"
     resultType="com.cloudx.common.core.entity.dto.SystemUserDTO">
     <include refid="baseSql"/>
     <if test="user.username != null and user.username != ''">
@@ -45,15 +44,12 @@
     <if test="user.mobile != null and user.mobile != ''">
       AND u.mobile = #{user.mobile}
     </if>
-    <if test="user.deptName != null and user.deptName != ''">
-      AND d.dept_name like CONCAT('%',#{user.deptName},'%')
-    </if>
     GROUP BY u.username,u.user_id,u.email,u.mobile,u.status,u.create_time,u.gender,
     u.dept_id,u.last_login_time,u.update_time,u.description,u.avatar
   </select>
 
   <select id="selectSystemUserDetail"
-    parameterType="com.cloudx.common.core.entity.dto.SystemUserDTO"
+    parameterType="com.cloudx.common.core.entity.system.SystemUser"
     resultType="com.cloudx.common.core.entity.dto.SystemUserDTO">
     <include refid="baseSql"/>
     <if test="user.username != null and user.username != ''">
@@ -70,9 +66,6 @@
     </if>
     <if test="user.mobile != null and user.mobile != ''">
       AND u.mobile = #{user.mobile}
-    </if>
-    <if test="user.deptName != null and user.deptName != ''">
-      AND d.dept_name like CONCAT('%',#{user.deptName},'%')
     </if>
     GROUP BY u.username,u.user_id,u.email,u.mobile,u.status,u.create_time,u.gender,
     u.dept_id,u.last_login_time,u.update_time,u.description,u.avatar

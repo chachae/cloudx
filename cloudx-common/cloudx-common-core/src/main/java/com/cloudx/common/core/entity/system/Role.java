@@ -1,5 +1,6 @@
 package com.cloudx.common.core.entity.system;
 
+import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
@@ -18,7 +19,7 @@ public class Role implements Serializable {
 
   private static final long serialVersionUID = -2870817897310784072L;
 
-  @TableId
+  @TableId(type = IdType.AUTO)
   private Long roleId;
   private String roleName;
   private String remark;

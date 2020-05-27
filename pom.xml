@@ -37,6 +37,10 @@
     <spring-cloud.version>Hoxton.SR3</spring-cloud.version>
     <spring-admin.version>2.2.2</spring-admin.version>
     <logstash-logback-encoder.version>6.3</logstash-logback-encoder.version>
+    <p6spy.version>3.8.5</p6spy.version>
+    <hutool.version>5.3.5</hutool.version>
+    <mybatis-plus.version>3.3.1</mybatis-plus.version>
+    <ip2region.version>1.7</ip2region.version>
   </properties>
 
   <dependencyManagement>

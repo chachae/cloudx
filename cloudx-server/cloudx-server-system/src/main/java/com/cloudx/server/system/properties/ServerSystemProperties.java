@@ -18,7 +18,7 @@ public class ServerSystemProperties {
   /**
    * 免认证 URI，多个值的话以逗号分隔
    */
-  private String anonUrl;
+  private String anonUrls;
   /**
    * 批量插入当批次可插入的最大值
    */

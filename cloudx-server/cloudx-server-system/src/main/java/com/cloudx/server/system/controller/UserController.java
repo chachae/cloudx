@@ -4,9 +4,14 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cloudx.common.core.entity.QueryParam;
 import com.cloudx.common.core.entity.R;
 import com.cloudx.common.core.entity.dto.SystemUserDTO;
+import com.cloudx.common.core.entity.system.LoginLog;
 import com.cloudx.common.core.entity.system.SystemUser;
 import com.cloudx.common.core.util.PageUtil;
+import com.cloudx.common.core.util.SecurityUtil;
+import com.cloudx.server.system.service.ILoginLogService;
 import com.cloudx.server.system.service.IUserService;
+import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import javax.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -32,18 +37,66 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
   private final IUserService userService;
+  private final ILoginLogService loginLogService;
 
-  @GetMapping("page")
+  /**
+   * 分页查询用户信息
+   *
+   * @param param 分页条件
+   * @param user  模糊搜索条件
+   * @return 用户数据
+   */
+  @GetMapping
   @PreAuthorize("hasAuthority('user:view')")
-  public R<Map<String, Object>> pageUser(QueryParam queryParam, SystemUserDTO user) {
-    IPage<SystemUserDTO> result = userService.pageSystemUser(queryParam, user);
-    Map<String, Object> pageResult = PageUtil.toPage(result);
-    return R.ok(pageResult);
+  public R<Map<String, Object>> userList(QueryParam param, SystemUser user) {
+    IPage<SystemUserDTO> result = userService.pageSystemUser(param, user);
+    return R.ok(PageUtil.toPage(result));
   }
+
+
+  /**
+   * 登录成功存储登录日志
+   *
+   * @param request 请求对象
+   */
+  @GetMapping("success")
+  public void loginSuccess() {
+    String currentUsername = SecurityUtil.getCurrentUsername();
+    // 更新登录时间
+    this.userService.updateLoginTime(currentUsername);
+    LoginLog loginLog = new LoginLog();
+    loginLog.setUsername(currentUsername);
+    this.loginLogService.saveLoginLog(loginLog);
+  }
+
+  @GetMapping("index")
+  public R<Map<String, Object>> index() {
+    Map<String, Object> data = new HashMap<>(5);
+    // 获取系统总访问记录
+    Long totalVisitCount = loginLogService.getTotalVisitCount();
+    data.put("totalVisitCount", totalVisitCount);
+    // 获取系统今日访问记录
+    Long todayVisitCount = loginLogService.getTodayVisitCount();
+    data.put("todayVisitCount", todayVisitCount);
+    // 获取系统进入访问IP量
+    Long todayIp = loginLogService.getTodayIp();
+    data.put("todayIp", todayIp);
+    // 获取近期系统访问记录
+    List<Map<String, Object>> lastTenVisitCount = loginLogService.getLastTenDaysVisitCount(null);
+    data.put("lastTenVisitCount", lastTenVisitCount);
+    // 当前用户近七天访问记录
+    SystemUser systemUser = new SystemUser();
+    systemUser.setUsername(SecurityUtil.getCurrentUsername());
+    List<Map<String, Object>> lastTenUserVisitCount = loginLogService
+        .getLastTenDaysVisitCount(systemUser);
+    data.put("lastTenUserVisitCount", lastTenUserVisitCount);
+    return R.ok(data);
+  }
+
 
   @GetMapping("check/{userName}")
   public boolean checkUserName(@PathVariable("userName") String userName) {
-    SystemUser result = userService.selectByUsername(userName);
+    SystemUser result = userService.getSystemUser(userName);
     return result != null;
   }
 

@@ -11,11 +11,11 @@ public interface SystemUserConstant {
   /**
    * 用户状态：有效
    */
-  Boolean STATUS_VALID = true;
+  String STATUS_VALID = "1";
   /**
    * 用户状态：锁定
    */
-  Boolean STATUS_LOCK = false;
+  String STATUS_LOCK = "0";
   /**
    * 默认头像
    */
