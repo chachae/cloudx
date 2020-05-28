@@ -4,7 +4,6 @@ package com.cloudx.server.system.service;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cloudx.common.core.entity.QueryParam;
-import com.cloudx.common.core.entity.dto.SystemUserDTO;
 import com.cloudx.common.core.entity.system.SystemUser;
 
 /**
@@ -30,7 +29,7 @@ public interface IUserService extends IService<SystemUser> {
    * @param user  模糊条件
    * @return 分页对象
    */
-  IPage<SystemUserDTO> pageSystemUser(QueryParam param, SystemUser user);
+  IPage<SystemUser> pageSystemUser(QueryParam param, SystemUser user);
 
   /**
    * 通过用户名更新用户登陆时间
@@ -39,11 +38,25 @@ public interface IUserService extends IService<SystemUser> {
    */
   void updateLoginTime(String username);
 
-  SystemUserDTO selectSystemUser(SystemUser user);
+  /**
+   * 新增用户
+   *
+   * @param user user
+   */
+  void createUser(SystemUser user);
 
-  void insert(SystemUserDTO user);
+  /**
+   * 删除用户
+   *
+   * @param userIds 用户 id数组
+   */
+  void deleteUsers(String[] userIds);
 
-  void update(Long userId, SystemUserDTO user);
+  /**
+   * 修改用户
+   *
+   * @param user user
+   */
+  void updateUser(SystemUser user);
 
-  void delete(Long userId);
 }

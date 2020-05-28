@@ -35,11 +35,12 @@ public class CurrentUser implements Serializable {
   private String status;
   private Long deptId;
   private String deptName;
-  private String roleIds;
+  private String roleId;
   private String roleName;
   @JsonIgnore
   private Date lastLoginTime;
-  private Integer gender;
+  private String sex;
   private String avatar;
   private String description;
+  private String deptIds;
 }

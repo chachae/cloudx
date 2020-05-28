@@ -23,7 +23,7 @@ public class PageUtil {
    */
   public static <T> Map<String, Object> toPage(IPage<T> page) {
     Map<String, Object> map = new HashMap<>(2);
-    map.put(PageResultConstant.CONTENT, page.getRecords());
+    map.put(PageResultConstant.ROWS, page.getRecords());
     map.put(PageResultConstant.TOTAL, page.getTotal());
     return map;
   }
@@ -33,7 +33,7 @@ public class PageUtil {
    */
   public static <T> Map<String, Object> toPage(T records, long total) {
     Map<String, Object> map = new HashMap<>(2);
-    map.put(PageResultConstant.CONTENT, records);
+    map.put(PageResultConstant.ROWS, records);
     map.put(PageResultConstant.TOTAL, total);
     return map;
   }

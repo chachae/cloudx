@@ -57,16 +57,16 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
       buildTrees(trees, menus);
 
       if (StringUtils.equals(menu.getType(), Menu.TYPE_BUTTON)) {
-        result.put(PageResultConstant.CONTENT, trees);
+        result.put(PageResultConstant.ROWS, trees);
       } else {
         List<? extends Tree<?>> menuTree = TreeUtil.build(trees);
-        result.put(PageResultConstant.CONTENT, menuTree);
+        result.put(PageResultConstant.ROWS, menuTree);
       }
 
       result.put(PageResultConstant.TOTAL, menus.size());
     } catch (NumberFormatException e) {
       log.error("查询菜单失败", e);
-      result.put(PageResultConstant.CONTENT, null);
+      result.put(PageResultConstant.ROWS, null);
       result.put(PageResultConstant.TOTAL, 0);
     }
     return result;

@@ -11,14 +11,14 @@
            u.password,
            u.status,
            u.create_time,
-           u.gender,
+           u.ssex as                 sex,
            u.last_login_time,
            u.update_time,
            u.description,
            u.avatar,
            u.dept_id,
            d.dept_name,
-           GROUP_CONCAT(r.role_id)   roleIds,
+           GROUP_CONCAT(r.role_id)   roleId,
            GROUP_CONCAT(r.role_name) roleName
     FROM t_user u
            LEFT JOIN t_user_role ur ON (u.user_id = ur.user_id)
@@ -27,13 +27,20 @@
     WHERE 1 = 1
   </sql>
 
-  <select id="findUserDto"
+  <select id="selectByName"
     parameterType="string"
-    resultType="com.cloudx.common.core.entity.dto.SystemUserDTO">
+    resultType="com.cloudx.common.core.entity.system.SystemUser">
     <include refid="baseSql"/>
     and u.username = #{username,jdbcType=VARCHAR}
-    GROUP BY u.username,u.user_id,u.email,u.mobile,u.status,u.create_time,u.gender,
+    GROUP BY u.username,u.user_id,u.email,u.mobile,u.status,u.create_time,u.ssex,
     u.dept_id,u.last_login_time,u.update_time,u.description,u.avatar
+  </select>
+
+  <select id="selectUserDataPermissions" parameterType="long"
+    resultType="com.cloudx.common.core.entity.system.UserDataPermission">
+    select user_id userId, dept_id deptId
+    from t_user_data_permission
+    where user_id = #{userId}
   </select>
 
 </mapper>

@@ -2,15 +2,12 @@ package com.cloudx.auth.service.impl;
 
 import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
-import com.cloudx.auth.mapper.MenuMapper;
+import com.cloudx.auth.manager.UserManager;
 import com.cloudx.auth.mapper.UserMapper;
 import com.cloudx.common.core.constant.SystemUserConstant;
 import com.cloudx.common.core.entity.auth.AuthUser;
-import com.cloudx.common.core.entity.dto.SystemUserDTO;
-import com.cloudx.common.core.entity.system.Menu;
 import com.cloudx.common.core.entity.system.SystemUser;
 import java.util.List;
-import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.BeanUtils;
 import org.springframework.security.core.GrantedAuthority;
@@ -31,17 +28,18 @@ import org.springframework.stereotype.Service;
 public class SystemUserDetailServiceImpl extends ServiceImpl<UserMapper, SystemUser> implements
     UserDetailsService {
 
-  private final MenuMapper menuMapper;
+  private final UserManager userManager;
 
   @Override
   public UserDetails loadUserByUsername(String username) {
-    SystemUserDTO systemUser = baseMapper.findUserDto(username);
+    SystemUser systemUser = userManager.findByName(username);
     if (systemUser != null) {
+      System.out.println(systemUser);
       // 判断用户状态
       if (SystemUserConstant.STATUS_VALID.equals(systemUser.getStatus())) {
         // 设置用户权限信息
         List<GrantedAuthority> authorities;
-        String expression = selectExpressionByUserId(systemUser.getUserId());
+        String expression = userManager.findUserPermissions(systemUser.getUsername());
         authorities = StrUtil.isNotBlank(expression) ? AuthorityUtils
             .commaSeparatedStringToAuthorityList(expression) : AuthorityUtils.NO_AUTHORITIES;
         // 设置认证用户属性
@@ -56,16 +54,5 @@ public class SystemUserDetailServiceImpl extends ServiceImpl<UserMapper, SystemU
     } else {
       throw new UsernameNotFoundException("");
     }
-  }
-
-  /**
-   * 通过用户id获取用户权限表达式
-   *
-   * @param userId 用户id
-   * @return 用户权限表达式：String
-   */
-  private String selectExpressionByUserId(Long userId) {
-    List<Menu> menus = menuMapper.selectListByUserId(userId);
-    return menus.stream().map(Menu::getExpression).collect(Collectors.joining(","));
   }
 }

@@ -14,7 +14,7 @@
            type,
            order_num,
            create_time,
-           modify_time
+           update_time
     from t_menu m
   </sql>
 
@@ -30,5 +30,17 @@
     left join t_user u on (u.user_id = ur.user_id)
     where u.user_id = #{userId,jdbcType=INTEGER})
     order by m.order_num
+  </select>
+
+  <select id="selectUserPermissions" resultType="com.cloudx.common.core.entity.system.Menu">
+    select distinct m.expression
+    from t_role r
+    left join t_user_role ur on (r.role_id = ur.role_id)
+    left join t_user u on (u.user_id = ur.user_id)
+    left join t_role_menu rm on (rm.role_id = r.role_id)
+    left join t_menu m on (m.menu_id = rm.menu_id)
+    where u.username = #{username,jdbcType=VARCHAR}
+    and m.expression is not null
+    and m.expression &lt;&gt; ''
   </select>
 </mapper>

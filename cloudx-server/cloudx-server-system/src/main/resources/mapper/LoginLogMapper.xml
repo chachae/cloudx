@@ -4,20 +4,20 @@
 <mapper namespace="com.cloudx.server.system.mapper.LoginLogMapper">
 
   <select id="countTotalVisit" resultType="long">
-    select count(1)
+    select count(*)
     from t_login_log
   </select>
 
   <select id="countTodayVisit" resultType="long">
-    select count(1)
+    select count(*)
     from t_login_log
-    where t_login_log.login_time between curdate() and date_add(current_date(), INTERVAL 1 DAY)
+    where t_login_log.login_time between curdate() and date_add(current_date(), interval 1 day)
   </select>
 
   <select id="countTodayIp" resultType="long">
-    SELECT count(DISTINCT (ip))
-    FROM t_login_log
-    WHERE login_time between curdate() and date_add(curdate(), INTERVAL 1 DAY)
+    select count(distinct (ip))
+    from t_login_log
+    where login_time between curdate() and date_add(curdate(), interval 1 day)
   </select>
 
   <select id="selectLastTenDaysVisitCount" resultType="map" parameterType="string">
@@ -25,7 +25,8 @@
     date_format(l.login_time, '%m-%d') days,
     count(1) count
     from
-    (select * from t_login_log where date_sub(curdate(), interval 10 day) &lt;= date(login_time)) as
+    (select t_login_log.id, username, login_time, location, ip, os, browser from t_login_log where
+    date_sub(curdate(), interval 10 day) &lt;= date(login_time)) as
     l where 1 = 1
     <if test="username != null and username != ''">
       and l.username = #{username}

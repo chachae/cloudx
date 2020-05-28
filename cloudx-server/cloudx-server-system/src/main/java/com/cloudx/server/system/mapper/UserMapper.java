@@ -3,7 +3,6 @@ package com.cloudx.server.system.mapper;
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
-import com.cloudx.common.core.entity.dto.SystemUserDTO;
 import com.cloudx.common.core.entity.system.SystemUser;
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
@@ -24,7 +23,7 @@ public interface UserMapper extends BaseMapper<SystemUser> {
    * @param <T>  type
    * @return Ipage<SystemUserDTO>
    */
-  <T> IPage<SystemUserDTO> pageSystemUserDetail(Page<T> page, @Param("user") SystemUser user);
+  <T> IPage<SystemUser> pageSystemUserDetail(Page<T> page, @Param("user") SystemUser user);
 
   /**
    * 查找用户详细信息
@@ -32,6 +31,6 @@ public interface UserMapper extends BaseMapper<SystemUser> {
    * @param user 用户对象，用于传递查询条件
    * @return List<SystemUserDTO>
    */
-  List<SystemUserDTO> selectSystemUserDetail(@Param("user") SystemUser user);
+  List<SystemUser> selectSystemUserDetail(@Param("user") SystemUser user);
 
 }

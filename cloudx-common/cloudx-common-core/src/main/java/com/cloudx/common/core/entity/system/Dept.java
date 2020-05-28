@@ -44,7 +44,7 @@ public class Dept implements Serializable {
   /**
    * 修改时间
    */
-  private Date updaeTime;
+  private Date updateTime;
 
   private transient String createTimeFrom;
 

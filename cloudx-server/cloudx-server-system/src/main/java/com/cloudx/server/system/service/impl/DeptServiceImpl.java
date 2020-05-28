@@ -43,11 +43,11 @@ public class DeptServiceImpl extends ServiceImpl<DeptMapper, Dept> implements ID
       buildTrees(trees, depts);
       List<? extends Tree<?>> deptTree = TreeUtil.build(trees);
 
-      result.put(PageResultConstant.CONTENT, deptTree);
+      result.put(PageResultConstant.ROWS, deptTree);
       result.put(PageResultConstant.TOTAL, depts.size());
     } catch (Exception e) {
       log.error("获取部门列表失败", e);
-      result.put(PageResultConstant.CONTENT, null);
+      result.put(PageResultConstant.ROWS, null);
       result.put(PageResultConstant.TOTAL, 0);
     }
     return result;

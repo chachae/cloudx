@@ -10,4 +10,11 @@ import com.cloudx.common.core.entity.system.UserRole;
  */
 public interface IUserRoleService extends IService<UserRole> {
 
+  /**
+   * 删除角色用户管理关系
+   *
+   * @param userIds 用户id数组
+   */
+  void deleteUserRolesByUserId(String[] userIds);
+
 }

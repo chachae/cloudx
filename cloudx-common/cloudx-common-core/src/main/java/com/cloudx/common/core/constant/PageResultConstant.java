@@ -14,6 +14,6 @@ public interface PageResultConstant {
   /**
    * 数据信息
    */
-  String CONTENT = "content";
+  String ROWS = "rows";
 
 }

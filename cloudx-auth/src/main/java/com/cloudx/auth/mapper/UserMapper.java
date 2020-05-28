@@ -2,8 +2,9 @@ package com.cloudx.auth.mapper;
 
 
 import com.baomidou.mybatisplus.core.mapper.BaseMapper;
-import com.cloudx.common.core.entity.dto.SystemUserDTO;
 import com.cloudx.common.core.entity.system.SystemUser;
+import com.cloudx.common.core.entity.system.UserDataPermission;
+import java.util.List;
 
 /**
  * @author chachae
@@ -17,6 +18,14 @@ public interface UserMapper extends BaseMapper<SystemUser> {
    * @param username 用户名称
    * @return 用户信息：SystemUserDTO
    */
-  SystemUserDTO findUserDto(String username);
+  SystemUser selectByName(String username);
+
+  /**
+   * 获取用户数据权限
+   *
+   * @param userId 用户id
+   * @return 数据权限
+   */
+  List<UserDataPermission> selectUserDataPermissions(Long userId);
 
 }
