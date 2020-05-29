@@ -2,6 +2,7 @@ package com.cloudx.server.system.service;
 
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cloudx.common.core.entity.system.UserDataPermission;
+import java.util.List;
 
 /**
  * 用户数据权限关联服务接口
@@ -25,4 +26,11 @@ public interface IUserDataPermissionService extends IService<UserDataPermission>
    * @param userIds 用户id
    */
   void deleteByUserIds(String[] userIds);
+
+  /**
+   * 通过部门ID删除关联关系
+   *
+   * @param deptIds 部门id
+   */
+  void deleteByDeptIds(List<String> deptIds);
 }

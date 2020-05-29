@@ -2,7 +2,7 @@ package com.cloudx.server.demo.controller;
 
 import com.cloudx.common.core.entity.QueryParam;
 import com.cloudx.common.core.entity.R;
-import com.cloudx.common.core.entity.dto.SystemUserDTO;
+import com.cloudx.common.core.entity.system.SystemUser;
 import com.cloudx.common.core.exception.ApiException;
 import com.cloudx.common.core.util.HttpUtil;
 import com.cloudx.common.core.util.SecurityUtil;
@@ -34,7 +34,7 @@ public class TestController {
    * 用于演示 Feign调用受保护的远程方法
    */
   @GetMapping("user/page")
-  public R<Map<String, Object>> pageRemoteUsers(QueryParam queryParam, SystemUserDTO user) {
+  public R<Map<String, Object>> pageRemoteUsers(QueryParam queryParam, SystemUser user) {
     if (!cut.get()) {
       cut.compareAndSet(false, true);
       throw new ApiException("测试 Feign 异常回滚");

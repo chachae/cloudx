@@ -54,4 +54,26 @@ public interface IMenuService extends IService<Menu> {
    * @return 菜单列表
    */
   List<Menu> findMenuList(Menu menu);
+
+
+  /**
+   * 创建菜单
+   *
+   * @param menu menu
+   */
+  void createMenu(Menu menu);
+
+  /**
+   * 更新菜单
+   *
+   * @param menu menu
+   */
+  void updateMenu(Menu menu);
+
+  /**
+   * 递归删除菜单/按钮
+   *
+   * @param menuIds menuIds
+   */
+  void deleteMeuns(String[] menuIds);
 }

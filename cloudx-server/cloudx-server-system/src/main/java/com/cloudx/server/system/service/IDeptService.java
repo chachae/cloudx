@@ -33,5 +33,24 @@ public interface IDeptService extends IService<Dept> {
    */
   List<Dept> getDepts(Dept dept, QueryParam param);
 
+  /**
+   * 创建部门
+   *
+   * @param dept dept
+   */
+  void createDept(Dept dept);
 
+  /**
+   * 更新部门
+   *
+   * @param dept dept
+   */
+  void updateDept(Dept dept);
+
+  /**
+   * 删除部门
+   *
+   * @param deptIds 部门id数组
+   */
+  void deleteDepts(String[] deptIds);
 }

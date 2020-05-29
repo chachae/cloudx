@@ -8,12 +8,17 @@ import com.cloudx.server.system.service.IMenuService;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import javax.validation.Valid;
 import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -57,6 +62,25 @@ public class MenuController {
   @GetMapping("permissions")
   public String findUserPermissions(String username) {
     return this.menuService.getUserPermissions(username);
+  }
+
+  @PostMapping
+  @PreAuthorize("hasAuthority('menu:add')")
+  public void addMenu(@Valid Menu menu) {
+    this.menuService.createMenu(menu);
+  }
+
+  @DeleteMapping("{menuIds}")
+  @PreAuthorize("hasAuthority('menu:delete')")
+  public void deleteMenus(@NotBlank(message = "{required}") @PathVariable String menuIds) {
+    String[] ids = menuIds.split(StrUtil.COMMA);
+    this.menuService.deleteMeuns(ids);
+  }
+
+  @PutMapping
+  @PreAuthorize("hasAuthority('menu:update')")
+  public void updateMenu(@Valid Menu menu) {
+    this.menuService.updateMenu(menu);
   }
 
 }

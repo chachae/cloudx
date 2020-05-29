@@ -11,6 +11,7 @@ import com.cloudx.common.core.entity.auth.CurrentUser;
 import com.cloudx.common.core.entity.system.SystemUser;
 import com.cloudx.common.core.entity.system.UserDataPermission;
 import com.cloudx.common.core.entity.system.UserRole;
+import com.cloudx.common.core.exception.ApiException;
 import com.cloudx.common.core.util.SecurityUtil;
 import com.cloudx.common.core.util.SortUtil;
 import com.cloudx.server.system.mapper.UserMapper;
@@ -21,6 +22,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
@@ -43,9 +45,9 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
   private final IUserDataPermissionService userDataPermissionService;
 
   @Override
-  public SystemUser getSystemUser(String userName) {
+  public SystemUser getSystemUser(String username) {
     LambdaQueryWrapper<SystemUser> qw = new LambdaQueryWrapper<>();
-    qw.eq(SystemUser::getUsername, userName);
+    qw.eq(SystemUser::getUsername, username);
     return getOne(qw);
   }
 
@@ -83,6 +85,10 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
 
   @Override
   public void deleteUsers(String[] userIds) {
+    // 判断是否删除数据内包含当前用户
+    if (hasCurrentUser(userIds)) {
+      throw new ApiException("不能删除当前用户");
+    }
     List<String> list = Arrays.asList(userIds);
     removeByIds(list);
     // 删除用户角色
@@ -110,6 +116,14 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     setUserDataPermissions(user, deptIds);
   }
 
+  @Override
+  public List<String> getUserIdByDeptIds(String[] deptIds) {
+    return baseMapper.selectList(
+        new LambdaQueryWrapper<SystemUser>().in(SystemUser::getDeptId, String.join(",", deptIds)))
+        .stream().map(user -> String.valueOf(user.getUserId())).collect(
+            Collectors.toList());
+  }
+
   private void setUserRoles(SystemUser user, String[] roles) {
     List<UserRole> userRoles = new ArrayList<>();
     UserRole userRole = new UserRole();
@@ -132,8 +146,15 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     userDataPermissionService.saveBatch(userDataPermissions);
   }
 
-  private boolean isCurrentUser(Long id) {
+  private boolean hasCurrentUser(String[] userIds) {
     CurrentUser cur = SecurityUtil.getCurrentUser();
-    return cur != null && cur.getUserId().equals(id);
+    if (cur != null) {
+      for (String userId : userIds) {
+        if (String.valueOf(cur.getUserId()).equals(userId)) {
+          return true;
+        }
+      }
+    }
+    return false;
   }
 }

@@ -3,7 +3,7 @@ package com.cloudx.server.demo.service;
 import com.cloudx.common.core.constant.ServerConstant;
 import com.cloudx.common.core.entity.QueryParam;
 import com.cloudx.common.core.entity.R;
-import com.cloudx.common.core.entity.dto.SystemUserDTO;
+import com.cloudx.common.core.entity.system.SystemUser;
 import com.cloudx.server.demo.service.fallback.UserServiceFallback;
 import java.util.Map;
 import org.springframework.cloud.openfeign.FeignClient;
@@ -28,5 +28,5 @@ public interface IUserService {
    */
   @GetMapping("user/page")
   R<Map<String, Object>> pageUser(@RequestParam("queryParam") QueryParam queryParam,
-      @RequestParam("user") SystemUserDTO user);
+      @RequestParam("user") SystemUser user);
 }

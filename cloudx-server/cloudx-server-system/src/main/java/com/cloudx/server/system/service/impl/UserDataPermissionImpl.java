@@ -26,10 +26,17 @@ public class UserDataPermissionImpl extends
     IUserDataPermissionService {
 
   @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void deleteByDeptIds(List<String> deptIds) {
+    baseMapper.delete(
+        new LambdaQueryWrapper<UserDataPermission>().in(UserDataPermission::getDeptId, deptIds));
+  }
+
+  @Override
   public String getByUserId(Long userId) {
     LambdaQueryWrapper<UserDataPermission> wrapper = new LambdaQueryWrapper<>();
     wrapper.eq(UserDataPermission::getUserId, userId);
-    return this.baseMapper.selectList(wrapper).stream()
+    return baseMapper.selectList(wrapper).stream()
         .map(permission -> String.valueOf(permission.getDeptId())).collect(
             Collectors.joining(StrUtil.COMMA));
   }
@@ -41,4 +48,6 @@ public class UserDataPermissionImpl extends
     baseMapper.delete(
         new LambdaQueryWrapper<UserDataPermission>().in(UserDataPermission::getUserId, list));
   }
+
+
 }

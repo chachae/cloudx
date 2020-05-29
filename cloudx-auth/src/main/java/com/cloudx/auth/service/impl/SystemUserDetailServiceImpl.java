@@ -34,7 +34,6 @@ public class SystemUserDetailServiceImpl extends ServiceImpl<UserMapper, SystemU
   public UserDetails loadUserByUsername(String username) {
     SystemUser systemUser = userManager.findByName(username);
     if (systemUser != null) {
-      System.out.println(systemUser);
       // 判断用户状态
       if (SystemUserConstant.STATUS_VALID.equals(systemUser.getStatus())) {
         // 设置用户权限信息

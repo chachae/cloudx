@@ -1,5 +1,7 @@
 package com.cloudx.server.system.service.impl;
 
+import cn.hutool.core.collection.CollUtil;
+import cn.hutool.core.util.StrUtil;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cloudx.common.core.constant.PageResultConstant;
@@ -8,16 +10,19 @@ import com.cloudx.common.core.entity.Tree;
 import com.cloudx.common.core.entity.router.RouterMeta;
 import com.cloudx.common.core.entity.router.VueRouter;
 import com.cloudx.common.core.entity.system.Menu;
+import com.cloudx.common.core.exception.ApiException;
 import com.cloudx.common.core.util.TreeUtil;
 import com.cloudx.server.system.mapper.MenuMapper;
 import com.cloudx.server.system.service.IMenuService;
+import com.cloudx.server.system.service.IRoleMenuService;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
-import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Propagation;
 import org.springframework.transaction.annotation.Transactional;
@@ -33,6 +38,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 @Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IMenuService {
+
+  private final IRoleMenuService roleMenuService;
 
   @Override
   public String getUserPermissions(String username) {
@@ -55,8 +62,7 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
 
       List<MenuTree> trees = new ArrayList<>();
       buildTrees(trees, menus);
-
-      if (StringUtils.equals(menu.getType(), Menu.TYPE_BUTTON)) {
+      if (StrUtil.equals(menu.getType(), Menu.TYPE_BUTTON)) {
         result.put(PageResultConstant.ROWS, trees);
       } else {
         List<? extends Tree<?>> menuTree = TreeUtil.build(trees);
@@ -93,13 +99,38 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
   @Override
   public List<Menu> findMenuList(Menu menu) {
     LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
-    if (StringUtils.isNotBlank(menu.getMenuName())) {
+    if (StrUtil.isNotBlank(menu.getMenuName())) {
       queryWrapper.like(Menu::getMenuName, menu.getMenuName());
     }
     queryWrapper.orderByAsc(Menu::getMenuId);
-    return this.baseMapper.selectList(queryWrapper);
+    return baseMapper.selectList(queryWrapper);
   }
 
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void createMenu(Menu menu) {
+    menu.setCreateTime(new Date());
+    setMenu(menu);
+    this.save(menu);
+  }
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void updateMenu(Menu menu) {
+    menu.setUpdateTime(new Date());
+    setMenu(menu);
+    baseMapper.updateById(menu);
+  }
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void deleteMeuns(String[] menuIds) {
+    List<String> result = roleMenuService.getRoleIdsByMenuId(menuIds);
+    if (CollUtil.isNotEmpty(result)) {
+      throw new ApiException("菜单存在角色关联，请移除相关角色后重试");
+    }
+    this.delete(Arrays.asList(menuIds));
+  }
 
   private void buildTrees(List<MenuTree> trees, List<Menu> menus) {
     menus.forEach(menu -> {
@@ -115,6 +146,31 @@ public class MenuServiceImpl extends ServiceImpl<MenuMapper, Menu> implements IM
       tree.setExpression(menu.getExpression());
       trees.add(tree);
     });
+  }
+
+  private void setMenu(Menu menu) {
+    if (menu.getParentId() == null) {
+      menu.setParentId(Menu.TOP_MENU_ID);
+    }
+    if (Menu.TYPE_BUTTON.equals(menu.getType())) {
+      menu.setPath(null);
+      menu.setIcon(null);
+      menu.setComponent(null);
+      menu.setOrderNum(null);
+    }
+  }
+
+  private void delete(List<String> menuIds) {
+    removeByIds(menuIds);
+
+    LambdaQueryWrapper<Menu> queryWrapper = new LambdaQueryWrapper<>();
+    queryWrapper.in(Menu::getParentId, menuIds);
+    List<Menu> menus = baseMapper.selectList(queryWrapper);
+    if (CollUtil.isNotEmpty(menus)) {
+      List<String> menuIdList = new ArrayList<>();
+      menus.forEach(m -> menuIdList.add(String.valueOf(m.getMenuId())));
+      this.delete(menuIdList);
+    }
   }
 
 }

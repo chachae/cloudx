@@ -26,4 +26,6 @@ public class Role implements Serializable {
   private Date createTime;
   private Date updateTime;
 
+  private transient String menuIds;
+
 }

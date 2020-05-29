@@ -5,6 +5,7 @@ import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
 import com.cloudx.common.core.entity.QueryParam;
 import com.cloudx.common.core.entity.system.SystemUser;
+import java.util.List;
 
 /**
  * 用户业务接口
@@ -58,5 +59,13 @@ public interface IUserService extends IService<SystemUser> {
    * @param user user
    */
   void updateUser(SystemUser user);
+
+  /**
+   * 通过部门id查询用户id
+   *
+   * @param deptIds 部门id
+   * @return
+   */
+  List<String> getUserIdByDeptIds(String[] deptIds);
 
 }

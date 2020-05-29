@@ -1,14 +1,22 @@
 package com.cloudx.server.system.controller;
 
+import cn.hutool.core.util.StrUtil;
 import com.cloudx.common.core.entity.QueryParam;
 import com.cloudx.common.core.entity.R;
 import com.cloudx.common.core.entity.system.Dept;
 import com.cloudx.server.system.service.IDeptService;
 import java.util.Map;
+import javax.validation.Valid;
+import javax.validation.constraints.NotBlank;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -39,4 +47,24 @@ public class DeptController {
   public R<Map<String, Object>> deptList(QueryParam param, Dept dept) {
     return R.ok(this.deptService.getDepts(param, dept));
   }
+
+  @PostMapping
+  @PreAuthorize("hasAuthority('dept:add')")
+  public void addDept(@Valid Dept dept) {
+    this.deptService.createDept(dept);
+  }
+
+  @DeleteMapping("{deptIds}")
+  @PreAuthorize("hasAuthority('dept:delete')")
+  public void deleteDepts(@NotBlank(message = "{required}") @PathVariable String deptIds) {
+    String[] ids = deptIds.split(StrUtil.COMMA);
+    this.deptService.deleteDepts(ids);
+  }
+
+  @PutMapping
+  @PreAuthorize("hasAuthority('dept:update')")
+  public void updateDept(@Valid Dept dept) {
+    this.deptService.updateDept(dept);
+  }
+
 }
