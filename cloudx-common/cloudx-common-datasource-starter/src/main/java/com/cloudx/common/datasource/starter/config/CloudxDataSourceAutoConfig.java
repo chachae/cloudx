@@ -3,6 +3,7 @@ package com.cloudx.common.datasource.starter.config;
 import com.baomidou.mybatisplus.core.parser.ISqlParser;
 import com.baomidou.mybatisplus.extension.parsers.BlockAttackSqlParser;
 import com.baomidou.mybatisplus.extension.plugins.PaginationInterceptor;
+import com.cloudx.common.datasource.starter.interceptor.DataPermissionInterceptor;
 import java.util.ArrayList;
 import java.util.List;
 import org.springframework.context.annotation.Bean;
@@ -15,6 +16,15 @@ import org.springframework.core.annotation.Order;
  */
 @Configuration
 public class CloudxDataSourceAutoConfig {
+
+  /**
+   * 注册数据权限
+   */
+  @Bean
+  @Order(-1)
+  public DataPermissionInterceptor dataPermissionInterceptor() {
+    return new DataPermissionInterceptor();
+  }
 
   /**
    * 注册分页插件
