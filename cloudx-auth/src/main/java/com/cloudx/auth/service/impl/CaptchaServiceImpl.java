@@ -10,14 +10,13 @@ import com.cloudx.common.core.constant.ParamsConstant;
 import com.cloudx.common.core.constant.SystemConstant;
 import com.cloudx.common.core.util.HttpUtil;
 import com.cloudx.common.redis.starter.service.RedisService;
+import com.wf.captcha.ArithmeticCaptcha;
 import com.wf.captcha.GifCaptcha;
 import com.wf.captcha.SpecCaptcha;
 import com.wf.captcha.base.Captcha;
-import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
-import org.springframework.http.MediaType;
 import org.springframework.stereotype.Service;
 
 /**
@@ -34,7 +33,7 @@ public class CaptchaServiceImpl implements ICaptchaService {
   private final AuthProperties properties;
 
   @Override
-  public void create(HttpServletResponse response) throws IOException {
+  public String create(HttpServletResponse response) {
     String key = HttpUtil.getParam(ParamsConstant.CAPTCHA_KEY);
     if (StrUtil.isBlank(key)) {
       throw new CaptchaException("验证码key不能为空");
@@ -43,11 +42,11 @@ public class CaptchaServiceImpl implements ICaptchaService {
     // 创建指定规格的验证码
     Captcha captcha = createCaptcha(code);
     // 设置响应头信息
-    setHeader(response, code.getType());
+    setHeader(response);
     // 缓存至 Redis
     redisService.set(SystemConstant.CAPTCHA_PREFIX + key, captcha.text(), code.getTime());
     // 此处可能抛出 IOException
-    captcha.out(response.getOutputStream());
+    return captcha.toBase64();
   }
 
   @Override
@@ -66,19 +65,16 @@ public class CaptchaServiceImpl implements ICaptchaService {
     Captcha captcha;
     if (code.getType().equalsIgnoreCase(ImageTypeConstant.GIF)) {
       captcha = new GifCaptcha(code.getWidth(), code.getHeight(), code.getLength());
-    } else {
+    } else if (code.getType().equalsIgnoreCase(ImageTypeConstant.PNG)) {
       captcha = new SpecCaptcha(code.getWidth(), code.getHeight(), code.getLength());
+    } else {
+      captcha = new ArithmeticCaptcha(code.getWidth(), code.getHeight(), code.getLength());
     }
     captcha.setCharType(code.getCharType());
     return captcha;
   }
 
-  private void setHeader(HttpServletResponse response, String type) {
-    if (type.equalsIgnoreCase(ImageTypeConstant.GIF)) {
-      response.setContentType(MediaType.IMAGE_GIF_VALUE);
-    } else {
-      response.setContentType(MediaType.IMAGE_PNG_VALUE);
-    }
+  private void setHeader(HttpServletResponse response) {
     response.setHeader(HttpHeaders.PRAGMA, "No-cache");
     response.setHeader(HttpHeaders.CACHE_CONTROL, "No-cache");
     response.setDateHeader(HttpHeaders.EXPIRES, 0L);

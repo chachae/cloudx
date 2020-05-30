@@ -30,6 +30,11 @@ public interface SystemConstant {
   String CAPTCHA_PREFIX = "cloudx:captcha:";
 
   /**
+   * 异步线程池名称
+   */
+  String ASYNC_POOL = "cloudx-async-thread-pool";
+
+  /**
    * Java默认临时目录
    */
   String JAVA_TEMP_DIR = "java.io.tmpdir";

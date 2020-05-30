@@ -70,4 +70,10 @@ public interface ILoginLogService extends IService<LoginLog> {
    */
   List<LoginLog> getUserLastSevenLoginLogs(String username);
 
+  /**
+   * 删除登录日志
+   *
+   * @param ids 日志 id集合
+   */
+  void deleteLoginLogs(String[] ids);
 }

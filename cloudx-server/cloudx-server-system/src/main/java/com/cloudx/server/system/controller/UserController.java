@@ -8,6 +8,7 @@ import com.cloudx.common.core.entity.system.LoginLog;
 import com.cloudx.common.core.entity.system.SystemUser;
 import com.cloudx.common.core.util.PageUtil;
 import com.cloudx.common.core.util.SecurityUtil;
+import com.cloudx.server.system.annotation.ControllerEndpoint;
 import com.cloudx.server.system.service.ILoginLogService;
 import com.cloudx.server.system.service.IUserDataPermissionService;
 import com.cloudx.server.system.service.IUserService;
@@ -103,28 +104,30 @@ public class UserController {
     return R.ok(PageUtil.toPage(result));
   }
 
-  @PostMapping
-  @PreAuthorize("hasAuthority('user:add')")
-  public void addUser(@Valid SystemUser user) {
-    this.userService.createUser(user);
-  }
-
   @GetMapping("{userId}")
-  @PreAuthorize("hasAuthority('user:update')")
   public R<String> findUserDataPermissions(
       @NotNull(message = "{required}") @PathVariable Long userId) {
     String dataPermissions = userDeptService.getByUserId(userId);
     return R.ok(dataPermissions);
   }
 
+  @PostMapping
+  @PreAuthorize("hasAuthority('user:add')")
+  @ControllerEndpoint(operation = "新增用户", exceptionMessage = "新增用户失败")
+  public void addUser(@Valid SystemUser user) {
+    this.userService.createUser(user);
+  }
+
   @PutMapping
   @PreAuthorize("hasAuthority('user:update')")
+  @ControllerEndpoint(operation = "更新用户", exceptionMessage = "更新用户失败")
   public void updateUser(@Valid SystemUser user) {
     this.userService.updateUser(user);
   }
 
   @DeleteMapping("{userIds}")
   @PreAuthorize("hasAuthority('user:delete')")
+  @ControllerEndpoint(operation = "删除用户", exceptionMessage = "删除用户失败")
   public void deleteUsers(@NotBlank(message = "{required}") @PathVariable String userIds) {
     String[] ids = userIds.split(StrUtil.COMMA);
     this.userService.deleteUsers(ids);

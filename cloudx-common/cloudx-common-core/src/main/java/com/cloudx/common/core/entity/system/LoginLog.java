@@ -1,6 +1,7 @@
 package com.cloudx.common.core.entity.system;
 
 import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import java.io.Serializable;
@@ -43,7 +44,8 @@ public class LoginLog implements Serializable {
   /**
    * 操作系统
    */
-  private String os;
+  @TableField("`system`")
+  private String system;
   /**
    * 浏览器
    */

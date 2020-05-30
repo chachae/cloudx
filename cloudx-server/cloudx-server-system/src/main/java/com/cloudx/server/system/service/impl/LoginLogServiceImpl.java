@@ -1,13 +1,13 @@
 package com.cloudx.server.system.service.impl;
 
 import cn.hutool.core.util.StrUtil;
-import cn.hutool.http.useragent.UserAgent;
 import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.plugins.pagination.Page;
 import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cloudx.common.core.constant.SystemConstant;
 import com.cloudx.common.core.entity.QueryParam;
+import com.cloudx.common.core.entity.UserAgent;
 import com.cloudx.common.core.entity.system.LoginLog;
 import com.cloudx.common.core.entity.system.SystemUser;
 import com.cloudx.common.core.util.HttpUtil;
@@ -15,6 +15,7 @@ import com.cloudx.common.core.util.SortUtil;
 import com.cloudx.server.system.mapper.LoginLogMapper;
 import com.cloudx.server.system.service.ILoginLogService;
 import com.cloudx.server.system.util.AddressUtil;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -49,7 +50,7 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
     }
 
     Page<LoginLog> page = new Page<>(param.getPageNum(), param.getPageSize());
-    SortUtil.handlePageSort(param, page, "loginTime", SystemConstant.ORDER_DESC, true);
+    SortUtil.handlePageSort(param, page, "login_time", SystemConstant.ORDER_DESC, false);
 
     return this.page(page, qw);
   }
@@ -60,9 +61,9 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
     loginLog.setIp(ip);
     loginLog.setLoginTime(new Date());
     loginLog.setLocation(AddressUtil.getCityInfo(ip));
-    UserAgent userAgent = HttpUtil.getUserAgent();
-    loginLog.setBrowser(userAgent.getBrowser().getName());
-    loginLog.setOs(userAgent.getOs().getName());
+    UserAgent ua = HttpUtil.getUserAgent();
+    loginLog.setBrowser(ua.getBrowser());
+    loginLog.setSystem(ua.getSystem());
     this.save(loginLog);
   }
 
@@ -96,5 +97,10 @@ public class LoginLogServiceImpl extends ServiceImpl<LoginLogMapper, LoginLog> i
     return loginLogs.getRecords();
   }
 
+  @Override
+  public void deleteLoginLogs(String[] ids) {
+    List<String> list = Arrays.asList(ids);
+    baseMapper.deleteBatchIds(list);
+  }
 
 }

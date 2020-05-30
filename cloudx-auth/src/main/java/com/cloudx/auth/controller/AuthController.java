@@ -1,11 +1,12 @@
 package com.cloudx.auth.controller;
 
 import com.cloudx.auth.service.ICaptchaService;
-import java.io.IOException;
+import com.cloudx.common.core.entity.R;
 import java.security.Principal;
 import javax.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RestController;
  * @since 2020/4/25 17:42
  */
 @Slf4j
+@Validated
 @RestController
 @RequiredArgsConstructor
 public class AuthController {
@@ -26,9 +28,8 @@ public class AuthController {
   }
 
   @GetMapping("captcha")
-  public void getCaptcha(HttpServletResponse response)
-      throws IOException {
-    captchaService.create(response);
+  public R<String> getCaptcha(HttpServletResponse response) {
+    return R.ok(captchaService.create(response));
   }
 
 }

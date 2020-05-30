@@ -1,6 +1,5 @@
 package com.cloudx.auth.service;
 
-import java.io.IOException;
 import javax.servlet.http.HttpServletResponse;
 
 /**
@@ -15,8 +14,9 @@ public interface ICaptchaService {
    * 创建验证码
    *
    * @param response 响应对象
+   * @return base64 图像
    */
-  void create(HttpServletResponse response) throws IOException;
+  String create(HttpServletResponse response);
 
   /**
    * 校验验证码

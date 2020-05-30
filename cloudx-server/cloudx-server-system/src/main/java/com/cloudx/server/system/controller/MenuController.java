@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.cloudx.common.core.entity.R;
 import com.cloudx.common.core.entity.router.VueRouter;
 import com.cloudx.common.core.entity.system.Menu;
+import com.cloudx.server.system.annotation.ControllerEndpoint;
 import com.cloudx.server.system.service.IMenuService;
 import java.util.HashMap;
 import java.util.List;
@@ -66,12 +67,14 @@ public class MenuController {
 
   @PostMapping
   @PreAuthorize("hasAuthority('menu:add')")
+  @ControllerEndpoint(operation = "新增菜单", exceptionMessage = "新增菜单失败")
   public void addMenu(@Valid Menu menu) {
     this.menuService.createMenu(menu);
   }
 
   @DeleteMapping("{menuIds}")
   @PreAuthorize("hasAuthority('menu:delete')")
+  @ControllerEndpoint(operation = "删除角色", exceptionMessage = "删除菜单失败")
   public void deleteMenus(@NotBlank(message = "{required}") @PathVariable String menuIds) {
     String[] ids = menuIds.split(StrUtil.COMMA);
     this.menuService.deleteMeuns(ids);
@@ -79,6 +82,7 @@ public class MenuController {
 
   @PutMapping
   @PreAuthorize("hasAuthority('menu:update')")
+  @ControllerEndpoint(operation = "更新角色", exceptionMessage = "更新菜单失败")
   public void updateMenu(@Valid Menu menu) {
     this.menuService.updateMenu(menu);
   }

@@ -10,6 +10,7 @@ import com.cloudx.server.demo.service.IUserService;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicBoolean;
+import javax.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -48,7 +49,7 @@ public class TestController {
    * 获取当前用户信息
    */
   @GetMapping("user")
-  public Map<String, Object> currentUser() {
+  public Map<String, Object> currentUser(HttpServletRequest request) {
     Map<String, Object> map = new HashMap<>(5);
     map.put("currentUser", SecurityUtil.getCurrentUser());
     map.put("currentUsername", SecurityUtil.getCurrentUsername());

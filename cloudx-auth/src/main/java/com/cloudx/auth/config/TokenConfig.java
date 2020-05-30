@@ -1,5 +1,6 @@
 package com.cloudx.auth.config;
 
+import cn.hutool.core.util.BooleanUtil;
 import cn.hutool.core.util.IdUtil;
 import com.cloudx.auth.properties.AuthProperties;
 import com.cloudx.auth.service.impl.RedisClientDetailsService;
@@ -42,7 +43,7 @@ public class TokenConfig {
    */
   @Bean
   public TokenStore tokenStore() {
-    if (properties.getEnableJwt()) {
+    if (BooleanUtil.isTrue(properties.getEnableJwt())) {
       return new JwtTokenStore(jwtAccessTokenConverter());
     } else {
       RedisTokenStore redisTokenStore = new RedisTokenStore(redisConnectionFactory);
@@ -100,7 +101,7 @@ public class TokenConfig {
       AuthenticationManager authenticationManager, OAuth2RequestFactory oAuth2RequestFactory) {
     DefaultTokenServices defaultTokenServices = defaultTokenServices();
     // 检查是否开启 JWT Token
-    if (properties.getEnableJwt()) {
+    if (BooleanUtil.isTrue(properties.getEnableJwt())) {
       defaultTokenServices.setTokenEnhancer(jwtAccessTokenConverter());
     }
     return new ResourceOwnerPasswordTokenGranter(

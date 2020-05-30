@@ -1,5 +1,6 @@
 package com.cloudx.common.core.util;
 
+import cn.hutool.core.lang.Validator;
 import cn.hutool.core.util.ReUtil;
 import com.cloudx.common.core.constant.RegexpConstant;
 import java.util.regex.Pattern;
@@ -26,6 +27,10 @@ public class RegexpUtil extends ReUtil {
 
   public static boolean isIdCard(String idCardStr) {
     return match(RegexpConstant.ID_CARD_REG, idCardStr);
+  }
+
+  public static boolean hasChinese(String value) {
+    return Validator.hasChinese(value);
   }
 
 }

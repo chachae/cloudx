@@ -35,8 +35,7 @@ public class SecurityUtil {
     try {
       LinkedHashMap<String, Object> authenticationDetails = getAuthenticationDetails();
       Object principal = authenticationDetails.get("principal");
-      ObjectMapper mapper = new ObjectMapper();
-      return mapper.readValue(mapper.writeValueAsString(principal), CurrentUser.class);
+      return MAPPER.readValue(MAPPER.writeValueAsString(principal), CurrentUser.class);
     } catch (Exception e) {
       log.error("获取当前用户信息失败", e);
       return null;

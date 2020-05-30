@@ -5,6 +5,7 @@ import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
+import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
  * 启动器
@@ -12,8 +13,8 @@ import org.springframework.boot.builder.SpringApplicationBuilder;
  * @author chachae
  * @since 2020/4/24 18:45
  */
-
 @SpringBootApplication
+@EnableTransactionManagement
 @EnableCloudxCloudResourceServer
 @MapperScan("com.cloudx.auth.mapper")
 public class AuthApplication {

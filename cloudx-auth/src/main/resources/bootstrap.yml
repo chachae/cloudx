@@ -31,5 +31,5 @@ cloudx:
   cloud:
     security:
       enable: true
-      only-fetch-by-gateway: false
+      only-fetch-by-gateway: true
       anon-uris: /actuator/**,/captcha,/social/**,/login,/resource/**

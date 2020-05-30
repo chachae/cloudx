@@ -4,6 +4,7 @@ import cn.hutool.core.util.StrUtil;
 import com.cloudx.common.core.entity.QueryParam;
 import com.cloudx.common.core.entity.R;
 import com.cloudx.common.core.entity.system.Dept;
+import com.cloudx.server.system.annotation.ControllerEndpoint;
 import com.cloudx.server.system.service.IDeptService;
 import java.util.Map;
 import javax.validation.Valid;
@@ -50,12 +51,14 @@ public class DeptController {
 
   @PostMapping
   @PreAuthorize("hasAuthority('dept:add')")
+  @ControllerEndpoint(operation = "新增部门", exceptionMessage = "新增部门失败")
   public void addDept(@Valid Dept dept) {
     this.deptService.createDept(dept);
   }
 
   @DeleteMapping("{deptIds}")
   @PreAuthorize("hasAuthority('dept:delete')")
+  @ControllerEndpoint(operation = "删除部门", exceptionMessage = "删除部门失败")
   public void deleteDepts(@NotBlank(message = "{required}") @PathVariable String deptIds) {
     String[] ids = deptIds.split(StrUtil.COMMA);
     this.deptService.deleteDepts(ids);
@@ -63,6 +66,7 @@ public class DeptController {
 
   @PutMapping
   @PreAuthorize("hasAuthority('dept:update')")
+  @ControllerEndpoint(operation = "更新部门", exceptionMessage = "更新部门失败")
   public void updateDept(@Valid Dept dept) {
     this.deptService.updateDept(dept);
   }
