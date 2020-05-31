@@ -78,12 +78,6 @@
       <groupId>org.projectlombok</groupId>
       <artifactId>lombok</artifactId>
     </dependency>
-    <!-- HuTool-core -->
-    <dependency>
-      <groupId>cn.hutool</groupId>
-      <artifactId>hutool-core</artifactId>
-      <version>${hutool.version}</version>
-    </dependency>
     <!-- HuTool-http -->
     <dependency>
       <groupId>cn.hutool</groupId>

@@ -34,17 +34,24 @@
       <artifactId>cloudx-common-security-starter</artifactId>
       <version>${cloudx.version}</version>
     </dependency>
-    <!-- easy-captcha -->
+    <dependency>
+      <groupId>org.springframework.boot</groupId>
+      <artifactId>spring-boot-starter-thymeleaf</artifactId>
+    </dependency>
     <dependency>
       <groupId>com.github.whvcse</groupId>
       <artifactId>easy-captcha</artifactId>
-      <version>1.6.2</version>
+      <version>${easy-captcha.version}</version>
     </dependency>
-    <!-- logstash-logback-encoder -->
     <dependency>
       <groupId>net.logstash.logback</groupId>
       <artifactId>logstash-logback-encoder</artifactId>
       <version>${logstash-logback-encoder.version}</version>
+    </dependency>
+    <dependency>
+      <groupId>com.xkcoding.justauth</groupId>
+      <artifactId>justauth-spring-boot-starter</artifactId>
+      <version>${justauth.version}</version>
     </dependency>
 
   </dependencies>

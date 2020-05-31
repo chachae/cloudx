@@ -4,9 +4,12 @@ import cn.hutool.core.util.StrUtil;
 import com.cloudx.auth.mapper.MenuMapper;
 import com.cloudx.auth.mapper.UserMapper;
 import com.cloudx.auth.mapper.UserRoleMapper;
+import com.cloudx.common.core.constant.SystemConstant;
 import com.cloudx.common.core.entity.system.Menu;
 import com.cloudx.common.core.entity.system.SystemUser;
 import com.cloudx.common.core.entity.system.UserDataPermission;
+import com.cloudx.common.core.entity.system.UserRole;
+import java.util.Date;
 import java.util.List;
 import java.util.stream.Collectors;
 import lombok.RequiredArgsConstructor;
@@ -55,6 +58,33 @@ public class UserManager {
   public String findUserPermissions(String username) {
     List<Menu> userPermissions = menuMapper.selectUserPermissions(username);
     return userPermissions.stream().map(Menu::getExpression).collect(Collectors.joining(","));
+  }
+
+  /**
+   * 注册用户
+   *
+   * @param username username
+   * @param password password
+   * @return SystemUser SystemUser
+   */
+  @Transactional(rollbackFor = Exception.class)
+  public SystemUser registUser(String username, String password) {
+    SystemUser systemUser = new SystemUser();
+    systemUser.setUsername(username);
+    systemUser.setPassword(password);
+    systemUser.setCreateTime(new Date());
+    systemUser.setStatus(SystemUser.STATUS_VALID);
+    systemUser.setSex(SystemUser.SEX_UNKNOWN);
+    systemUser.setAvatar(SystemUser.DEFAULT_AVATAR);
+    systemUser.setDescription("注册用户");
+    this.userMapper.insert(systemUser);
+
+    UserRole userRole = new UserRole();
+    userRole.setUserId(systemUser.getUserId());
+    // 注册用户角色 ID
+    userRole.setRoleId(SystemConstant.REGISTER_ROLE_ID);
+    this.userRoleMapper.insert(userRole);
+    return systemUser;
   }
 
 }

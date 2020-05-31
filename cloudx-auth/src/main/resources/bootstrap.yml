@@ -26,7 +26,6 @@ logging:
           actuate:
             endpoint:
               EndpointId: error
-
 cloudx:
   cloud:
     security:

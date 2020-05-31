@@ -38,4 +38,10 @@ public interface SystemConstant {
    * Java默认临时目录
    */
   String JAVA_TEMP_DIR = "java.io.tmpdir";
+
+  /**
+   * 注册用户角色ID
+   */
+  Long REGISTER_ROLE_ID = 2L;
+
 }

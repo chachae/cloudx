@@ -108,20 +108,62 @@ public class UserServiceImpl extends ServiceImpl<UserMapper, SystemUser> impleme
     // 维护用户角色信息
     String[] userIds = {String.valueOf(user.getUserId())};
     userRoleService.deleteUserRolesByUserId(userIds);
-    String[] roles = StrUtil.splitToArray(user.getRoleId(), StrUtil.C_COMMA);
+    String[] roles = StrUtil.split(user.getRoleId(), StrUtil.COMMA);
     setUserRoles(user, roles);
     // 维护用户数据权限信息
     userDataPermissionService.deleteByUserIds(userIds);
-    String[] deptIds = StrUtil.splitToArray(user.getDeptIds(), StrUtil.C_COMMA);
+    String[] deptIds = StrUtil.split(user.getDeptIds(), StrUtil.COMMA);
     setUserDataPermissions(user, deptIds);
   }
 
   @Override
   public List<String> getUserIdByDeptIds(String[] deptIds) {
     return baseMapper.selectList(
-        new LambdaQueryWrapper<SystemUser>().in(SystemUser::getDeptId, String.join(",", deptIds)))
-        .stream().map(user -> String.valueOf(user.getUserId())).collect(
-            Collectors.toList());
+        new LambdaQueryWrapper<SystemUser>()
+            .in(SystemUser::getDeptId, String.join(",", deptIds)))
+        .stream().map(user -> String.valueOf(user.getUserId()))
+        .collect(Collectors.toList());
+  }
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void updateProfile(SystemUser user) {
+    user.setPassword(null).setUsername(null).setStatus(null);
+    if (hasCurrentUser(new String[]{String.valueOf(user.getUserId())})) {
+      updateById(user);
+    } else {
+      throw new ApiException("您无权修改别人的账号信息！");
+    }
+  }
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void updateAvatar(String avatar) {
+    SystemUser user = new SystemUser().setAvatar(avatar);
+    String curUsername = SecurityUtil.getCurrentUsername();
+    this.baseMapper.update(user,
+        new LambdaQueryWrapper<SystemUser>().eq(SystemUser::getUsername, curUsername));
+  }
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void updatePassword(String password) {
+    SystemUser user = new SystemUser().setPassword(passwordEncoder.encode(password));
+    String curUsername = SecurityUtil.getCurrentUsername();
+    baseMapper.update(user,
+        new LambdaQueryWrapper<SystemUser>().eq(SystemUser::getUsername, curUsername));
+  }
+
+  @Override
+  @Transactional(rollbackFor = Exception.class)
+  public void resetPassword(String[] usernames) {
+    SystemUser params = new SystemUser();
+    params.setPassword(passwordEncoder.encode(SystemUser.DEFAULT_PASSWORD));
+
+    List<String> list = Arrays.asList(usernames);
+    baseMapper
+        .update(params, new LambdaQueryWrapper<SystemUser>().in(SystemUser::getUsername, list));
+
   }
 
   private void setUserRoles(SystemUser user, String[] roles) {

@@ -2,8 +2,8 @@ package com.cloudx.auth.service;
 
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.baomidou.mybatisplus.extension.service.IService;
+import com.cloudx.auth.entity.OauthClientDetails;
 import com.cloudx.common.core.entity.QueryParam;
-import com.cloudx.common.core.entity.system.OauthClientDetails;
 
 /**
  * 客户端业务接口
@@ -23,7 +23,7 @@ public interface IOauthClientDetailsService extends IService<OauthClientDetails>
    */
   IPage<OauthClientDetails> findOauthClientDetails(QueryParam param,
       OauthClientDetails oauthClientDetails);
-  
+
   /**
    * 新增
    *

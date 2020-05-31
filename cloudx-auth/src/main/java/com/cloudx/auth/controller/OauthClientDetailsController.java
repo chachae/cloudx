@@ -1,9 +1,9 @@
 package com.cloudx.auth.controller;
 
+import com.cloudx.auth.entity.OauthClientDetails;
 import com.cloudx.auth.service.IOauthClientDetailsService;
 import com.cloudx.common.core.entity.QueryParam;
 import com.cloudx.common.core.entity.R;
-import com.cloudx.common.core.entity.system.OauthClientDetails;
 import com.cloudx.common.core.exception.ApiException;
 import com.cloudx.common.core.util.PageUtil;
 import java.util.Map;

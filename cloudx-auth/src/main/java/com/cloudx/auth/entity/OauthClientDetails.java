@@ -1,4 +1,4 @@
-package com.cloudx.common.core.entity.system;
+package com.cloudx.auth.entity;
 
 import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableId;

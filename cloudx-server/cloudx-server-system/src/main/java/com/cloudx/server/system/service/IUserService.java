@@ -64,8 +64,37 @@ public interface IUserService extends IService<SystemUser> {
    * 通过部门id查询用户id
    *
    * @param deptIds 部门id
-   * @return
+   * @return List<String>
    */
   List<String> getUserIdByDeptIds(String[] deptIds);
+
+
+  /**
+   * 更新个人信息
+   *
+   * @param user 个人信息
+   */
+  void updateProfile(SystemUser user);
+
+  /**
+   * 更新用户头像
+   *
+   * @param avatar 用户头像
+   */
+  void updateAvatar(String avatar);
+
+  /**
+   * 更新用户密码
+   *
+   * @param password 新密码
+   */
+  void updatePassword(String password);
+
+  /**
+   * 重置密码
+   *
+   * @param usernames 用户集合
+   */
+  void resetPassword(String[] usernames);
 
 }

@@ -20,6 +20,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.access.prepost.PreAuthorize;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -40,6 +41,7 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
 
   private final IUserService userService;
+  private final PasswordEncoder passwordEncoder;
   private final IUserDataPermissionService userDeptService;
   private final ILoginLogService loginLogService;
 
@@ -131,6 +133,39 @@ public class UserController {
   public void deleteUsers(@NotBlank(message = "{required}") @PathVariable String userIds) {
     String[] ids = userIds.split(StrUtil.COMMA);
     this.userService.deleteUsers(ids);
+  }
+
+  @PutMapping("profile")
+  @ControllerEndpoint(exceptionMessage = "修改个人信息失败")
+  public void updateProfile(@Valid SystemUser user) {
+    this.userService.updateProfile(user);
+  }
+
+  @PutMapping("avatar")
+  @ControllerEndpoint(exceptionMessage = "修改头像失败")
+  public void updateAvatar(@NotBlank(message = "{required}") String avatar) {
+    this.userService.updateAvatar(avatar);
+  }
+
+  @GetMapping("password/check")
+  public boolean checkPassword(@NotBlank(message = "{required}") String password) {
+    String curUsername = SecurityUtil.getCurrentUsername();
+    SystemUser user = userService.getSystemUser(curUsername);
+    return user != null && passwordEncoder.matches(password, user.getPassword());
+  }
+
+  @PutMapping("password")
+  @ControllerEndpoint(exceptionMessage = "修改密码失败")
+  public void updatePassword(@NotBlank(message = "{required}") String password) {
+    userService.updatePassword(password);
+  }
+
+  @PutMapping("password/reset")
+  @PreAuthorize("hasAuthority('user:reset')")
+  @ControllerEndpoint(exceptionMessage = "重置用户密码失败")
+  public void resetPassword(@NotBlank(message = "{required}") String usernames) {
+    String[] usernameArr = usernames.split(StrUtil.COMMA);
+    this.userService.resetPassword(usernameArr);
   }
 
 }

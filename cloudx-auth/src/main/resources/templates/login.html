@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="ch" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta
+      content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+      name="viewport">
+  <meta name="description" content="cloudx 授权码模式登录页面">
+  <meta name="author" content="MrBird">
+  <link rel="stylesheet" th:href="@{resource/login.min.css}" media="all">
+  <script th:src="@{resource/jQuery-2.1.4.min.js}"></script>
+  <link rel="icon" th:href="@{resource/favicon.ico}" type="image/x-icon"/>
+  <title>cloudx 系统登录</title>
+</head>
+<body>
+<div class="wrapper">
+  <div class="container"><h1>cloudx 系统登录</h1>
+    <form class="form"><label for="username"></label>
+      <input type="text" placeholder="用户名" id="username">
+      <input type="password" placeholder="密码" id="password">
+      <button type="submit" id="login">登录</button>
+    </form>
+  </div>
+  <ul class="bg-bubbles">
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+    <li></li>
+  </ul>
+</div>
+</body>
+<script th:inline="javascript">
+  const ctx = [[@{/}]];;
+</script>
+<script th:src="@{resource/login.min.js}"></script>
+</html>
