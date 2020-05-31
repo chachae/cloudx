@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: cloudx-tx-manager
+  cloud:
+    nacos:
+      config:
+        server-addr: ${nacos.url}
+        group: DEFAULT_GROUP
+        prefix: ${spring.application.name}
+        file-extension: yaml
+
+logging:
+  level:
+    com:
+      alibaba:
+        nacos:
+          client:
+            config:
+              impl:
+                ClientWorker: error

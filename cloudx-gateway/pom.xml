@@ -53,7 +53,7 @@
     <dependency>
       <groupId>com.alibaba.csp</groupId>
       <artifactId>sentinel-spring-cloud-gateway-adapter</artifactId>
-      <version>1.7.1</version>
+      <version>${sentinel.version}</version>
     </dependency>
     <!-- logstash-logback-encoder -->
     <dependency>
