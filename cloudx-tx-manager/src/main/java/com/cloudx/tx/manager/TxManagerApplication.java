@@ -1,4 +1,4 @@
-package com.cloudx.tx.lcn;
+package com.cloudx.tx.manager;
 
 import com.codingapi.txlcn.tm.config.EnableTransactionManagerServer;
 import org.springframework.boot.WebApplicationType;

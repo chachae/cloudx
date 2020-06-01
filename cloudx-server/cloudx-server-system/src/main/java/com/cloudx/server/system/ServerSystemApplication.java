@@ -1,6 +1,7 @@
 package com.cloudx.server.system;
 
 import com.cloudx.common.security.starter.annotation.EnableCloudxCloudResourceServer;
+import com.codingapi.txlcn.tc.config.EnableDistributedTransaction;
 import org.mybatis.spring.annotation.MapperScan;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
@@ -14,8 +15,9 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 @EnableAsync
 @SpringBootApplication
-@EnableCloudxCloudResourceServer
 @EnableTransactionManagement
+@EnableDistributedTransaction
+@EnableCloudxCloudResourceServer
 @MapperScan("com.cloudx.server.system.mapper")
 public class ServerSystemApplication {
 

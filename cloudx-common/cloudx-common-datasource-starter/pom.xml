@@ -26,6 +26,12 @@
       <artifactId>cloudx-common-core</artifactId>
       <version>${cloudx.version}</version>
     </dependency>
+    <!-- dynamic-datasource -->
+    <dependency>
+      <groupId>com.baomidou</groupId>
+      <artifactId>dynamic-datasource-spring-boot-starter</artifactId>
+      <version>${dynamic-datasource.version}</version>
+    </dependency>
     <!-- mysql -->
     <dependency>
       <groupId>mysql</groupId>

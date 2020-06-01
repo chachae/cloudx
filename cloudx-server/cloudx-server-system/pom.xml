@@ -32,6 +32,14 @@
       <groupId>org.springframework.boot</groupId>
       <artifactId>spring-boot-starter-aop</artifactId>
     </dependency>
+    <dependency>
+      <groupId>com.codingapi.txlcn</groupId>
+      <artifactId>txlcn-tc</artifactId>
+    </dependency>
+    <dependency>
+      <groupId>com.codingapi.txlcn</groupId>
+      <artifactId>txlcn-txmsg-netty</artifactId>
+    </dependency>
   </dependencies>
 
   <build>

@@ -1,11 +1,11 @@
 package com.cloudx.server.demo;
 
 import com.cloudx.common.security.starter.annotation.EnableCloudxCloudResourceServer;
+import com.codingapi.txlcn.tc.config.EnableDistributedTransaction;
 import org.springframework.boot.WebApplicationType;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.boot.builder.SpringApplicationBuilder;
 import org.springframework.cloud.openfeign.EnableFeignClients;
-import org.springframework.scheduling.annotation.EnableAsync;
 import org.springframework.transaction.annotation.EnableTransactionManagement;
 
 /**
@@ -14,10 +14,10 @@ import org.springframework.transaction.annotation.EnableTransactionManagement;
  */
 
 
-@EnableAsync
 @EnableFeignClients
 @SpringBootApplication
 @EnableTransactionManagement
+@EnableDistributedTransaction
 @EnableCloudxCloudResourceServer
 public class ServerDemoApplication {
 

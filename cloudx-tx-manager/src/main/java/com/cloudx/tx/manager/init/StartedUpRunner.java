@@ -1,4 +1,4 @@
-package com.cloudx.tx.lcn.init;
+package com.cloudx.tx.manager.init;
 
 import java.time.LocalDateTime;
 import org.springframework.beans.factory.annotation.Autowired;
