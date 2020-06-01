@@ -1,14 +1,22 @@
+# system
+.DS_Store
+
+# project
 HELP.md
 target/
 !.mvn/wrapper/maven-wrapper.jar
 !**/src/main/**
 !**/src/test/**
+.txlcn/
 
-### IntelliJ IDEA ###
+# idea
 .idea
 *.iws
 *.iml
 *.ipr
+
+# plugins
 **/gen
-log
+log/
 **/**/resources/rebel.xml
+spy.log
